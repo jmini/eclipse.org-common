@@ -1,0 +1,18 @@
+#topnav ul {
+	width: 530px;
+}
+#topnav li {
+	text-align: center;
+	width: 90px;
+}
+#topnav li+li+li+li+li {
+	width: 135px;
+}
+
+#footernav {
+	width: 350px;
+}
+#footernav li {
+	text-align: center;
+	width: 80px;
+}
