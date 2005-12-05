@@ -1,3 +1,0 @@
-<?
-		include($App->getFooterPath($theme));
-?>
