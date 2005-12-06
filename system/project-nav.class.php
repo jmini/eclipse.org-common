@@ -31,18 +31,35 @@ class ProjectNav {
     var $cvs				= "";
     var $bugs				= "";
    
-	function setDescriptionURL( $d ) {		$this->description = $d;	}
-	function setProjectPlanURL( $p ) {		$this->project_plan = $p;	}
-	function setLeadershipURL( $u ) {		$this->leadership = $u;	}
-	function setCommittersURL( $c ) {		$this->committers = $c; }
-	function setContributorsURL( $c ) {		$this->contributors = $c; }
-	function setIPLogURL( $i ) {			$this->ip_log = $i; }
-	function setDownloadsURL( $d ) {		$this->downloads = $d; }
-	function setGettingStartedURL( $g ) {	$this->getting_started = $g; }
-	function setDevelopmentPlanURL( $p ) {	$this->development_plan = $p; }
-	function setMailingListsURL( $m ) {		$this->mailing_lists = $m;	}
-	function setCVSURL( $c ) {				$this->cvs = $c; }
-	function setBugsURL( $b ) {				$this->bugs = $b; }
+	function setDescriptionPath( $d ) {		$this->description = $d;	}
+	
+	function setProjectPlanPath( $p ) {		$this->project_plan = $p;	}
+	
+	function setLeadershipPath( $u ) {		$this->leadership = $u;	}
+	
+	function setCommittersPath( $c ) {		$this->committers = $c; }
+	
+	function setContributorsPath( $c ) {		$this->contributors = $c; }
+	
+	function setIPLogPath( $i ) {			$this->ip_log = $i; }
+	
+	function setDownloadsPath( $d ) {		$this->downloads = $d; }
+	
+	function setGettingStartedPath( $g ) {	$this->getting_started = $g; }
+	
+	function setDevelopmentPlanPath( $p ) {	$this->development_plan = $p; }
+	
+	/* Use this function if you have a local page listing mailing lists */
+	function setMailingListsPath( $m ) {		$this->mailing_lists = $m;	}
+	/* Use this function if you have one mailing list */
+	function setMailingListsName( $m ) {	$this->mailing_lists = "http://dev.eclipse.org/mhonarc/lists/$m/maillist.html";	}
+	
+	function setCVSPath( $c ) {				$this->cvs = $c; }
+	
+	/* Use this function if you have a local page listing bugs */
+	function setBugsPath( $b ) {			$this->bugs = $b; }
+	/* Use this function if you want a link to the product bug listing */
+	function setBugsProduct( $b ) {			$this->bugs = "https://bugs.eclipse.org/bugs/buglist.cgi?classification=$b"; }
 	
     function generate_nav( $thenav ) {
     	$thenav->addNavSeparator("Project Links", "");
