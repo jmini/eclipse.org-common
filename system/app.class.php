@@ -27,7 +27,10 @@ class App {
 	var $DOWNLOAD_BASE_PATH = "/home/data/httpd/download.eclipse.org";
 	
 	var $ExtraHtmlHeaders   = "";
+	var $GazooMode			= "";
 	
+	function setIncubation() {	$this->GazooMode = "incubation"; }
+	function setProposal() {	$this->GazooMode = "proposal"; }
 	
 	function getAppVersion() {
 		return $this->APPVERSION;
@@ -232,6 +235,29 @@ class App {
 		
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
+		}
+		
+		if( $this->GazooMode == "incubation" 
+		 || $this->GazooMode == "proposal" ) {
+			$idx = strpos( $html, "class=\"rightcolumn\"" );
+			if( $idx ) {
+				$idx = strpos( $html, ">", $idx );
+				$html = substr( $html, 0, $idx )
+				      . "
+	<div class=\"sideitem\">
+		<h6>Incubation</h6>
+			<img src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" />
+	</div>"
+				      . substr( $html, $idx + 1);
+			} else {
+				$html .= "
+<div class=\"rightcolumn\">
+	<div class=\"sideitem\">
+		<h6>Incubation</h6>
+			<img src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" />
+	</div>
+</div>";
+			}
 		}
 		
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
