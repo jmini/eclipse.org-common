@@ -239,7 +239,7 @@ class App {
 		
 		if( $this->GazooMode == "incubation" 
 		 || $this->GazooMode == "proposal" ) {
-			$idx = strpos( $html, "class=\"rightcolumn\"" );
+			$idx = strpos( $html, "id=\"rightcolumn\"" );
 			if( $idx ) {
 				$idx = strpos( $html, ">", $idx );
 				$html = substr( $html, 0, $idx )
@@ -251,7 +251,7 @@ class App {
 				      . substr( $html, $idx + 1);
 			} else {
 				$html .= "
-<div class=\"rightcolumn\">
+<div id=\"rightcolumn\">
 	<div class=\"sideitem\">
 		<h6>Incubation</h6>
 			<img src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" />
