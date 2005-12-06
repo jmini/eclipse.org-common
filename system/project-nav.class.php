@@ -62,22 +62,22 @@ class ProjectNav {
 	function setBugsProduct( $b ) {			$this->bugs = "https://bugs.eclipse.org/bugs/buglist.cgi?classification=$b"; }
 	
     function generate_nav( $thenav ) {
-    echo $thenav;
-    	$thenav->addNavSeparator("Project Links", "");
-        $thenav->addCustomNav("About", $this->description, "", 1);
-            $thenav->addCustomNav("Description", $this->description, "", 2);
-            $thenav->addCustomNav("Project Plan", $this->project_plan, "", 2);
-            $thenav->addCustomNav("Leadership", $this->leadership, "", 2);
-            $thenav->addCustomNav("Committers", $this->committers, "", 2);
-            $thenav->addCustomNav("Contributors", $this->contributors, "", 2);
-            $thenav->addCustomNav("IP Log", $this->ip_log, "", 2);
-        $thenav->addCustomNav("Downloads", $this->downloads, "", 1);
-        $thenav->addCustomNav("Getting Started", $this->getting_started, "", 1);
-        $thenav->addCustomNav("Development", $this->development_plan, "", 1);
-            $thenav->addCustomNav("Project Plan", $this->development_plan, "", 2);
-            $thenav->addCustomNav("Mailing Lists", $this->mailing_lists, "", 2);
-            $thenav->addCustomNav("CVS", $this->cvs, "", 2);
-            $thenav->addCustomNav("Bugs", $this->bugs, "", 2);
+    	global $Nav;
+    	$Nav->addNavSeparator("Project Links", "");
+        $Nav->addCustomNav("About", $this->description, "", 1);
+            $Nav->addCustomNav("Description", $this->description, "", 2);
+            $Nav->addCustomNav("Project Plan", $this->project_plan, "", 2);
+            $Nav->addCustomNav("Leadership", $this->leadership, "", 2);
+            $Nav->addCustomNav("Committers", $this->committers, "", 2);
+            $Nav->addCustomNav("Contributors", $this->contributors, "", 2);
+            $Nav->addCustomNav("IP Log", $this->ip_log, "", 2);
+        $Nav->addCustomNav("Downloads", $this->downloads, "", 1);
+        $Nav->addCustomNav("Getting Started", $this->getting_started, "", 1);
+        $Nav->addCustomNav("Development", $this->development_plan, "", 1);
+            $Nav->addCustomNav("Project Plan", $this->development_plan, "", 2);
+            $Nav->addCustomNav("Mailing Lists", $this->mailing_lists, "", 2);
+            $Nav->addCustomNav("CVS", $this->cvs, "", 2);
+            $Nav->addCustomNav("Bugs", $this->bugs, "", 2);
     }
 }
 ?>
