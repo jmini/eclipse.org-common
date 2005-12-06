@@ -62,6 +62,7 @@ class ProjectNav {
 	function setBugsProduct( $b ) {			$this->bugs = "https://bugs.eclipse.org/bugs/buglist.cgi?classification=$b"; }
 	
     function generate_nav( $thenav ) {
+    echo $thenav;
     	$thenav->addNavSeparator("Project Links", "");
         $thenav->addCustomNav("About", $this->description, "", 1);
             $thenav->addCustomNav("Description", $this->description, "", 2);
