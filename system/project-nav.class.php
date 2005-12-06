@@ -52,7 +52,7 @@ class ProjectNav {
 	/* Use this function if you have a local page listing mailing lists */
 	function setMailingListsPath( $m ) {		$this->mailing_lists = $m;	}
 	/* Use this function if you have one mailing list */
-	function setMailingListsName( $m ) {	$this->mailing_lists = "http://dev.eclipse.org/mhonarc/lists/$m/maillist.html";	}
+	function setMailingListName( $m ) {	$this->mailing_lists = "http://dev.eclipse.org/mhonarc/lists/$m/maillist.html";	}
 	
 	function setCVSPath( $c ) {				$this->cvs = $c; }
 	
