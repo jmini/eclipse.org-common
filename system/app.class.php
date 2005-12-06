@@ -88,9 +88,41 @@ class App {
 	}
 
 	function getProjectCommon() {
-		# not done yet
-		# walk up the directory structure to find the deepest _projectCommon.php file
-		return "_projectCommon.php";
+		/* @return: String
+		 * 
+		 * Walk up the directory structure to find the closest _projectCommon.php file
+		 * 
+		 * 2005-12-06: droy
+		 * - created basic code to walk up all the way to the DocumentRoot  
+		 * 
+		 */
+		
+		$currentScript 	= $_SERVER['SCRIPT_NAME'];
+		$strLen 		= strlen($currentScript);
+		$found 			= false;
+		$antiLooper		= 0;
+		
+		# default to /home/_projectCommon.php
+		$rValue 		= $_SERVER['DOCUMENT_ROOT'] . "/home/_projectCommon.php";  
+		
+		
+		while($strLen > 1 && ! $found) {
+			$currentScript 	= substr($_SERVER['SCRIPT_NAME'], 0, strrpos($currentScript, "/"));
+			$testPath 		= $_SERVER['DOCUMENT_ROOT'] . $currentScript . "/_projectCommon.php";
+			
+			if(file_exists($testPath)) {	
+				$found 	= true;
+				$rValue = $testPath;
+			}
+			$strLen = strlen($currentScript);
+			
+			# break free from endless loops
+			$antiLooper++;
+			if($antiLooper > 20) {
+				$found = true;
+			}
+		}
+		return $rValue;
 	}
 
 
