@@ -10,7 +10,7 @@
 
 		if($Link->getLevel() == 2 || $Link->getLevel() == 3) {
 			$aClass = "class=\"level" . $Link->getLevel();
-			if(strpos($_SERVER['SCRIPT_FILENAME'], $Link->getURL())) {
+			if($Link->getURL() && strpos($_SERVER['SCRIPT_FILENAME'], $Link->getURL())) {
 				$aClass .= "selected";
 			}
 			
@@ -30,10 +30,20 @@
 		if($Link->getTarget() != "" && $Link->getTarget() != "_self") {
 			$target = "target=\"" . $Link->getTarget() . "\"";
 		}
-		
-?>							
-		<li <?= $liClass ?>><a <?= $aClass ?> href="<?= $Link->getURL() ?>" <?= $target ?>><?= $Link->getText() ?></a></li>
+
+		if( $Link->getLevel() == 2 ) {
+?>    <?php
+		}
+		if( $Link->getLevel() == 3 ) {
+?>        <?php
+		}
+        if( $Link->getURL() ) {
+?>    <li <?= $liClass ?>><a <?= $aClass ?> href="<?= $Link->getURL() ?>" <?= $target ?>><?= $Link->getText() ?></a></li>
 <?php
+        } else {
+?>    <li <?= $liClass ?>><span <?= $aClass ?>><?= $Link->getText() ?></span></li>
+<?php
+        }		
 	}	
 ?>
 		<li style="background-image: url(/eclipse.org-common/themes/Phoenix/images/leftnav_fade.jpg); background-repeat: repeat-x; border-style: none;">
