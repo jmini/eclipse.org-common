@@ -29,6 +29,8 @@ class App {
 	var $ExtraHtmlHeaders   = "";
 	var $GazooMode			= "";
 	
+	var $THEME_LIST 		=  array("", "Phoenix", "Miasma");
+	
 	function setIncubation() {	$this->GazooMode = "incubation"; }
 	function setProposal() {	$this->GazooMode = "proposal"; }
 	
@@ -479,6 +481,40 @@ class App {
                         }
                 }
         }
+        
+
+
+        function isValidTheme($_theme) {
+		/* @return: bool
+		 * 
+		 * returns true if supplied theme is in the array of valid themes
+		 * 
+		 * 2005-12-07: droy
+		 * 
+		 */
+        	return array_search($_theme, $this->THEME_LIST);
+        }
+        	
+        
+        function getUserPreferedTheme() {
+		/* @return: String
+		 * 
+		 * returns theme name in a browser cookie, or the Empty String
+		 * 
+		 * 2005-12-07: droy
+		 * 
+		 */
+        	if(isset($_COOKIE["theme"])) {
+				$theme = $_COOKIE["theme"];
+				
+				if($this->isValidTheme($theme)) {
+					return $theme;
+				}
+				else {
+					return "";
+				}
+        	}
+        }	
 
 }
 
