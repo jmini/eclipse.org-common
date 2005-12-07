@@ -278,7 +278,7 @@ class App {
 				      . "
 	<div class=\"sideitem\">
 		<h6>Incubation</h6>
-			<a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a>
+			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
 	</div>"
 				      . substr( $html, $idx + 1);
 			} else {
@@ -286,7 +286,7 @@ class App {
 <div id=\"rightcolumn\">
 	<div class=\"sideitem\">
 		<h6>Incubation</h6>
-			<a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a>
+			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
 	</div>
 </div>";
 			}
