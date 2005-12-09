@@ -279,7 +279,7 @@ class App {
 				$html = substr( $html, 0, $idx )
 				      . "
 	<div class=\"sideitem\">
-		<h6>Incubation</h6>
+		<h6><?= ucfirst($this->GazooMode) ?></h6>
 			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
 	</div>"
 				      . substr( $html, $idx + 1);
@@ -287,7 +287,7 @@ class App {
 				$html .= "
 <div id=\"rightcolumn\">
 	<div class=\"sideitem\">
-		<h6>Incubation</h6>
+		<h6><?= ucfirst($this->GazooMode) ?></h6>
 			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
 	</div>
 </div>";
