@@ -27,12 +27,8 @@ class App {
 	var $DOWNLOAD_BASE_PATH = "/home/data/httpd/download.eclipse.org";
 	
 	var $ExtraHtmlHeaders   = "";
-	var $GazooMode			= "";
 	
 	var $THEME_LIST 		=  array("", "Phoenix", "Miasma");
-	
-	function setIncubation() {	$this->GazooMode = "incubation"; }
-	function setProposal() {	$this->GazooMode = "proposal"; }
 	
 	function getAppVersion() {
 		return $this->APPVERSION;
@@ -269,30 +265,6 @@ class App {
 		
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
-		}
-		
-		if( $this->GazooMode == "incubation" 
-		 || $this->GazooMode == "proposal" ) {
-			$idx = strpos( $html, "id=\"rightcolumn\"" );
-			$headertext = ucfirst($this->GazooMode);
-			if( $idx ) {
-				$idx = strpos( $html, ">", $idx );
-				$html = substr( $html, 0, $idx )
-				      . "
-	<div class=\"sideitem\">
-		<h6>$headertext</h6>
-			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
-	</div>"
-				      . substr( $html, $idx + 1);
-			} else {
-				$html .= "
-<div id=\"rightcolumn\">
-	<div class=\"sideitem\">
-		<h6>$headertext</h6>
-			<div align=\"center\"><a href=\"/projects/gazoo.php\"><img align=\"center\" src=\"/images/gazoo-" . $this->GazooMode . ".jpg\" border=\"0\" /></a></div>
-	</div>
-</div>";
-			}
 		}
 		
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
