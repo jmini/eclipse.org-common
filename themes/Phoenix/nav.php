@@ -2,6 +2,7 @@
 	<ul id="leftnav">
 <?php
 	for($i = 0; $i < $Nav->getLinkCount(); $i++) {
+		$Link = $Nav->getLinkAt($i);
 		?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a></li><?php
 /*
 		$liClass = "";
