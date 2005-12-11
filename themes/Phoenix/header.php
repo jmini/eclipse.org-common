@@ -8,6 +8,21 @@
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/layout.css" media="screen" />
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
+<script type="text/javascript">
+
+sfHover = function() {
+	var sfEls = document.getElementById("leftnav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+</script>
 </head>
 <body>
 <div id="header">
