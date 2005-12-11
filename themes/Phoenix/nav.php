@@ -2,6 +2,8 @@
 	<ul id="leftnav">
 <?php
 	for($i = 0; $i < $Nav->getLinkCount(); $i++) {
+		?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a></li><?php
+/*
 		$liClass = "";
 		$aClass = "";
 		$aClassSelected = "";
@@ -32,18 +34,19 @@
 		}
 
 		if( $Link->getLevel() == 2 ) {
-?>    <?php
+?    ?php
 		}
 		if( $Link->getLevel() == 3 ) {
-?>        <?php
+?    ?php
 		}
         if( $Link->getURL() ) {
-?>    <li <?= $liClass ?>><a <?= $aClass ?> href="<?= $Link->getURL() ?>" <?= $target ?>><?= $Link->getText() ?></a></li>
-<?php
+?    <li <?= $liClass ?>><a <?= $aClass ?> href="<?= $Link->getURL() ?>" <?= $target ?>><?= $Link->getText() ?></a></li>
+?php
         } else {
-?>    <li <?= $liClass ?>><span <?= $aClass ?>><?= $Link->getText() ?></span></li>
-<?php
+?    <li <?= $liClass ?>><span <?= $aClass ?>><?= $Link->getText() ?></span></li>
+?php
         }		
+        */
 	}	
 ?>
 		<li style="background-image: url(/eclipse.org-common/themes/Phoenix/images/leftnav_fade.jpg); background-repeat: repeat-x; border-style: none;">
