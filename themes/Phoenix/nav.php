@@ -31,7 +31,7 @@
 <?= substr("                  ", 0, $level * 2) ?><li class="separator"><a class="separator"><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a><?php
 			} else {
 				?>
-<?= substr("                  ", 0, $level * 2) ?><li><a href="#"><span id="leftnavemptylink"><?= $Link->getText() ?></span></a><?php
+<?= substr("                  ", 0, $level * 2) ?><li><a class="nolink" href="#"><?= $Link->getText() ?></a><?php
 			}
 		} else {
 			if($Link->getTarget() == "__SEPARATOR") {
