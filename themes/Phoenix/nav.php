@@ -1,9 +1,43 @@
 <div id="leftcol">
-	<ul id="leftnav">
 <?php
+    $level = 0;
 	for($i = 0; $i < $Nav->getLinkCount(); $i++) {
 		$Link = $Nav->getLinkAt($i);
-		?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a></li><?php
+		$newlevel = $Link->getLevel();
+		if( $level < $newlevel ) {
+			if( $level == 0 ) {
+				?><ul id="leftnav">
+<?php
+			} else {
+				?><ul>
+<?php
+			}
+			$level++;
+			?><!-- += <?= $level ?> -->
+<?php
+		} elseif( $level > $newlevel ) {
+			while( $level > $newlevel ) {
+				?></li></ul>
+				<?php
+				$level--;
+			}
+			?><!-- -= <?= $level ?> -->
+<?php
+		} else {
+			?></li><?php
+		}
+		if($Link->getTarget() == "__SEPARATOR") {
+			?><li class="separator"><a class="separator" href="<?= $Link->getURL() ?>"><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a>
+<?php
+		} else {
+			?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a>
+<?php
+		}
+	}
+	for($i = $level; $i > 1; $i-- ) {
+		?></li></ul>
+<?php
+	}
 /*
 		$liClass = "";
 		$aClass = "";
@@ -47,8 +81,8 @@
 ?    <li <?= $liClass ?>><span <?= $aClass ?>><?= $Link->getText() ?></span></li>
 ?php
         }		
-        */
 	}	
+        */
 ?>
 		<li style="background-image: url(/eclipse.org-common/themes/Phoenix/images/leftnav_fade.jpg); background-repeat: repeat-x; border-style: none;">
 			<br /><br /><br /><br /><br />

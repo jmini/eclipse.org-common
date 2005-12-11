@@ -30,16 +30,16 @@ class Nav {
 	function Nav() {
 		
 
-		$Link = new Link("Committers", "http://dev.eclipse.org/", "_self", 0);
+		$Link = new Link("Committers", "http://dev.eclipse.org/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-		$Link = new Link("Newsgroups", "/newsgroups/", "_self", 0);
+		$Link = new Link("Newsgroups", "/newsgroups/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-		$Link = new Link("Bugs", "https://bugs.eclipse.org/bugs/", "_self", 0);
+		$Link = new Link("Bugs", "https://bugs.eclipse.org/bugs/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-		$Link = new Link("Articles", "/articles/", "_self", 0);
+		$Link = new Link("Articles", "/articles/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
 
@@ -56,7 +56,7 @@ class Nav {
 	}
 
 	function addNavSeparator($_Text, $_URL) {
-		$Link = new Link($_Text, $_URL, "__SEPARATOR", 0);
+		$Link = new Link($_Text, $_URL, "__SEPARATOR", 1);
 			
 		# Add incoming Nav Item
 		$this->LinkList[count($this->LinkList)] = $Link;
