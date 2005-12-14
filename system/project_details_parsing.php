@@ -13,12 +13,13 @@
 /***************************************
  * Name: NewsParse
  * function: Parses the news file and build the project specific html
- * I/O: takes the name of the project(getProjectID()) and a pointer to the html output stream
+ * I/O: takes the name of the project(getProjectID()) and a pointer to the html output stream, as
+ * well as a bool to turn off the descriptive text
  * 
  * By: M. Ward
  * Date: Dec 13/05
 ****************************************/
-function NewsParse( $name, &$html) {
+function NewsParse( $name, &$html, $show_desc) {
   //build up the name of hte file on the local filesystem
   $group_file = $_SERVER['DOCUMENT_ROOT'] . "/" . $name . "/" . "newsgroup";
   if( file_exists($group_file) ) {
@@ -34,7 +35,10 @@ function NewsParse( $name, &$html) {
 	  $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' /></a>";
 	  $newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
-	  $html .= "<blockquote><p>$news_html $webnews_html $newsarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
+	  if( $show_desc == TRUE )
+	    $html .= "<blockquote><p>$news_html $webnews_html $newsarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
+	  else
+	  $html .= "<blockquote>$news_html $webnews_html $newsarch_html</blockquote>";
 	}
   }          
 }
