@@ -38,7 +38,7 @@ function NewsParse( $name, &$html, $show_desc) {
 	  if( $show_desc == TRUE )
 	    $html .= "<blockquote><p>$news_html $webnews_html $newsarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
 	  else
-	  $html .= "<blockquote>$news_html $webnews_html $newsarch_html</blockquote>";
+	  $html .= "$news_html $webnews_html $newsarch_html";
 	}
   }          
 }
