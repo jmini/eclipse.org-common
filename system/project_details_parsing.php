@@ -22,7 +22,6 @@
 function NewsParse( $name, &$html, $show_desc) {
   //build up the name of hte file on the local filesystem
   $group_file = $_SERVER['DOCUMENT_ROOT'] . "/" . $name . "/project-info/" . "newsgroup";
-  $html .= "file: $group_file";
   if( file_exists($group_file) ) {
   	//get the contents
     $contents = file_get_contents($group_file);
