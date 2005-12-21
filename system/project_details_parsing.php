@@ -85,14 +85,14 @@ function MailParse( $name, &$html, $show_desc) {
     $group_count = count($array);
     for ( $loop = 1; $loop < $group_count; $loop+=2) {
       $mail_name = $array[$loop];
-      $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . ">" . $mail_name . "</a>";
+      $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmark_tsk.gif' alt='Subscribe' /></a>";
 	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
 	  /*if( $show_desc == TRUE )
 	    $html .= "<blockquote><p>$mail_html $mailarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
 	  else
 	  $html .= "$mail_html $mailarch_html";*/
-	  $html .= "<blockquote> $mail_html  <a onclick=\"switchMenu('$mail_name');\" title=\"desc\">Description</a>  $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	  $html .= "<blockquote> <a onclick=\"switchMenu('$mail_name');\" title=\"desc\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
 	}
   }          
 }
