@@ -55,9 +55,9 @@ function NewsParse( $name, &$html, $show_desc) {
       $news_name = $array[$loop];
       $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" ><img src='images/file_obj.gif' alt='News server' /></a>";
 	  $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' /></a>";
-	  $newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
+	  $newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt=\"Archive\" /></a>";
 	  $description = $array[$loop+1];
-	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"desc\">$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"Description\">$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
 	}
   }          
 }
@@ -84,7 +84,7 @@ function MailParse( $name, &$html ) {
       $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' /></a>";
 	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
-	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name');\" title=\"desc\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name');\" title=\"Description\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
 	}
   }          
 }
