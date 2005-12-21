@@ -88,10 +88,11 @@ function MailParse( $name, &$html, $show_desc) {
       $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . ">" . $mail_name . "</a>";
 	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
-	  if( $show_desc == TRUE )
+	  /*if( $show_desc == TRUE )
 	    $html .= "<blockquote><p>$mail_html $mailarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
 	  else
-	  $html .= "$mail_html $mailarch_html";
+	  $html .= "$mail_html $mailarch_html";*/
+	  $html .= "<a onclick=\"switchMenu('$mail_name');\" title=\"desc\">+</a> <blockquote><p>$mail_html $mailarch_html </p><blockquote> <div id=\"$mail_list\"> <p> $description </p></div>";
 	}
   }          
 }
