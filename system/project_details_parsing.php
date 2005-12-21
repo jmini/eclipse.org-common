@@ -68,13 +68,12 @@ function NewsParse( $name, &$html, $show_desc) {
 /***************************************
  * Name: MailParse
  * function: Parses the mail file and build the project specific html
- * I/O: takes the name of the project(getProjectID()) and a pointer to the html output stream, as
- * well as a bool to turn off the descriptive text
+ * I/O: takes the name of the project(getProjectID()) and a pointer to the html output stream
  * 
  * By: M. Ward
  * Date: Dec 21/05
 ****************************************/
-function MailParse( $name, &$html, $show_desc) {
+function MailParse( $name, &$html ) {
   $group_file = GetFile( $name, "maillist");
   if( file_exists($group_file) ) {
   	//get the contents
@@ -85,13 +84,9 @@ function MailParse( $name, &$html, $show_desc) {
     $group_count = count($array);
     for ( $loop = 1; $loop < $group_count; $loop+=2) {
       $mail_name = $array[$loop];
-      $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmark_tsk.gif' alt='Subscribe' /></a>";
+      $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' /></a>";
 	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
-	  /*if( $show_desc == TRUE )
-	    $html .= "<blockquote><p>$mail_html $mailarch_html </p><blockquote><p> $description </p></blockquote></blockquote>";
-	  else
-	  $html .= "$mail_html $mailarch_html";*/
 	  $html .= "<blockquote> <a onclick=\"switchMenu('$mail_name');\" title=\"desc\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
 	}
   }          
