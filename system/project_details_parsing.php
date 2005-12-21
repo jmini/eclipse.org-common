@@ -93,7 +93,7 @@ function MailParse( $name, &$html, $show_desc) {
 	  else
 	  $html .= "$mail_html $mailarch_html";*/
 	  $html .= "WALLA WALLA";
-	  $html .= "<a onclick=\'switchMenu('$mail_name');\' title=\"desc\">blurb</a> <blockquote><p>$mail_html $mailarch_html </p><blockquote> <div id=\"$mail_list\"> <p> $description </p></div>";
+	  $html .= "<a onclick=\"switchMenu('$mail_name');\" title=\"desc\">blurb</a> <blockquote><p>$mail_html $mailarch_html </p><blockquote> <div id=\"$mail_list\"> <p> $description </p></div>";
 	}
   }          
 }
