@@ -84,7 +84,7 @@ function MailParse( $name, &$html ) {
       $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' /></a>";
 	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
-	  $html .= "<blockquote> <a href onclick=\"switchMenu('$mail_name');\" title=\"desc\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	  $html .= "<blockquote> <a href=\"\" onclick=\"switchMenu('$mail_name');\" title=\"desc\">$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
 	}
   }          
 }
