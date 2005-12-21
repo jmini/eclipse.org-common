@@ -53,7 +53,7 @@ function NewsParse( $name, &$html, $show_desc) {
     $group_count = count($array);
     for ( $loop = 1; $loop < $group_count; $loop+=2) {
       $news_name = $array[$loop];
-      $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" ><img src='images/file-_obj.gif' alt='News server' /></a>";
+      $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" ><img src='images/file_obj.gif' alt='News server' /></a>";
 	  $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' /></a>";
 	  $newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' /></a>";
 	  $description = $array[$loop+1];
