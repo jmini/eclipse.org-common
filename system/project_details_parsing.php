@@ -41,7 +41,6 @@ function GetFile( $name, $filename ) {
  * Date: Dec 29/05
 *****************************/
 function GetTempFile( $name, $filename ) {
-echo "in get temp file, $name";
  //breakup the name
   $position = strrpos($name,'.');
   if( $position === FALSE) {
@@ -51,8 +50,6 @@ echo "in get temp file, $name";
   }
   //build up the name of hte file on the local filesystem
   $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/" . $localname . "/" . $filename;
-  
-  echo "$group_file \n\r";
   
   return $group_file;
 	
@@ -100,20 +97,23 @@ function NewsParse( $name, &$html, $show_desc) {
 ****************************************/
 function MailParse( $name, &$html ) {
   $group_file = GetFile( $name, "maillist");
-  if( file_exists($group_file) ) {
-  	//get the contents
-    $contents = file_get_contents($group_file);
-    //now break them down        
-    $array = explode("::",$contents);
+  if( !file_exists($group_file) ) {
+  	$group_file = GetTempFile( $name, "maillist" );
+    if( !file_exists($group_file) )
+      return;
+  }
+  //get the contents
+  $contents = file_get_contents($group_file);
+  //now break them down        
+  $array = explode("::",$contents);
 
-    $group_count = count($array);
-    for ( $loop = 1; $loop < $group_count; $loop+=2) {
-      $mail_name = $array[$loop];
-      $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' title=\"Subscribe\" /></a>";
-	  $mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
-	  $description = $array[$loop+1];
-	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name');\" title=\"Description\" alt='Description'>$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
-	}
+  $group_count = count($array);
+  for ( $loop = 1; $loop < $group_count; $loop+=2) {
+    $mail_name = $array[$loop];
+    $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' title=\"Subscribe\" /></a>";
+	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
+	$description = $array[$loop+1];
+	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name');\" title=\"Description\" alt='Description'>$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
   }          
 }
 
