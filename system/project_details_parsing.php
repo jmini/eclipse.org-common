@@ -51,6 +51,8 @@ function GetTempFile( $name, $filename ) {
   //build up the name of hte file on the local filesystem
   $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/" . $localname . "/" . $filename;
   
+  echo "$group_file";
+  
   return $group_file;
 	
 } 
