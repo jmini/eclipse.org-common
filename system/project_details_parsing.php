@@ -32,6 +32,29 @@ function GetFile( $name, $filename ) {
   return $group_file;
 	
 } 
+/*****************************
+ * Name: gettempfile
+ * Function: given a project id builds a location path
+ * I/O: the project id and the name of the file. returns the path
+ * 
+ * By: M. Ward
+ * Date: Dec 29/05
+*****************************/
+function GetTempFile( $name, $filename ) {
+ //breakup the name
+  $position = strrpos($name,'.');
+  if( $position === FALSE) {
+	$localname = $name; 
+  } else { 
+    $localname = substr($name, $position+1 );
+  }
+  //build up the name of hte file on the local filesystem
+  $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary" . $localname . "/" . $filename;
+  
+  return $group_file;
+	
+} 
+
 
 /***************************************
  * Name: NewsParse
@@ -44,21 +67,23 @@ function GetFile( $name, $filename ) {
 ****************************************/
 function NewsParse( $name, &$html, $show_desc) {
   $group_file = GetFile( $name, "newsgroup" );
-  if( file_exists($group_file) ) {
-  	//get the contents
-    $contents = file_get_contents($group_file);
-    //now break them down        
-    $array = explode("::",$contents);
-
-    $group_count = count($array);
-    for ( $loop = 1; $loop < $group_count; $loop+=2) {
-      $news_name = $array[$loop];
-      $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" ><img src='images/file_obj.gif' alt='News server' title=\"News server\"/></a>";
-	  $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
-	  $newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
-	  $description = $array[$loop+1];
-	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
-	}
+  if( !file_exists($group_file) ) {
+  	$group_file = GetTempFile( $name, "newsgroup" );
+    if( !file_exists($group_file) )
+      return;
+  }
+  //get the contents
+  $contents = file_get_contents($group_file);
+  //now break them down        
+  $array = explode("::",$contents);
+  $group_count = count($array);
+  for ( $loop = 1; $loop < $group_count; $loop+=2) {
+    $news_name = $array[$loop];
+    $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" ><img src='images/file_obj.gif' alt='News server' title=\"News server\"/></a>";
+    $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
+	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
+	$description = $array[$loop+1];
+	$html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
   }          
 }
 
