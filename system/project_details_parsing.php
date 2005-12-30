@@ -65,7 +65,7 @@ function GetTempFile( $name, $filename ) {
  * By: M. Ward
  * Date: Dec 13/05
 ****************************************/
-function NewsParse( $name, &$html, $show_desc) {
+function NewsParse( $name, &$html, $catagory) {
   $group_file = GetFile( $name, "newsgroup" );
   if( !file_exists($group_file) ) {
   	$group_file = GetTempFile( $name, "newsgroup" );
@@ -83,7 +83,10 @@ function NewsParse( $name, &$html, $show_desc) {
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	if ( !isset( $catagory))
+	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	else
+	  $html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name$catagory');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
   }          
 }
 
