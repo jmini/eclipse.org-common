@@ -41,7 +41,7 @@ function GetFile( $name, $filename ) {
  * Date: Dec 29/05
 *****************************/
 function GetTempFile( $name, $filename ) {
-echo "in get temp file";
+echo "in get temp file, $name";
  //breakup the name
   $position = strrpos($name,'.');
   if( $position === FALSE) {
@@ -51,6 +51,8 @@ echo "in get temp file";
   }
   //build up the name of hte file on the local filesystem
   $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary" . $localname . "/" . $filename;
+  
+  echo "$group_file \n\r";
   
   return $group_file;
 	
