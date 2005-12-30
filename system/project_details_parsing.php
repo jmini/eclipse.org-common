@@ -50,7 +50,7 @@ echo "in get temp file, $name";
     $localname = substr($name, $position+1 );
   }
   //build up the name of hte file on the local filesystem
-  $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary" . $localname . "/" . $filename;
+  $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/" . $localname . "/" . $filename;
   
   echo "$group_file \n\r";
   
