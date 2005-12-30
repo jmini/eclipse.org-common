@@ -41,6 +41,7 @@ function GetFile( $name, $filename ) {
  * Date: Dec 29/05
 *****************************/
 function GetTempFile( $name, $filename ) {
+echo "in get temp file";
  //breakup the name
   $position = strrpos($name,'.');
   if( $position === FALSE) {
