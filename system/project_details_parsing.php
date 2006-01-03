@@ -20,7 +20,9 @@
 *****************************/
 function GetFile( $name, $filename, $docroot ) {
 
-  $name = str_replace("index.html","", $name);
+  if( substr($name,-1,1) != "/" )
+    $name .= "/";
+  $name = str_replace("index.html","/", $name);
   $name = str_replace("http://www.eclipse.org/", $docroot . "/", $name);
   $localname = str_replace("http://eclipse.org/", $docroot . "/", $name);
   //build up the name of hte file on the local filesystem
