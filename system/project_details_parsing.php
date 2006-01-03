@@ -83,7 +83,7 @@ function NewsParse( $name, &$html, $id ) {
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	$html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\" alt='Description' >$news_name</a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name.$id\" class=\"switchcontent\"> <p> $description </p></div>";
   }          
 }
 
