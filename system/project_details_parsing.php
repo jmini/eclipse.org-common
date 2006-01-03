@@ -27,7 +27,7 @@ function GetFile( $name, $filename, $docroot ) {
     $localname = substr($name, $position+1 );
   }
   //build up the name of hte file on the local filesystem
-  $group_file = $docroots . "/" . $localname . "/project-info/" . $filename;
+  $group_file = $docroot . "/" . $localname . "/project-info/" . $filename;
   
   return $group_file;
 	
