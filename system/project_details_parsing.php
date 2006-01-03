@@ -19,15 +19,14 @@
  * Date: Dec 21/05
 *****************************/
 function GetFile( $name, $filename, $docroot ) {
- //breakup the name
-  $position = strrpos($name,'.');
-  if( $position === FALSE) {
-	$localname = $name; 
-  } else { 
-    $localname = substr($name, $position+1 );
-  }
+
+  $name = str_replace("index.html","", $name);
+  $name = str_replace("http://www.eclipse.org/", $docroot . "/", $name);
+  $localname = str_replace("http://eclipse.org/", $docroot . "/", $name);
   //build up the name of hte file on the local filesystem
-  $group_file = $docroot . "/" . $localname . "/project-info/" . $filename;
+  $group_file = $localname . "/project-info/" . $filename;
+ 
+  echo "!! $group_file // \n\r";
   
   return $group_file;
 	
