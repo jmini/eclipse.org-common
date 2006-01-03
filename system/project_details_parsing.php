@@ -26,6 +26,8 @@ function GetFile( $name, $filename, $docroot ) {
   //build up the name of hte file on the local filesystem
   $group_file = $localname . "project-info/" . $filename;
   
+  echo "!! $group_file ??\n\r";
+  
   return $group_file;
 	
 }
