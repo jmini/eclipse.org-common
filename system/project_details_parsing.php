@@ -13,7 +13,7 @@
 /*****************************
  * Name: getfile
  * Function: given a project id builds a location path
- * I/O: the project id and the name of the file. returns the path
+ * I/O: the project id and the name of the file, and the location of the document root of the server. returns the path
  * 
  * By: M. Ward
  * Date: Dec 21/05
@@ -31,30 +31,7 @@ function GetFile( $name, $filename, $docroot ) {
   
   return $group_file;
 	
-} 
-/*****************************
- * Name: gettempfile
- * Function: given a project id builds a location path
- * I/O: the project id and the name of the file. returns the path
- * 
- * By: M. Ward
- * Date: Dec 29/05
-*****************************/
-function GetTempFile( $name, $filename ) {
- //breakup the name
-  $position = strrpos($name,'.');
-  if( $position === FALSE) {
-	$localname = $name; 
-  } else { 
-    $localname = substr($name, $position+1 );
-  }
-  //build up the name of hte file on the local filesystem
-  $group_file = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/" . $localname . "/" . $filename;
-  
-  return $group_file;
-	
-} 
-
+}
 
 /***************************************
  * Name: NewsParse
@@ -95,10 +72,10 @@ function NewsParse( $name, &$html, $id ) {
  * By: M. Ward
  * Date: Dec 21/05
 ****************************************/
-function MailParse( $name, &$html ) {
-  $group_file = GetFile( $name, "maillist");
+function MailParse( $name, &$html, $id ) {
+  $group_file = GetFile( $name, "maillist",$_SERVER['DOCUMENT_ROOT'] );
   if( !file_exists($group_file) ) {
-  	$group_file = GetTempFile( $name, "maillist" );
+  	$group_file = GetFile( $name, "maillist", $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary");
     if( !file_exists($group_file) )
       return;
   }
@@ -113,7 +90,7 @@ function MailParse( $name, &$html ) {
     $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' title=\"Subscribe\" /></a>";
 	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name');\" title=\"Description\" alt='Description'>$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name\" class=\"switchcontent\"> <p> $description </p></div>";
+	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\" alt='Description'>$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p></div>";
   }          
 }
 
