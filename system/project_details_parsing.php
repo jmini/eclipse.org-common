@@ -20,6 +20,7 @@
 *****************************/
 function GetFile( $name, $filename, $docroot ) {
  //breakup the name
+ echo "$name // $filename // $docroot \n\r";
   $position = strrpos($name,'.');
   if( $position === FALSE) {
 	$localname = $name; 
@@ -68,7 +69,8 @@ function GetTempFile( $name, $filename ) {
 function NewsParse( $name, &$html, $id ) {
   $group_file = GetFile( $name, "newsgroup", $_SERVER['DOCUMENT_ROOT']  );
   if( !file_exists($group_file) ) {
-  	$group_file = GetFile( $name, "newsgroup" , $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/" );
+  	$globalpath = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/";
+  	$group_file = GetFile( $name, "newsgroup" , $globalpath );
     if( !file_exists($group_file) )
       return;
   }
