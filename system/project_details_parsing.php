@@ -69,7 +69,7 @@ function GetTempFile( $name, $filename ) {
 function NewsParse( $name, &$html, $id ) {
   $group_file = GetFile( $name, "newsgroup", $_SERVER['DOCUMENT_ROOT']  );
   if( !file_exists($group_file) ) {
-  	$globalpath = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary/";
+  	$globalpath = $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary";
   	$group_file = GetFile( $name, "newsgroup" , $globalpath );
     if( !file_exists($group_file) )
       return;
