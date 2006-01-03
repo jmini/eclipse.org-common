@@ -24,9 +24,7 @@ function GetFile( $name, $filename, $docroot ) {
   $name = str_replace("http://www.eclipse.org/", $docroot . "/", $name);
   $localname = str_replace("http://eclipse.org/", $docroot . "/", $name);
   //build up the name of hte file on the local filesystem
-  $group_file = $localname . "/project-info/" . $filename;
- 
-  echo "!! $group_file // \n\r";
+  $group_file = $localname . "project-info/" . $filename;
   
   return $group_file;
 	
