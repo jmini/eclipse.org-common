@@ -22,6 +22,8 @@ function GetFile( $name, $filename, $docroot ) {
 
   //remove any index.html 
   $name = str_replace("index.html","", $name);
+  //same thing for main.html
+  $name = str_replace("main.html","", $name);
   //if there isn't a trailing / then insert one'
   if( substr($name,-1,1) != "/" )
     $name .= "/";
