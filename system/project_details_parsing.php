@@ -18,7 +18,7 @@
  * By: M. Ward
  * Date: Dec 21/05
 *****************************/
-function GetFile( $name, $filename ) {
+function GetFile( $name, $filename, $docroot ) {
  //breakup the name
   $position = strrpos($name,'.');
   if( $position === FALSE) {
@@ -27,7 +27,7 @@ function GetFile( $name, $filename ) {
     $localname = substr($name, $position+1 );
   }
   //build up the name of hte file on the local filesystem
-  $group_file = $_SERVER['DOCUMENT_ROOT'] . "/" . $localname . "/project-info/" . $filename;
+  $group_file = $docroots . "/" . $localname . "/project-info/" . $filename;
   
   return $group_file;
 	
@@ -66,9 +66,9 @@ function GetTempFile( $name, $filename ) {
  * Date: Dec 13/05
 ****************************************/
 function NewsParse( $name, &$html, $id ) {
-  $group_file = GetFile( $name, "newsgroup");
+  $group_file = GetFile( $name, "newsgroup",$_SERVER['DOCUMENT_ROOT'] );
   if( !file_exists($group_file) ) {
-  	$group_file = GetTempFile( $name, "newsgroup" );  
+  	$group_file = GetTempFile( $name, "newsgroup" , $_SERVER['DOCUMENT_ROOT'] . "/projects/temporary" );  
     if( !file_exists($group_file) )
       return;
   }
