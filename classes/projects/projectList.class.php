@@ -48,7 +48,7 @@ class ProjectList {
 	function selectProjectList($_project_id, $_name, $_level, $_parent_project_id, $_description, $_order_by) {
 		
 		$App = new App();
-	    $WHERE = "";
+	    $WHERE = " PRJ.is_active = 1";
 	
 	    if($_project_id != "") {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
