@@ -102,7 +102,7 @@ class ProjectList {
 					projects AS PRJ "
 				. $WHERE
 				. $_order_by;
- echo $sql;	
+# echo $sql;	
 	    $result = mysql_query($sql, $dbh);
 
 	    while($myrow = mysql_fetch_array($result))
