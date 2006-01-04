@@ -95,7 +95,9 @@ class ProjectList {
 					PRJ.description,
 					PRJ.url_download,
 					PRJ.url_index,
-					PRJ.is_topframe
+					PRJ.is_topframe,
+					PRJ.sort_order,
+					PRJ.is_active
 	        	FROM
 					projects AS PRJ "
 				. $WHERE
@@ -115,6 +117,8 @@ class ProjectList {
 	    		$Project->setUrlDownload	($myrow["url_download"]);
 	    		$Project->setUrlIndex		($myrow["url_index"]);
 				$Project->setIsTopframe		($myrow["is_topframe"]);
+				$Project->setSortOrder		($myrow["sort_order"]);
+				$Project->setIsActive		($myrow["is_active"]);
 	            $this->add($Project);
 	    }
 	    

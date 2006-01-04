@@ -26,6 +26,8 @@ class Project {
 	var $url_download		= "";
 	var $url_index			= "";
 	var $is_topframe		= 0;
+	var $sort_order			= 0;
+	var $is_active			= 0;
 	var $drop;
 	
 	
@@ -52,6 +54,12 @@ class Project {
 	}
 	function getIsTopFrame() {
 		return $this->is_topframe;
+	}
+	function getSortOrder() {
+		return $this->sort_order;
+	}
+	function getIsActive() {
+		return $this->is_active;
 	}
 	function getDrop() {
 		return $this->drop;
@@ -84,6 +92,12 @@ class Project {
 	function setIsTopframe($_is_topframe) {
 		$this->is_topframe = $_is_topframe;
 	}
+	function setSortOrder($_sort_order) {
+		$this->sort_order = $_sort_order;
+	}
+	function setIsActive($_is_active) {
+		$this->is_active = $_is_active;
+	}
 
 
 	function selectList($_project_id) {
@@ -106,7 +120,9 @@ class Project {
 						PRJ.description,
 						PRJ.url_download,
 						PRJ.url_index,
-						PRJ.is_topframe
+						PRJ.is_topframe,
+						PRJ.sort_order,
+						PRJ.is_active
 		        	FROM
 						projects AS PRJ "
 					. $WHERE;
@@ -123,6 +139,8 @@ class Project {
 				$this->setUrlDownload	($myrow["url_download"]);
 				$this->setUrlIndex		($myrow["url_index"]);
 				$this->setIsTopframe	($myrow["is_topframe"]);
+				$this->setSortOrder		($myrow["sort_order"]);
+				$this->setIsActive		($myrow["is_active"]);
 		    }
 		    
 		    $dbc->disconnect();
