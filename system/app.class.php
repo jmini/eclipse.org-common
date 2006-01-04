@@ -171,7 +171,7 @@ class App {
 		# return: string - AND'ed String
 		
 		if($_String != "") {
-			$_String = $_String . " OR ";
+			$_String = $_String . " AND ";
 		}
 		
 		return $_String;
