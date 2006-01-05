@@ -36,10 +36,6 @@ class Nav {
 		$Link = new Link("Newsgroups", "/newsgroups/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-        $Link = new Link("Mailing Lists", "/mail/", "_self", 1);
-		$this->LinkList[count($this->LinkList)] = $Link;
-
-
 		$Link = new Link("Bugs", "https://bugs.eclipse.org/bugs/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
