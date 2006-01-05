@@ -64,9 +64,20 @@ function NewsParse( $name, &$html, $id ) {
     $news_name = $array[$loop];
     $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
-	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . "><img src='images/filecabinet.gif' alt='Archive' title=\"Archive\" /></a>";
+	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
+	$newssearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
+			<table bgcolor=#EEEEEE border=0  style=\"font-size: .9em;\" width=\"99%\">
+  			<TR>
+    		<TD>
+      			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\">
+      			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Go\" />
+      			<INPUT TYPE=\"hidden\" NAME=\"form\" value=\"extended\" />
+      	        <input type=\"hidden\" name=\"wf\" value=\"574a74\" ;>
+      	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/newslists/$news_name\">
+
+      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\">";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html $newsarch_html </blockquote> <div id=\"$news_name.$id\" class=\"switchcontent\"> <p> $description </p></div>";
+	$html .= "<a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html <div id=\"$news_name.$id\" class=\"switchcontent\"> <p> $description <p> $newsarch_html </p> <p> $newssearch </p> </p></div>";
   }          
 }
 
