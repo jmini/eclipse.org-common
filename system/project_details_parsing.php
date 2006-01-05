@@ -75,7 +75,8 @@ function NewsParse( $name, &$html, $id ) {
       	        <input type=\"hidden\" name=\"wf\" value=\"574a74\" ;>
       	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/newslists/$news_name\">
 
-      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\">";
+      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\">
+      	     </td></tr></Table>";
 	$description = $array[$loop+1];
 	$html .= "<a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html <div id=\"$news_name.$id\" class=\"switchcontent\"> <p> $description <p> $newsarch_html </p> <p> $newssearch </p> </p></div>";
   }          
