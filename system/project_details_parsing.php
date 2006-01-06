@@ -65,15 +65,15 @@ function NewsParse( $name, &$html, $id ) {
     $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
-	$newssearch = "<div id=\"$news_name\"> <FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\" class=\"groupsearch\">
+	$newssearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
-      			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\">
-      			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Go\" />
+      			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
+      			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Go\" class=\"groupsearch\"/>
       			<INPUT TYPE=\"hidden\" NAME=\"form\" value=\"extended\" />
       	        <input type=\"hidden\" name=\"wf\" value=\"574a74\" ;>
       	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/newslists/$news_name\">
-      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\"></td></tr></Table> </div>";
+      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\"></td></tr></Table>";
 	$description = $array[$loop+1];
 	$html .= "<p><a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html </p><div id=\"$news_name.$id\" class=\"switchcontent\"> <p>$description </p> <p>$newsarch_html</p> <p>$newssearch</p></div>";
   }          
