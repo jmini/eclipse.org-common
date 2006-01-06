@@ -66,7 +66,7 @@ function NewsParse( $name, &$html, $id ) {
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
 	$newssearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
-			<table bgcolor=#EEEEEE border=0 font-size=\"5px\">
+			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
       			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
       			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Go\" class=\"groupsearch\">
