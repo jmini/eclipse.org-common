@@ -102,10 +102,19 @@ function MailParse( $name, &$html, $id ) {
   $group_count = count($array);
   for ( $loop = 1; $loop < $group_count; $loop+=2) {
     $mail_name = $array[$loop];
-    $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\""  . "><img src='images/taskmrk_tsk.gif' alt='Subscribe' title=\"Subscribe\" /></a>";
-	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "><img src='images/save_edit.gif' alt='Archive' title=\"Archive\" /></a>";
+    $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\" alt=\"Subscribe\" title=\"Subscribe\" />$mail_name</a>";
+	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
+	$mailsearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
+			<table bgcolor=#EEEEEE border=0>
+  			<TR><TD>Search $news_name 
+      			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
+      			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Go\" class=\"groupsearch\">
+      			<INPUT TYPE=\"hidden\" NAME=\"form\" value=\"extended\">
+      	        <input type=\"hidden\" name=\"wf\" value=\"574a74\">
+      	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/mhonarc/$mail_name\">
+      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\"></td></tr></Table>";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\" alt='Description'>$mail_name</a>  $mail_html $mailarch_html </blockquote> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p></div>";
+	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </blockquote> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailsarch_html</p> <p>$mailsearch</p></div>";
   }          
 }
 
