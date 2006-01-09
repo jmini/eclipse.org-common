@@ -65,7 +65,7 @@ function NewsParse( $name, &$html, $id ) {
     $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
-	$newssearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
+	$newssearch = "<FORM name=\"$news_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
       			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
@@ -104,7 +104,7 @@ function MailParse( $name, &$html, $id ) {
     $mail_name = $array[$loop];
     $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\" alt=\"Subscribe\" title=\"Subscribe\" />$mail_name</a>";
 	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
-	$mailsearch = "<FORM METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
+	$mailsearch = "<FORM name=\"$mail_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
       			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
@@ -114,7 +114,7 @@ function MailParse( $name, &$html, $id ) {
       	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/mhonarc/$mail_name\">
       	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\"></td></tr></Table>";
 	$description = $array[$loop+1];
-	$html .= "<blockquote> <a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </blockquote> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailsarch_html</p> <p>$mailsearch</p></div>";
+	$html .= "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailsarch_html</p> <p>$mailsearch</p></div>";
   }          
 }
 
