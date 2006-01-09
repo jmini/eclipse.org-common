@@ -112,7 +112,9 @@ function MailParse( $name, &$html, $id ) {
       			<INPUT TYPE=\"hidden\" NAME=\"form\" value=\"extended\">
       	        <input type=\"hidden\" name=\"wf\" value=\"574a74\">
       	        <INPUT TYPE=\"hidden\" NAME=\"ul\" value=\"/mhonarc/lists/$mail_name\">
-      	        <INPUT TYPE=\"hidden\" NAME=\"tmptag\" value=\"5\"></td></tr></Table></FORM>";
+      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"5\">
+      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"News\">
+      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"Mail\"></td></tr></Table></FORM>";
 	$description = $array[$loop+1];
 	$html .= "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailsarch_html</p> <p>$mailsearch</p></div>";
   }          
