@@ -34,6 +34,7 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 			<input type="hidden" name="t" value="All" />
 			<input type="hidden" name="t" value="Doc" />
 			<input type="hidden" name="t" value="Downloads" />
+			<input type="hidden" name="t" value="Wiki" />
 			<input type="hidden" name="wf" value="574a74" />
 			<input type="text" name="q" value="" />
 			<input type="image" class="button" src="/eclipse.org-common/themes/Phoenix/images/searchbar_submit.gif" alt="Submit" onclick="this.submit();" />
