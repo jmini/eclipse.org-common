@@ -204,9 +204,9 @@ class Item {
  */
 
 /*
- * The XmlHandler class is the focal point of the SAX parser callbacks.
- * It keeps track of a stack of element handlers. The element handlers
- * are used to handle whatever elements come in.
+ * The RssFileHandler represents the file being parsed. It does
+ * only one thing: provides a handler for the contents of the
+ * the file.
  */
 class RssFileHandler extends XmlFileHandler {
 	var $feed;
@@ -259,7 +259,7 @@ class RssHandler extends XmlElementHandler {
 	}
 	
 	/*
-	 * This method handles the <rss>...</rss> element.
+	 * This method handles the <channel>...</channel> element.
 	 */
 	function & get_channel_handler($attributes) {
 		return new ChannelHandler();
@@ -307,6 +307,9 @@ class ChannelHandler extends XmlElementHandler {
 		$this->channel->add_item($handler->item);
 	}
 	
+	/*
+	 * This method handles the <image>...</image> element.
+	 */
 	function & get_image_handler($attributes) {
 		return new ImageHandler();
 	}
@@ -355,7 +358,6 @@ class ItemHandler extends XmlElementHandler {
 			$this->item->pubDate = strtotime($value);
 		}
 	}
-
 }
 
 class ImageHandler extends XmlElementHandler {
