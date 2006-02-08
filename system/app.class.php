@@ -487,6 +487,10 @@ class App {
 					return "";
 				}
         	}
+        }
+        
+        function usePolls() {
+        	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
         }	
 
 }

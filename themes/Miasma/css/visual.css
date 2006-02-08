@@ -194,3 +194,16 @@ a:active { color: #666; }
 #footernav a:hover, #footernav a:active {
 	color: #fff;
 }
+
+.poll_start {
+	background-image: url(/eclipse.org-common/themes/Phoenix/images/poll_start.jpg);
+	background-repeat: no-repeat;
+}
+.poll_bar {
+	background-image: url(/eclipse.org-common/themes/Phoenix/images/poll_bar.jpg);
+	background-repeat: repeat-x;
+}
+.poll_end {
+	background-image: url(/eclipse.org-common/themes/Phoenix/images/poll_end.jpg);
+	background-repeat: no-repeat;
+}
