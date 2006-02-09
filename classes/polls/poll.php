@@ -1,6 +1,5 @@
 <?php
-require_once("/home/data/users/droy/workspace/ArchivedStuff/drops/dbconnection_polls_rw.class.php");
-#require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_polls_rw.class.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_polls_rw.class.php");
 
 #*****************************************************************************
 #
