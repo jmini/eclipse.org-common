@@ -1,6 +1,6 @@
 <?php
-
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_polls_rw.class.php");
+require_once("/home/data/users/droy/workspace/ArchivedStuff/drops/dbconnection_polls_rw.class.php");
+#require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_polls_rw.class.php");
 
 #*****************************************************************************
 #
@@ -316,10 +316,7 @@ class Poll {
 			
 			$this->selectPollCounts();
 		
-			$rValue = "<p><b>Results: " . $this->poll_title . "</b><br />";
-			
-			
-			$rValue .= "<table width=\"97%\" align=\"right\" cellpadding=\"0\" cellspacing=\"0\">";
+			$rValue = "<p><b>Results: " . $this->poll_title . "</b></p>";
 			
 			for($i = 0; $i < count($this->poll_options); $i++) {
 				$PollOption = $this->poll_options[$i];
@@ -328,19 +325,20 @@ class Poll {
 				
 				if($this->total_votes > 0) {
 					$thisPercent = round($PollOption->answer_count / $this->total_votes * 100);
-				}
-				
-				$rValue .= "<tr><td width=\"100%\">" . $PollOption->option_text . ": " . $thisPercent . " %</td></tr>";
-				$rValue .= "<tr><td width=\"100%\">";
+				}				
+				$rValue .= $PollOption->option_text . ": " . $thisPercent . " %<br />";
 				
 				if($thisPercent > 0 && $this->show_graph) {
-					$rValue .= "<table height=\"9\" cellpadding=\"0\" cellspacing=\"0\"><td class=\"poll_start\" width=\"3\"></td><td width=\"$thisPercent\" class=\"poll_bar\"></td><td width=\"3\" class=\"poll_end\" style=\"font-size: 2pt;\">&nbsp;</td></tr></table>";
+					$rValue .= "<table height=\"9\" cellpadding=\"0\" cellspacing=\"0\"><td class=\"poll_start\" width=\"3\"></td><td width=\"$thisPercent\" class=\"poll_bar\"></td><td width=\"3\" class=\"poll_end\" style=\"font-size: 2pt;\">&nbsp;</td></tr></table><br />";
 				}
-				$rValue .= "<br /></td></tr>";
+				else {
+					$rValue .= "<br />";
+				}
+
 			}
 			
 			
-			$rValue .= "</table><br /><b>Total votes: </b>" . $this->total_votes . "</p>";
+			$rValue .= "<p><b>Total votes: </b>" . $this->total_votes . "</p>";
 		}
 
 		return $rValue;
