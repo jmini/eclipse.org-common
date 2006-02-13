@@ -11,7 +11,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td align="left" width="25%" class="small">
-					Eclipse Foundation, Inc.
+					Copyright 2001-2006 Eclipse Foundation, Inc.
 				</td>
 				<td align="center" width="50%" class="small">
 					<a href="/">Home</a> | <a href="http://www.eclipse.org">Eclipse Home</a>
