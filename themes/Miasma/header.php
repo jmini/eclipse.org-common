@@ -6,6 +6,7 @@
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Miasma/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Miasma/css/layout.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 

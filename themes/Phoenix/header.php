@@ -7,6 +7,7 @@
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/layout.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 <script type="text/javascript">
 
