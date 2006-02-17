@@ -95,7 +95,7 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 		
 		// Add the RSS image on the right
 		if ($rss_url) {
-			$html .= "<a href=\"$rss_url\"><img src=\"/images/rss.gif\" align=\"right\" alt=\"More...\" /></a>";
+			$html .= "<a href=\"$rss_url\"><img src=\"/images/rss.gif\" align=\"right\" title=\"RSS Feed\" alt=\"[RSS]\" /></a>";
 		}
 		
 		// Add the title of the channel 
@@ -103,7 +103,7 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 		// If we're displaying short format, provide a link to
 		// show news in long format.
 		if ($more_url)
-			$html .= "&nbsp;<a href=\"$more_url\"><img src=\"/images/more.gif\" title=\"More...\" alt=\"More...\" /></a>";
+			$html .= "&nbsp;<a href=\"$more_url\"><img src=\"/images/more.gif\" title=\"More...\" alt=\"[More]\" /></a>";
 
 		$html .= "</h3>";
 		
@@ -119,7 +119,8 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 			// If the pubDate was not specified correctly or was not
 			// specified at all, don't try to print it.
 			if ($item->pubDate > 0) {
-				$date = date("d&#8209;m&#8209;Y", $item->pubDate);
+				$date = date("M d, Y", $item->pubDate);
+				$date = str_replace(" ", "&nbsp;", $date);
 				$html .= " posted&nbsp;$date";
 			}
 			
