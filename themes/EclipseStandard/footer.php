@@ -14,7 +14,8 @@
 				<td class="menu_separator" width="1"><img src="/eclispe.org-common/themes/EclipseStandard/images/spacer.gif" height="1" width="1" border="0" /></td>
 				<td nowrap="true">Terms of use</td>
 				<td width="100%"></td>
-				<td nowrap="true">Copyright &copy;2001-2006 Eclipse Foundation, Inc. All Rights Reserved.</td>
+				<td nowrap="true">Copyright &copy; <?=date("Y");?> The Eclipse Foundation. All Rights
+Reserved</td>
 			</tr>
 		</table>
 

@@ -18,7 +18,8 @@
 					</h5>
 				</td>
 				<td align="right" width="40%" class="small">
-					<h5>Copyright &copy 2001-2006 Eclipse Foundation, Inc.</h5>
+					<h5>Copyright &copy; <?=date("Y");?> The Eclipse Foundation. All Rights
+Reserved.</h5>
   				</td>
 			</tr>
 		</table>
