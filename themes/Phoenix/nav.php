@@ -1,50 +1,34 @@
 <div id="leftcol">
+<ul id="leftnav">
 <?php
     $level = 0;
 	for($i = 0; $i < $Nav->getLinkCount(); $i++) {
 		$Link = $Nav->getLinkAt($i);
 		$newlevel = $Link->getLevel();
-		if( $level < $newlevel ) {
-			if( $level == 0 ) {
-				?><ul id="leftnav">
-<?php
-			} else {
-				?><ul>
-<?php
-			}
-			$level++;
-		} elseif( $level > $newlevel ) {
-			while( $level > $newlevel ) {
-				?></li></ul><?php
-				$level--;
-			}
-			?> 
-<?= substr("                  ", 0, $level * 2) ?></li>
-<?php
-		} else {
-			?></li>
-<?php
-		}
 		if( $Link->getURL() == "" ) {
 			if($Link->getTarget() == "__SEPARATOR") {
-				?>
-<?= substr("                  ", 0, $level * 2) ?><li class="separator"><a class="separator"><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a><?php
+			   
+			   ?><li class="separator"><a class="separator"><?php
+			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
+			   ?><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li>
+			   <?php
 			} else {
-				?>
-<?= substr("                  ", 0, $level * 2) ?><li><a class="nolink" href="#"><?= $Link->getText() ?></a><?php
+				?><li><a class="nolink" href="#"><?php
+			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
+			   ?><?= $Link->getText() ?></a></li>
+			   <?php
 			}
 		} else {
 			if($Link->getTarget() == "__SEPARATOR") {
-				?>
-<?= substr("                  ", 0, $level * 2) ?><li class="separator"><a class="separator" href="<?= $Link->getURL() ?>"><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a><?php
+				?><li class="separator"><a class="separator" href="<?= $Link->getURL() ?>"><?php
+			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
+			   ?><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li><?php
 			} else {
-				?>
-<?= substr("                  ", 0, $level * 2) ?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a><?php
+				?><li><a href="<?= $Link->getURL() ?>"><?php
+			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
+			   ?><?= $Link->getText() ?></a></li><?php
 			}
 		}
-	}
-	for($i = $level; $i > 1; $i-- ) {
-		?></li></ul><?php
 	}
 	?> 
   </li>
