@@ -3,6 +3,7 @@ body {
 	color: #555;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: .75em;
+	background : #FFFFFF;
 }
 h1 {
 	background-image: url(/eclipse.org-common/themes/Miasma/images/h1_bg.gif);
