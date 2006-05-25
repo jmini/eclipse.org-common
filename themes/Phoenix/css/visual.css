@@ -1,18 +1,16 @@
 /* General Rules */
-body {
-	/* If You Pick One Color, Pick Them All
-	 * http://www.w3.org/QA/Tips/color */
+html {
 	background: white; color: black;
-	/* assumed default of 12pt would result in 10pt size;
-	 * assume for IE Win only as it is the only way to
-	 * keep the text scalable with it. */
-	font: 83.333%/1.4 "Arial", "Helvetica", sans-serif;
+	font: 10pt sans-serif;
+	font: message-box;
 }
-html > body {
-	/* for the other browsers just set the desired size;
-	 * use 'pt' and not 'px' units as they are more likely
-	 * to scale with different dpi settings. */
-	font-size: 10pt;
+body {
+	/* IE and Opera bugs force those to be split
+	 * in a second rule and applied to a child
+	 * element of the one having 'font: <systemfont>' applied. */
+	font-weight: normal;
+	font-style: normal;
+	line-height: 1.4;
 }
 h1 {
 	color: #336;
