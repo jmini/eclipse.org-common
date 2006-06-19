@@ -9,21 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Blue/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
-<script type="text/javascript">
-
-sfHover = function() {
-	var sfEls = document.getElementById("leftnav").getElementsByTagName("LI");
-	for (var i=0; i<sfEls.length; i++) {
-		sfEls[i].onmouseover=function() {
-			this.className+=" sfhover";
-		}
-		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-		}
-	}
-}
-if (window.attachEvent) window.attachEvent("onload", sfHover);
-</script>
 </head>
 <body>
 <div id="header"> <a href="http://www.eclipse.org/"><img src="/eclipse.org-common/themes/Blue/images/header_logo.gif" alt="Eclipse Logo" class="logo" border="0" height="68" /></a> 
