@@ -32,8 +32,7 @@
 			}
 		}
 	}
-	?> 
-  </li>
+	?>
   <li style="background-image: url(/eclipse.org-common/themes/Phoenix/images/leftnav_fade.jpg); background-repeat: repeat-x; border-style: none;">
 			<br /><br /><br /><br /><br />
   </li>
