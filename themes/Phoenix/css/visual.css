@@ -24,7 +24,7 @@ h5 {
 	color: #003366;
 	font-size: 1.4em;
 }
-a { text-decoration: none; }
+
 a:link { color: #636; }
 a:visited { color: #636; }
 a:hover { color: #666; }
@@ -188,7 +188,7 @@ pre {
 
 /* Main Content Area Rules */
 #maincontent a {
-	font-weight: bold;
+	font-weight: normal;
 }
 
 /* Middle Column Rules */
