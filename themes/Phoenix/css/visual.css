@@ -1,8 +1,10 @@
 /* General Rules */
 body {
  	background : #FFFFFF;
-  	font-family: sans-serif, helvetica, arial;
-	font-size: .8em;
+  	/* font-family: sans-serif, helvetica, arial;  */
+  	font-family: verdana,arial,sans-serif; 
+	/*  font-size: .8em;  */
+	font-size: 10pt;
 }
 body {
 	font-weight: normal;
@@ -10,32 +12,38 @@ body {
 }
 h1 {
 	color: #336;
-	font-size: 1.5em;
+	/* font-size: 1.5em;  */
+	font-size: 150%;
 }
 h2 {
 	color: #000;
-	font-size: 1.4em;
+	/* font-size: 1.4em;   */
+	font-size: 125%;
 }
 h4 {
 	color: #336;
-	font-size: 1em;
+	/* font-size: 1em;  */
 }
 h5 {
 	color: #003366;
-	font-size: 1.4em;
+	/* font-size: 1.4em;  */
+	font-size: 125%;
 }
 
+a { font-weight: bold; text-decoration: underline; }
 a:link { color: #636; }
-a:visited { color: #636; }
-a:hover { color: #666; }
-a:active { color: #666; }
+a:visited { color: #336; }
+a:hover,
+a:active { color: #636; }
 
-code {
+/* code {
 	font-size: 100%;
 }
 pre {
 	font-size: 100%;
-}
+}  
+*/
+
 /* Header Rules */
 #header {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/header_bg.gif);
@@ -52,11 +60,13 @@ pre {
 	border-color: #56548D;
 	border-style: solid;
 	color: #333333;
-	font-size: 0.9em;
+	/* font-size: 0.9em;  */
+	font-size: 90%;
 }
 #headernav {
-	font-size: 0.8em;
+	/* font-size: 0.9em;  */
 }
+
 #headernav li {
 	border-color: #ccc;
 	border-style: solid;
@@ -79,6 +89,7 @@ pre {
 	border-color: #7A79A7;
 	border-style: solid;
 }
+
 #leftnav a, 
 #leftnav a:link, 
 #leftnav a:visited, 
@@ -89,15 +100,18 @@ pre {
 	background-position: 3% 50%;
 	background-repeat: no-repeat;
 	color: #fff;
-	font-size: 0.9em;
+	/*  font-size: 0.9em;  */
 	text-decoration: none;
+	font-weight: normal;
 }
+
 #leftnav a:hover, 
 #leftnav a:active {
 	background-color: #8583B2;
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_hover.gif);
 	color: #292556;
 }
+
 #leftnav a.nolink, 
 #leftnav a.nolink:link, 
 #leftnav a.nolink:visited, 
@@ -108,7 +122,7 @@ pre {
 	background-position: 3% 50%;
 	background-repeat: no-repeat;
 	color: #999999;
-	font-size: 0.9em;
+	/* font-size: 0.9em;   */
 	text-decoration: none;
 }
 
@@ -117,6 +131,7 @@ pre {
 	background-color: #7A79A7;
 	border-style: solid;
 }
+
 #leftnav a.separator, 
 #leftnav a.separator:link, 
 #leftnav a.separator:visited, 
@@ -125,7 +140,7 @@ pre {
 	background-color: #7A79A7;
 	background-image: none;
 	color: #fff;
-	font-size: 0.9em;
+	/*   font-size: 0.9em;   */
 	text-decoration: none;
 }
 
@@ -134,7 +149,7 @@ pre {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabbg.gif);
 	background-repeat: repeat-x;
 	color: #999;
-	font-size: 0.9em;
+	/*  font-size: 0.9em;  */
 }
 
 #topnav li {
@@ -142,18 +157,22 @@ pre {
 	background-repeat: repeat-x;
 	list-style: none;
 }
+
 #topnav li.tabstart {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabstart_first.gif);
 	background-repeat: no-repeat;
 }
+
 #topnav li.tabstartselected {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabstart_selected_inline.gif);
 	background-repeat: no-repeat;
 }
+
 #topnav li.tabseparator {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabseparator.gif);
 	background-repeat: no-repeat;
 }
+
 #topnav li.tabseparatorselected {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabseparator_selected.gif);
 	background-repeat: no-repeat;
@@ -187,8 +206,8 @@ pre {
 
 
 /* Main Content Area Rules */
-#maincontent a {
-	font-weight: normal;
+#midcolumn a {
+	font-weight: bold;
 }
 
 /* Middle Column Rules */
@@ -196,22 +215,28 @@ pre {
 	margin: 10px 0 10px 25px;
 	list-style-image: url(/eclipse.org-common/themes/Phoenix/images/arrow.gif);
 }
+
 #midcolumn ul {
 	list-style-image: url(/eclipse.org-common/themes/Phoenix/images/arrow.gif);
 }
+
 .homeitem {
 	border-color: #669;
 	border-style: solid;
-	font-size: 0.9em;
+	/* font-size: 0.9em;  */
 }
+
 .homeitem h3 {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/header_bg.gif);
 	background-position: top left;
 	background-repeat: repeat-x;
 	background-color: #669;
 	color: #fff;
-	font-size: 1.1em;
+	/*  font-size: 1.1em;  */
+	font-size: 110%;
+	
 }
+
 .homeitem li {
 	list-style-image: url(/eclipse.org-common/themes/Phoenix/images/arrow.gif);
 	border-style: dashed;
@@ -222,15 +247,17 @@ pre {
 .homeitem3col {
 	border-color: #669;
 	border-style: solid;
-	font-size: 0.9em;
+	/* font-size: 0.9em;  */
 }
+
 .homeitem3col h3 {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/header_bg.gif);
 	background-position: top left;
 	background-repeat: repeat-x;
 	background-color: #669;
 	color: #fff;
-	font-size: 1.1em;
+	/* font-size: 1.1em;  */
+	font-size: 110%;
 }
 .homeitem3col li {
 	list-style-image: url(/eclipse.org-common/themes/Phoenix/images/arrow.gif);
@@ -252,17 +279,21 @@ li.nodash {
 	border-color: #333;
 	color: #000;
 	border-style: dotted;
-	font-size: 0.8em;
+	/* font-size: 0.9em;  */
+	font-size: 90%;
 }
+
 .sideitem h6 {
 	background-color: #ccc;
 	color: #333;
-	font-size: 1.1em;
+	font-size: 110%;
 	font-weight: bold;
 }
+
 .sideitem ul {
 	list-style-image: url(/eclipse.org-common/themes/Phoenix/images/bullet.gif);
 }
+
 .sideitem li {
 }
 
@@ -277,16 +308,20 @@ li.nodash {
 	font-size: 0.9em;
 	text-align: right;
 }
+
 #footernav {
 	list-style: none;
 }
+
 #footernav li {
 	border-color: #ccc;
 	border-style: solid;
 }
+
 #footernav a, #footernav a:link, #footernav a:visited {
 	color: #ccc;
 }
+
 #footernav a:hover, #footernav a:active {
 	color: #fff;
 }
