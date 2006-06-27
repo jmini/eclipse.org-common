@@ -30,11 +30,11 @@ h5 {
 	font-size: 125%;
 }
 
-a { font-weight: bold; text-decoration: underline; }
+a { font-weight: bold; text-decoration: none; }
 a:link { color: #636; }
 a:visited { color: #336; }
 a:hover,
-a:active { color: #636; }
+a:active { color: #636; text-decoration: underline; }
 
 /* code {
 	font-size: 100%;
