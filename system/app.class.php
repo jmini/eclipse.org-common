@@ -74,11 +74,47 @@ class App {
 	}
 	
 	function getUserLanguage() {
-		# for later use
-		# we'll grab the language from the PHP session or from the browser
+		/* @return: String
+		 * 
+		 * Check the browser's default language and return
+		 * 
+		 * 2006-06-28: droy
+		 * 
+		 */
 		
-		return "en";
+		$validLanguages = array('en', 'de', 'fr');
+		$defaultLanguage = "en";
+		
+		# get the default browser language (first one reported)
+		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		
+		if(array_search($language, $validLanguages)) {
+				return $language;
+		}
+		else {
+			return $defaultLanguage;
+		}
 	}
+
+	function getLocalizedContentFilename() {
+		/* @return: String
+		 * 
+		 * return the content/xx_filename.php filename, according to availability of the file
+		 * 
+		 * 2006-06-28: droy
+		 * 
+		 */
+		
+		$language = $this->getUserLanguage();
+		$filename = "content/" . $language . "_" . $this->getScriptName();
+		
+		if(!file_exists($filename)) {
+			$filename = "content/en_" . $this->getScriptName();
+		}
+		
+		return $filename;
+	}
+
 	
 	function getScriptName() {
 		# returns only the filename portion of a script
