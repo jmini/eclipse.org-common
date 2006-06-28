@@ -79,12 +79,12 @@ pre {
 }
 
 .smallText {
-	font-size:12px !important;
+	font-size:small !important;
 	color:#ccc;
 }
 
 .largeText {
-	font-size:16px !important;
+	font-size:medium !important;
 	color:#ccc;	
 }
 
