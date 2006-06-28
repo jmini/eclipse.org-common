@@ -29,7 +29,8 @@
 		</form>
 	</div>
 	<ul id="headernav">
-		<li class="first"><a href="/org/foundation/contact.php">Contact</a></li>
+		<li class="first"><a class="smallText" href="/eclipse.org-common/themes/Phoenix/switcher.php?set=small">A</a> <a class="largeText" href="/eclipse.org-common/themes/Phoenix/switcher.php?set=large">A</span></li>
+		<li><a href="/org/foundation/contact.php">Contact</a></li>
 		<li><a href="/legal/">Legal</a></li>
 	</ul>
 </div>
