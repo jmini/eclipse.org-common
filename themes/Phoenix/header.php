@@ -5,11 +5,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="author" content="<?= $pageAuthor ?>" />
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
-	<? $sitestyle = $_COOKIE['sitestyle']; ?>
-	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/<?php echo (!$sitestyle)?'small':$sitestyle ?>.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/small.css" title="small" />
+	<link rel="alternate stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/large.css" title="large" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
+	<script type="text/javascript" src="/eclipse.org-common/themes/Phoenix/styleswitcher.js"></script>
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 <body>
@@ -29,7 +30,7 @@
 		</form>
 	</div>
 	<ul id="headernav">
-		<li class="first"><a class="smallText" href="/eclipse.org-common/themes/Phoenix/switcher.php?set=small">A</a> <a class="largeText" href="/eclipse.org-common/themes/Phoenix/switcher.php?set=large">A</span></li>
+		<li class="first"><a class="smallText" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
 		<li><a href="/org/foundation/contact.php">Contact</a></li>
 		<li><a href="/legal/">Legal</a></li>
 	</ul>
