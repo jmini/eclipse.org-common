@@ -5,6 +5,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="author" content="<?= $pageAuthor ?>" />
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
+	<? $sitestyle = $_COOKIE['sitestyle']; ?>
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/<?php echo (!$sitestyle)?'small':$sitestyle ?>.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
