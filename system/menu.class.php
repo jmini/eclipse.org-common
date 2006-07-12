@@ -45,9 +45,9 @@ class Menu {
 		$MenuItem = new MenuItem($MenuText, "/downloads/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
-		# $MenuText = "Reference & Support";
-		# $MenuItem = new MenuItem($MenuText, "#", "_self", 0);
-		# $this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
+		$MenuText = "Resources";
+		$MenuItem = new MenuItem($MenuText, "/resources/", "_self", 0);
+		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Projects";
 		$MenuItem = new MenuItem($MenuText, "/projects/", "_self", 0);
