@@ -1,3 +1,4 @@
+</div>
 <div id="footer">
 	<ul id="footernav">
 		<li class="first"><a href="/">Home</a></li>

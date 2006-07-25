@@ -30,7 +30,7 @@
 		</form>
 	</div>
 	<ul id="headernav">
-		<li class="first"><a class="smallText" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
+		<li class="first"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
 		<li><a href="/org/foundation/contact.php">Contact</a></li>
 		<li><a href="/legal/">Legal</a></li>
 	</ul>
