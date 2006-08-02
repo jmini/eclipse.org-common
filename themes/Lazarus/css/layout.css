@@ -1,0 +1,267 @@
+/* General Rules */
+body {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+img { border-width: 0; }
+ul, li { margin: 0; padding: 0; }
+
+.clearer {
+	visibility: hidden;
+	clear: both;
+}
+
+h1 {
+	padding-left: 20px;
+	position: relative;
+}
+
+/* Header Rules */
+#header {
+	height: 75px;
+	position: relative;
+	width: 100%;
+}
+#header img {
+	display: block;
+}
+#headerlogo {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#searchbar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	float: right;
+	padding-right: 10px;
+}
+#searchbar form {
+	margin: 0px 0px 0 0;
+}
+#searchbar input {
+	padding: 0;
+	vertical-align: middle;
+}
+#searchbar input.button {
+	vertical-align: middle;
+}
+#headernav {
+	top: 15px;
+	left: 220px;
+	position: absolute;
+}
+#headernav li {
+	border-width: 0 0 0 1px;
+	float: left;
+	padding: 0 6px;
+}
+#headernav li.first {
+	border-width: 0;
+}
+
+/* Top Navigation Rules */
+#topnav {
+	top: 0px;
+	height: 18px;
+	left: 230px;
+	padding-left: 1px;
+	position: absolute;
+}
+#topnav li {
+	float: left;
+	height: 18px;
+	padding: 0 1px 0 0;
+}
+
+#topnav a {
+	display: block;
+	padding: 0 7px;
+}
+
+#topnavsep {
+	border-width: 1px;
+	height: 0px;
+	margin-left: 0px;
+	width: 100%;
+	line-height: 0;
+	font-size: 0;
+}
+
+#branding {
+	top: 35px;
+	position: absolute;
+	margin: 0 auto;
+	width: 40%;
+	left: 30%;
+}
+
+/* Left Column Rules */
+#leftcol {
+	float: left;
+	width: 140px;
+}
+#leftnav {
+	margin-bottom: 30px;
+	background color: black;
+}
+
+#leftnav li.selected {
+	padding: 8px 0 8px 5px;
+}
+#leftnav a.selected {
+	padding: 0px 0 0px 5px;
+}
+
+#leftnav, #leftnav ul { /* all lists */
+		padding: 0;
+		margin: 0;
+		list-style: none;
+/*		float : left; */
+		width : 11em;
+		margin-bottom: 30px;
+	}
+#leftnav li { /* all list items */
+		position : relative;
+		border-width: 0 0 1px 0;
+		float : left;
+		width: 155px;
+}
+	
+#leftnav li a {
+		width: 140px; 
+		w\idth : 140px;
+		display : block;
+		text-decoration : none;
+		list-style-type: none;
+		padding: 6px 0 6px 15px;
+}
+
+#leftnav li a:hover {
+		/* background-color : black; */
+		list-style-type: none;
+}
+	
+#leftnav li:hover ul ul, #leftnav li:hover ul ul ul, #leftnav li.sfhover ul ul, #leftnav li.sfhover ul ul ul {
+}
+	
+#leftnav li:hover ul, #leftnav li li:hover ul, #leftnav li li li:hover ul, #leftnav li.sfhover ul, #leftnav li li.sfhover ul, #leftnav li li li.sfhover ul { /* lists nested under hovered list items */
+		left: auto;
+		list-style-type: none;
+}
+
+/* Main Content Rules */
+#midcolumn {
+	float: left;
+	margin-left: 2%;
+	margin-top: 20px;
+	width: 60%;
+}
+.midlist {
+	margin: 10px 0 10px 25px;
+}
+/*  #maincontent .colset {
+	border-top: 1px dotted #000;
+}
+#maincontent .colset .col1, #maincontent .colset .col2 {
+	display: inline;
+	float: left;
+	margin: 0 1%;
+	width: 47%;
+}  */
+
+.homeitem {
+/*	position: relative; */
+	border-width: 0 1px;
+	float: left;
+	margin: 10px 0 10px 1%;
+	width: 48%;
+}
+.homeitem h3 {
+	padding: 3px;
+	margin: 0;
+}
+.homeitem ul {
+	margin: 0px 20px;
+
+}
+.homeitem li {
+	margin: 5px 5px;
+	padding: 2px 5px 6px 0px;
+}
+
+/* NEWS rules */
+.homeitem3col {
+	border-width: 0 1px;
+	float: left;
+	/* margin: 10px 3% 10px 0;  */
+	margin: 10px 3% 10px 1%;
+	width: 97%;
+}
+.homeitem3col h3 {
+	padding: 3px;
+	margin: 0;
+}
+.homeitem3col h4 {
+	margin: 3px;
+}
+.homeitem3col ul {
+	margin: 0px 20px;
+}
+.homeitem3col li {
+	margin: 5px 5px;
+	padding: 2px 5px 6px 0px;
+}
+
+
+/* Right Column Rules */
+#rightcolumn {
+	float: right;
+	width: 17%;
+	margin-top: 20px;
+}
+#rightcolumn .sideitem {
+	margin: 5px 1% 20px 0;
+}
+#rightcolumn .sideitem h6 {
+	margin: 0 0 8px 0;
+	padding: 0 0 0 10px;
+}
+#rightcolumn .sideitem li {
+	list-style: none;
+}
+body.threecol #rightcolumn {
+	display: block;
+}
+
+/* Footer Rules */
+#footer {
+	border-width: 1px 0 0 0;
+	clear: both;
+	height: 18px;
+	position: relative;
+}
+#footer p {
+	margin: 0 20px 0 0;
+	padding: 0;
+}
+#footernav {
+	float: left;
+	margin: 4px 0 4px 6px;
+	padding: 0;
+}
+#footernav li {
+	border-width: 0 0 0 1px;
+	float: left;
+	padding: 0 10px;
+}
+#footernav li.first {
+	border-width: 0;
+}
+
+.bold {
+	font-weight: bold;
+}
