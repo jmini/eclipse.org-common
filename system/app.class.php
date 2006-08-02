@@ -28,7 +28,7 @@ class App {
 	
 	var $ExtraHtmlHeaders   = "";
 	
-	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial");
+	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial","Lazarus");
 	
 	function getAppVersion() {
 		return $this->APPVERSION;

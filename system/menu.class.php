@@ -17,6 +17,15 @@ class Menu {
 	
 	var $MenuItemList = array();
 	
+	var $projectBranding = "";
+
+	function getProjectBranding() {
+	  return $this->projectBranding;
+	}
+
+	function setProjectBranding($_projectBranding) {
+	  $this->projectBranding = $_projectBranding;
+	}
 	
 	function getMenuItemList() {
 		return $this->MenuItemList;
