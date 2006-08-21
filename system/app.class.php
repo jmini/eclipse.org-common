@@ -529,6 +529,83 @@ class App {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
         }	
 
+        /*
+         * This function applies standard formatting to a date. 
+         * 
+         * The first parameter is either a string or a number representing a date. 
+         * If it's a string, it must be in a format that is parseable by the 
+         * strtotime() function. If it is a number, it must be an integer representing 
+         * a UNIX timestamp (number of seconds since January 1 1970 00:00:00 GMT) 
+         * which, conveniently, is the output of the strtotime() function. 
+         * 
+         * The second (optional) parameter is the format for the result. This must
+         * one of 'short', or 'long'.
+         */
+        function getFormattedDate($date, $format = 'long') {
+        	if (is_string($date)) $date = strtotime($date);
+        	switch ($format) {
+        		case 'long' : return date("F j, Y", $date);
+        		case 'short' : return date("d M y", $date);
+        	}
+        }
+        
+        /*
+         * This function applies standard formatting to a date range. 
+         * 
+         * See the comments for getFormattedDate($date, $format) for information
+         * concerning what's expected in the parameters of this method).
+         */
+        function getFormattedDateRange($start_date, $end_date, $format) {
+        	if (is_string($start_date)) $start_date = strtotime($start_date);
+        	if (is_string($end_date)) $end_date = strtotime($end_date);
+        	switch ($format) {
+        		case 'long' : 
+        			if ($this->same_year($start_date, $end_date)) {
+						if ($this->same_month($start_date, $end_date)) {
+							return date("F", $start_date) 
+								. date(" d", $start_date)
+								. date("-d, Y", $end_date);
+						} else {
+							return date("F d", $start_date)
+								. date("-F d, Y", $end_date);
+						}
+					} else {
+						return date("F d, Y", $start_date)
+							. date("-F d, Y", $end_date);
+					}
+        		case 'short' :         	
+        			if ($this->same_year($start_date, $end_date)) {
+						if ($this->same_month($start_date, $end_date)) {
+							return date("d", $start_date) 
+								. date ("-d", $end_date)
+								. date(" M", $start_date)
+								. date(" y", $end_date);
+						} else {
+							return date("d M", $start_date)
+								. date("-d M y", $end_date);
+						}
+					} else {
+						return date("d M y", $start_date)
+							. date("-d M y", $end_date);
+					}
+        	}
+        }       
+
+        /*
+         * This method answers true if the two provided values represent
+         * dates that occur in the same year.
+         */
+		function same_year($a, $b) {
+			return date("Y", $a) == date("Y", $b);
+		}
+		
+        /*
+         * This method answers true if the two provided values represent
+         * dates that occur in the same month.
+         */
+		function same_month($a, $b) {
+			return date("F", $a) == date("F", $b);
+		}
 }
 
 ?>
