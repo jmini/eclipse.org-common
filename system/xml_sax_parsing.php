@@ -178,6 +178,10 @@ class SimpleTextHandler extends XmlElementHandler {
 	function data($data) {
 		$this->text .= $data;
 	}
+	
+	function end($name) {
+		$this->text = html_entity_decode($this->text);
+	}
 }
 
 class SimplePropertyHandler extends SimpleTextHandler {
@@ -190,6 +194,7 @@ class SimplePropertyHandler extends SimpleTextHandler {
 	}
 
 	function end($name) {
+		parent::end($name);
 		$this->set_property_value($this->text);
 	}
 
