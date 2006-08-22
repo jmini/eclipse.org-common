@@ -220,11 +220,12 @@ pre {
 /* Right Column Rules */
 .sideitem {
 	border-color: #333;
-
+	border-width: 1px 1px;
 	color: #000;
 	border-style: dotted;
 	font-size: 0.8em;
 }
+
 .sideitem h6 {
 	background-color: #ccc;
 	color: #333;
