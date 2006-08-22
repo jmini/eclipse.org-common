@@ -30,7 +30,7 @@ class Nav {
 	function Nav() {
 		
 
-		$Link = new Link("Committers", "http://dev.eclipse.org/", "_self", 1);
+		$Link = new Link("Committers", "http://wiki.eclipse.org/index.php/Development_Resources", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
 		$Link = new Link("Newsgroups", "/newsgroups/", "_self", 1);
