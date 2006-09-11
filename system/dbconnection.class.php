@@ -15,9 +15,9 @@ class DBConnection {
 		#*****************************************************************************
 
         var $MysqlUrl           = "localhost";
-        var $MysqlUser          = "phoenix";
-        var $MysqlPassword      = "fireB!rd";
-        var $MysqlDatabase      = "pillars";
+        var $MysqlUser          = "";
+        var $MysqlPassword      = "";
+        var $MysqlDatabase      = "";
 
         function connect()
         {
