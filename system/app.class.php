@@ -306,8 +306,12 @@ class App {
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
 
 		include($this->getHeaderPath($theme));
+		if ($Menu != NULL)
 		include($this->getMenuPath($theme));
+		
+		if ($Nav != NULL)
 		include($this->getNavPath($theme));
+		
 		echo $html;
 		include($this->getFooterPath($theme));
 	}
