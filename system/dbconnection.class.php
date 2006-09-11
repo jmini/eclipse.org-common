@@ -14,10 +14,10 @@ class DBConnection {
         #
 		#*****************************************************************************
 
-        var $MysqlUrl           = "localhost";
-        var $MysqlUser          = "";
-        var $MysqlPassword      = "";
-        var $MysqlDatabase      = "";
+        var $MysqlUrl           = null;
+        var $MysqlUser          = "root";
+        var $MysqlPassword      = null;
+        var $MysqlDatabase      = "resources";
 
         function connect()
         {
