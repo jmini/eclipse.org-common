@@ -1,6 +1,6 @@
 <div id="topnav">
 	<ul>
-		<li><a>Eclipse.org navigation</a></li>
+		<li>&nbsp;&nbsp;&nbsp;</li>
 <?php
 	$nextclass = "";
 	

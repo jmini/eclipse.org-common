@@ -50,6 +50,11 @@ class Menu {
 		$MenuItem = new MenuItem($MenuText, "/membership/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
+		$MenuText = "Committers";
+		$MenuItem = new MenuItem($MenuText, "http://wiki.eclipse.org/index.php/Development_Resources", "_self", 0);
+		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
+		
+
 		$MenuText = "Downloads";
 		$MenuItem = new MenuItem($MenuText, "/downloads/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
