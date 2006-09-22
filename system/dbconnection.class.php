@@ -14,10 +14,10 @@ class DBConnection {
         #
 		#*****************************************************************************
 
-        var $MysqlUrl           = null;
-        var $MysqlUser          = "root";
-        var $MysqlPassword      = null;
-        var $MysqlDatabase      = "resources";
+        var $MysqlUrl           = "www.eclipseplugincentral.net";
+        var $MysqlUser          = "phoenix";
+        var $MysqlPassword      = "fireB!rd";
+        var $MysqlDatabase      = "phoenix";
 
         function connect()
         {
