@@ -1,7 +1,8 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
+//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/project.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/category.class.php");
 
@@ -23,6 +24,7 @@ class ProjectCategory {
 	var $project_id;
 	var $category_id;
 	var $description;
+	var $long_description;
 	var $projectObject;
 	var $categoryObject;
 
@@ -32,6 +34,7 @@ class ProjectCategory {
 		$this->project_id 		= "";
 		$this->category_id		= "";
 		$this->description 		= "";
+		$this->long_description = "";
 		$this->projectObject	= new Project();
 		$this->categoryObject	= new Category();
 	}
@@ -45,6 +48,9 @@ class ProjectCategory {
 	function getDescription() {
 		return $this->description;
 	}
+	function getLongDescription() {
+		return $this->long_description;
+	}	
 	function getProjectObject() {
 		return $this->projectObject;
 	}
@@ -62,6 +68,9 @@ class ProjectCategory {
 	function setDescription($_description) {
 		$this->description = $_description;
 	}
+	function setLongDescription($_long_description) {
+		$this->long_description = $_long_description;
+	}	
 	function setProjectObject($_Project) {
 		$this->projectObject = $_Project;
 	}
@@ -106,12 +115,14 @@ class ProjectCategory {
 		    $sql = "INSERT INTO project_categories (
 						project_id,
 						category_id,
-						description
+						description,
+						long_description
 						)
 	        		VALUES (
 					" . $App->returnQuotedString($_project_id) . ",
 					" . $App->returnQuotedString($_category_id) . ",
-					" . $App->returnQuotedString($_description) . "
+					" . $App->returnQuotedString($_description) . ",
+					" . $App->returnQuotedString($_long_description). "
 						)";
 
 

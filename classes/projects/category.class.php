@@ -17,7 +17,8 @@ class Category {
 
 	var $category_id 		= 0;
 	var $description		= "";
-	var $image_name		= "";
+	var $image_name			= "";
+	var $category_shortname 	= "";
 	
 	
 	
@@ -30,6 +31,9 @@ class Category {
 	function getImageName() {
 		return $this->image_name;
 	}
+	function getCategoryShortname() {
+		return $this->category_shortname;
+	}
 	
 	function setCategoryID($_category_id) {
 		$this->category_id = $_category_id;
@@ -39,6 +43,9 @@ class Category {
 	}
 	function setImageName($_image_name) {
 		$this->image_name = $_image_name;
+	}
+	function setCategoryShortname ($_category_shortname) {
+		$this->category_shortname = $_category_shortname;
 	}
 
 }

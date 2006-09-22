@@ -1,7 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/drops/drop.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/project.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
+//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class ProjectList {
@@ -45,7 +46,7 @@ class ProjectList {
             }
     }
 
-	function selectProjectList($_project_id, $_name, $_level, $_parent_project_id, $_description, $_order_by) {
+	function selectProjectList($_project_id, $_name, $_level, $_parent_project_id, $_description, $_order_by, $_is_project = 0) {
 		
 		$App = new App();
 	    $WHERE = " PRJ.is_active = 1";
@@ -72,6 +73,11 @@ class ProjectList {
 	            $WHERE .= " PRJ.description LIKE " . $App->returnQuotedString("%" . $_description . "%");
 	
 	    }
+	    if ($_is_project != 0)
+	    {
+	    		$WHERE = $App->addAndIfNotNull($WHERE);
+	    		$WHERE .= " PRJ.is_project = " . $_is_project;	
+	    }
 	
 	    if($WHERE != "") {
 	            $WHERE = " WHERE " . $WHERE;
@@ -97,7 +103,12 @@ class ProjectList {
 					PRJ.url_index,
 					PRJ.is_topframe,
 					PRJ.sort_order,
-					PRJ.is_active
+					PRJ.is_active,
+					PRJ.url_newsgroup,
+					PRJ.url_mailinglist,
+					PRJ.url_wiki,
+					PRJ.url_docs,
+					PRJ.is_project
 	        	FROM
 					projects AS PRJ "
 				. $WHERE
@@ -119,6 +130,11 @@ class ProjectList {
 				$Project->setIsTopframe		($myrow["is_topframe"]);
 				$Project->setSortOrder		($myrow["sort_order"]);
 				$Project->setIsActive		($myrow["is_active"]);
+				$Project->setUrlNewsgroup  ($myrow["url_newsgroup"]);
+				$Project->setUrlMailingList($myrow["url_mailinglist"]);
+				$Project->setUrlWiki  		($myrow["url_wiki"]);
+				$Project->setUrlDocs  		($myrow["url_docs"]);
+				$Project->setIsProject		($myrow["is_project"]);				
 	            $this->add($Project);
 	    }
 	    

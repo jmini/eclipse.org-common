@@ -1,6 +1,7 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectCategory.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
+//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class ProjectCategoryList {
@@ -71,12 +72,17 @@ class ProjectCategoryList {
 	    $sql = "SELECT 
 					PRC.project_id,
 					PRC.category_id, 
-					PRC.description AS ProjectCategoryDescription,
+					PRC.description AS ProjectCategoryDescription ,
+					PRC.long_description AS ProjectCategoryLongDescription,
 					PRJ.name,
 					PRJ.level,
 					PRJ.parent_project_id,
 					PRJ.description,
 					PRJ.url_download,
+					PRJ.url_newsgroup,
+					PRJ.url_mailinglist,
+					PRJ.url_wiki,
+					PRJ.url_docs,
 					PRJ.url_index,
 					PRJ.is_topframe,
 					CAT.description AS CategoryDescription,
@@ -87,7 +93,7 @@ class ProjectCategoryList {
 					INNER JOIN categories 	AS CAT ON CAT.category_id = PRC.category_id "
 				. $WHERE
 				. $_order_by;
-
+				
 	    $dbc = new DBConnection();
 	    $dbh = $dbc->connect();
 	
@@ -102,6 +108,10 @@ class ProjectCategoryList {
 	            $Project->setParentProjectID($myrow["parent_project_id"]);
 	            $Project->setDescription	($myrow["description"]);
 	    		$Project->setUrlDownload	($myrow["url_download"]);
+	    		$Project->setUrlNewsgroup   ($myrow["url_newsgroup"]);
+	    		$Project->setUrlMailingList ($myrow["url_mailinglist"]);
+	    		$Project->setUrlWiki		($myrow["url_wiki"]);
+	    		$Project->setUrlDocs		($myrow["url_docs"]);
 	    		$Project->setUrlIndex		($myrow["url_index"]);
 				$Project->setIsTopframe		($myrow["is_topframe"]);
 				
@@ -114,6 +124,7 @@ class ProjectCategoryList {
 				$ProjectCategory->setProjectID	($myrow["project_id"]);
 				$ProjectCategory->setCategoryID	($myrow["category_id"]);
 				$ProjectCategory->setDescription($myrow["ProjectCategoryDescription"]);
+				$ProjectCategory->setLongDescription($myrow["ProjectCategoryLongDescription"]);
 				$ProjectCategory->setProjectObject($Project);
 				$ProjectCategory->setCategoryObject($Category);
 				

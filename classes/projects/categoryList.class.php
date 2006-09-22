@@ -1,6 +1,7 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/category.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
+//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class CategoryList {
@@ -53,7 +54,8 @@ class CategoryList {
 	    $sql = "SELECT 
 					CAT.category_id,
 					CAT.description,
-					CAT.image_name
+					CAT.image_name,
+					CAT.category_shortname
 	        	FROM
 					categories AS CAT 
 				ORDER BY CAT.description ";
@@ -68,7 +70,8 @@ class CategoryList {
 	            $Category = new Category();
 	            $Category->setCategoryID	($myrow["category_id"]);
 	            $Category->setDescription	($myrow["description"]);
-	            $Category->setImageName	($myrow["image_name"]);
+	            $Category->setImageName		($myrow["image_name"]);
+	            $Category->setCategoryShortname ($myrow["category_shortname"]);
 	            $this->add($Category);
 	    }
 

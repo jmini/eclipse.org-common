@@ -1,6 +1,7 @@
 <?php
 
-require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php";
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
+//require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php";
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class Project {
@@ -28,6 +29,11 @@ class Project {
 	var $is_topframe		= 0;
 	var $sort_order			= 0;
 	var $is_active			= 0;
+	var $url_newsgroup      = "";
+	var $url_mailinglist	= "";
+	var $url_wiki			= "";
+	var $url_docs			= "";
+	var $is_project			= 0;
 	var $drop;
 	
 	
@@ -61,6 +67,23 @@ class Project {
 	function getIsActive() {
 		return $this->is_active;
 	}
+	function getUrlNewsgroup() {
+		return $this->url_newsgroup;	
+	}
+	function getUrlMailingList() {
+		return $this->url_mailinglist;	
+	}
+	function getUrlWiki() {
+		return $this->url_wiki;	
+	}
+	function getUrlDocs() {
+		return $this->url_docs;	
+	}	
+	function getIsProject() {
+		return $this->is_project;	
+	}	
+	
+	
 	function getDrop() {
 		return $this->drop;
 	}
@@ -98,6 +121,22 @@ class Project {
 	function setIsActive($_is_active) {
 		$this->is_active = $_is_active;
 	}
+	function setUrlNewsgroup($_url_newsgroup) {
+		$this->url_newsgroup = $_url_newsgroup;
+	}
+	function setUrlMailingList($_url_mailinglist) {
+		$this->url_mailinglist = $_url_mailinglist;
+	}
+	function setUrlWiki($_url_wiki) {
+		$this->url_wiki = $_url_wiki;
+	}
+	function setUrlDocs($_url_docs) {
+		$this->url_docs = $_url_docs;
+	}	
+	function setIsProject($_is_project) {
+		$this->is_project = $_is_project;
+	}	
+
 
 
 	function selectList($_project_id) {
@@ -122,7 +161,12 @@ class Project {
 						PRJ.url_index,
 						PRJ.is_topframe,
 						PRJ.sort_order,
-						PRJ.is_active
+						PRJ.is_active,
+						PRJ.url_newsgroup,
+						PRJ.url_mailinglist,
+						PRJ.url_wiki,
+						PRJ.url_docs,
+						PRJ.is_project
 		        	FROM
 						projects AS PRJ "
 					. $WHERE;
@@ -141,6 +185,11 @@ class Project {
 				$this->setIsTopframe	($myrow["is_topframe"]);
 				$this->setSortOrder		($myrow["sort_order"]);
 				$this->setIsActive		($myrow["is_active"]);
+				$this->setUrlNewgroup   ($myrow["url_newsgroup"]);
+				$this->setUrlMailingList($myrow["url_mailinglist"]);
+				$this->setUrlWiki  		($myrow["url_wiki"]);
+				$this->setUrlDocs  		($myrow["url_docs"]);
+				$this->setIsProject		($myrow["is_project"]);
 		    }
 		    
 		    $dbc->disconnect();
