@@ -185,7 +185,7 @@ class Project {
 				$this->setIsTopframe	($myrow["is_topframe"]);
 				$this->setSortOrder		($myrow["sort_order"]);
 				$this->setIsActive		($myrow["is_active"]);
-				$this->setUrlNewgroup   ($myrow["url_newsgroup"]);
+				$this->setUrlNewsgroup   ($myrow["url_newsgroup"]);
 				$this->setUrlMailingList($myrow["url_mailinglist"]);
 				$this->setUrlWiki  		($myrow["url_wiki"]);
 				$this->setUrlDocs  		($myrow["url_docs"]);
