@@ -285,15 +285,16 @@ li.nodash {
 
 /* Right Column Rules */
 .sideitem {
-	border-color: #333;
+	border-color: #CCC;
 	color: #000;
-	border-style: dotted;
+	border-style: solid;
 	/* font-size: 0.9em;  */
 	font-size: 90%;
 }
 
 .sideitem h6 {
 	background-color: #ccc;
+	background: url('/images/bar.jpg') -20px -20px !important;
 	color: #333;
 	font-size: 110%;
 	font-weight: bold;
