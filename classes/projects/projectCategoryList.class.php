@@ -86,6 +86,7 @@ class ProjectCategoryList {
 					PRJ.url_index,
 					PRJ.is_topframe,
 					CAT.description AS CategoryDescription,
+					CAT.category_shortname,
 					CAT.image_name
 	        	FROM
 					project_categories 		AS PRC 
@@ -118,6 +119,7 @@ class ProjectCategoryList {
 				$Category = new Category();
 				$Category->setCategoryID	($myrow["category_id"]);
 				$Category->setDescription	($myrow["CategoryDescription"]);
+				$Category->setCategoryShortname	($myrow["category_shortname"]);
 				$Category->setImageName		($myrow["image_name"]);
 				
 				$ProjectCategory = new ProjectCategory();
