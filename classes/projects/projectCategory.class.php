@@ -10,6 +10,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
+
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 //require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
@@ -132,10 +133,13 @@ class ProjectCategory {
 					" . $App->returnQuotedString($_project_id) . ",
 					" . $App->returnQuotedString($_category_id) . ",
 					" . $App->returnQuotedString($_description) . ",
-					" . $App->returnQuotedString($_long_description). "
+					" . $App->returnQuotedString($this->getLongDescription()). "
 						)";
 
-
+			# smart connection does not work here
+			if (file_exists("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php")) {
+				require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php";
+			}
 		    $dbc = new DBConnectionRW();
 		    $dbh = $dbc->connect();
 		
