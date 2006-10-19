@@ -242,22 +242,24 @@ class App {
 		return $addstring;
 	}
 
-	function str_replace_count($find,$replace,$subject,$count) {
+	function str_replace_count($find, $replace,$subject, $count) {
 		# Replaces $find with $replace in $subnect $count times only
 		
+		$nC = 0;
+		
 		$subjectnew = $subject;
-		$pos = strpos($subject,$find);
+		$pos = strpos($subject, $find);
 		if ($pos !== FALSE)   {
 			while ($pos !== FALSE) {
-				$nC = $nC + 1;
-				$temp = substr($subjectnew,$pos+strlen($find));
-				$subjectnew = substr($subjectnew,0,$pos) . $replace . $temp;
+				$nC++;
+				$temp = substr($subjectnew, $pos+strlen($find));
+				$subjectnew = substr($subjectnew, 0, $pos) . $replace . $temp;
 				if ($nC >= $count)   {
 					break;
 				}
-		        $pos = strpos($subjectnew,$find);
-			} // closes the while loop
-		} // closes the if
+		        $pos = strpos($subjectnew, $find);
+			}
+		}
 		return $subjectnew;
 	}
 
