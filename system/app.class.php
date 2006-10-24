@@ -340,6 +340,31 @@ class App {
 		return "/eclipse.org-common/themes/" . $_theme;
 		
 	}
+	
+	function getHTTPParameter($_param_name, $_method="") {
+		/** @author droy
+		 * @since version - Oct 19, 2006
+		 * @param String _param_name name of the HTTP GET/POST parameter
+		 * @param String _method GET or POST, or the empty string for POST,GET order 
+		 * @return String HTTP GET/POST parameter value, or the empty string
+		 *  
+		 * Fetch the HTTP parameter
+		 * 
+		 */
+		
+		$rValue = "";
+		$_method = strtoupper($_method);
+
+		# Always fetch the GET VALUE, override with POST unless a GET was specifically requested
+		if(isset($_GET[$_param_name])) {
+			$rValue = $_GET[$_param_name];
+		}
+		if(isset($_POST[$_param_name]) && $_method != "GET") {	
+			$rValue = $_POST[$_param_name];
+		}
+		
+		return $rValue;
+	}
 
 
 	function getClientOS() {
