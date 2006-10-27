@@ -34,7 +34,7 @@
  * to be updated.
  */
 function parse_xml_file($file_name, & $file_handler) {
-	$GLOBALS[handler] = & $file_handler;
+	$GLOBALS['handler'] = & $file_handler;
 	$file_handler->initialize();
 	
 	// Read the entire file contents in to memory.
