@@ -225,5 +225,3 @@ function & array_last(& $array) {
 }
 
 ?>
-
-
