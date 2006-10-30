@@ -11,8 +11,8 @@
  *******************************************************************************/
 ?>
 <div id="topnav">
-	<ul>
-		<li>&nbsp;&nbsp;&nbsp;</li>
+<ul>
+<li>&nbsp;&nbsp;&nbsp;</li>
 <?php
 	$nextclass = "";
 	
@@ -36,12 +36,11 @@
 		
 		
 ?>
-		<li class="<?= $startclass ?>">&#160;&#160;&#160;</li>
-		<li><a class="<?= $aclass ?>" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></li>
+<li class="<?= $startclass ?>">&#160;&#160;&#160;</li>
+<li><a class="<?= $aclass ?>" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></li>
 <?php
 	}
 ?>
-		<li class="<?= $separatorclass ?>">&#160;&#160;&#160;</li>			
-	</ul>
-</div>
+<li class="<?= $separatorclass ?>">&#160;&#160;&#160;</li>			
+</ul></div>
 <div id="topnavsep"></div>
