@@ -122,7 +122,7 @@ function MailParse( $name, &$html, $id ) {
 	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
 	$mailsearch = "<FORM name=\"$mail_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
-  			<TR><TD>Search $news_name 
+  			<TR><TD>Search $mail_name 
       			<INPUT TYPE=\"text\" NAME=\"q\" value=\"\" SIZE=\"18\" class=\"groupsearch\">
       			<INPUT TYPE=\"submit\" NAME=\"cmd\" value=\"Search\" class=\"groupsearch\">
       			<INPUT TYPE=\"hidden\" NAME=\"form\" value=\"extended\">
