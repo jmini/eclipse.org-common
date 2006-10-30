@@ -22,7 +22,7 @@
 	<div id="searchbar">
 		<img src="/eclipse.org-common/themes/Phoenix/images/searchbar_transition.gif" width="92" height="26" class="transition" alt="" />
 		<img src="/eclipse.org-common/themes/Phoenix/images/searchbar_header.gif" width="64" height="17" class="header" alt="Search" />
-		<form method="get" action="/search/search.cgi"><input type="hidden" name="t" value="All" /><input type="hidden" name="t" value="Doc" /><input type="hidden" name="t" value="Downloads" /><input type="hidden" name="t" value="Wiki" /><input type="hidden" name="wf" value="574a74" /><input type="text" name="q" value="" /><input type="image" class="button" src="/eclipse.org-common/themes/Phoenix/images/searchbar_submit.gif" alt="Submit" onclick="this.submit();" /></form>
+		<form method="get" action="/search/search.cgi"><input type="hidden" name="t" value="All" /><input type="hidden" name="t" value="Downloads" /><input type="hidden" name="t" value="Wiki" /><input type="hidden" name="wf" value="574a74" /><input type="text" name="q" value="" /><input type="image" class="button" src="/eclipse.org-common/themes/Phoenix/images/searchbar_submit.gif" alt="Submit" onclick="this.submit();" /></form>
 	</div>
 	<ul id="headernav">
 		<li class="first"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
