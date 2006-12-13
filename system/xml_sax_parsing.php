@@ -34,7 +34,6 @@
  * to be updated.
  */
 function parse_xml_file($file_name, & $file_handler) {
-	$GLOBALS['handler'] = & $file_handler;
 	$file_handler->initialize();
 	
 	// Read the entire file contents in to memory.
@@ -42,12 +41,25 @@ function parse_xml_file($file_name, & $file_handler) {
 	$file = fopen($file_name, "r");
 	$xml = fread($file, filesize($file_name));
 	fclose($file);
+	
+	parse_xml_string($xml, $file_handler);
+}
 
+function parse_xml_string($xml, & $file_handler) {
+	$GLOBALS['handler'] = $file_handler;
 	$parser = xml_parser_create();
 	xml_set_element_handler($parser, 'sax_start_handler', 'sax_end_handler');
 	xml_set_character_data_handler($parser, 'sax_data_handler');
 	xml_parse($parser, $xml);
+	if (xml_get_error_code($parser)) throw new SaxParsingException(xml_error_string($parser));
 }
+
+class SaxParsingException extends Exception {
+	public function __construct($message, $code = 0) {
+		parent::__construct($message, $code);
+	}
+}
+
 
 /*
  * The $handler variable is global. It manages all the call backs
@@ -165,12 +177,19 @@ class XmlElementHandler {
 			return $this->$method_name($handler);
 		} 
 	}
+	
+	function initialize() {
+	}
+	
 	/*
 	 * Ignore data for this element.
 	 */
 	function data($data) {
 	}
 
+	function start($name) {
+	}
+	
 	/*
 	 * Ignore data for this element.
 	 */
@@ -225,3 +244,5 @@ function & array_last(& $array) {
 }
 
 ?>
+
+
