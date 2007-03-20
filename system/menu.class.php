@@ -52,9 +52,10 @@ class Menu {
 		
 		global $App;
 
-		if(isset($App)) {
-			$www_prefix = $App->getWWWPrefix();
+		if(!isset($App)) {
+			$App = new App();
 		}
+		$www_prefix = $App->getWWWPrefix();
 
 		$MenuText = "Home";
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/", "_self", 0);
