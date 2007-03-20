@@ -44,10 +44,17 @@ class Poll {
 	 * Default constructor
 	 * @param int $poll_index  to identify the poll index on a page (for multiple polls)
 	 * @param string $poll_title
+	 * @param string $id optional static id to identify the poll, instead of the URL, so it can be used anywhere 
 	 * 
 	 */
-	function Poll($_poll_index, $_poll_title) {
-		$this->url			= $_SERVER['REQUEST_URI'];
+	function Poll($_poll_index, $_poll_title, $_id = null) {
+		
+		if($_id == null) {
+			$this->url			= $_SERVER['SCRIPT_NAME'];
+		}
+		else {
+			$this->url			= $_id;
+		}
 		$this->poll_index	= $_poll_index;
 		$this->poll_title	= $_poll_title;
 		$this->selectInsertPollID();  ## We need this before going on!
