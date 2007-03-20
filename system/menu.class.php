@@ -47,17 +47,25 @@ class Menu {
 	
 	# Main constructor
 	function Menu() {
+
+		$www_prefix = "";
 		
+		global $App;
+
+		if(isset($App)) {
+			$www_prefix = $App->getWWWPrefix();
+		}
+
 		$MenuText = "Home";
-		$MenuItem = new MenuItem($MenuText, "/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Community";
-		$MenuItem = new MenuItem($MenuText, "/community/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/community/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Membership";
-		$MenuItem = new MenuItem($MenuText, "/membership/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/membership/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Committers";
@@ -66,19 +74,19 @@ class Menu {
 		
 
 		$MenuText = "Downloads";
-		$MenuItem = new MenuItem($MenuText, "/downloads/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/downloads/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Resources";
-		$MenuItem = new MenuItem($MenuText, "/resources/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/resources/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Projects";
-		$MenuItem = new MenuItem($MenuText, "/projects/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/projects/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "About Us";
-		$MenuItem = new MenuItem($MenuText, "/org/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/org/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 	}
@@ -89,41 +97,6 @@ class Menu {
 			
 		# Add incoming menuitem
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
-	}
-	
-
-	function getLabel($_Label, $_Language) {
-	
-		switch($_Language) {
-			case "en":
-				switch($_Label) {
-					case "save" :
-						return "Save";
-						break;
-					case "list" :
-						return "Back to list";
-						break;
-					case "delete" :
-						return "Delete";
-						break;
-				}
-			break;
-			case "fr":
-				switch($_Label) {
-					case "save" :
-						return "Sauvegarder";
-						break;
-					case "list" :
-						return "Retour � la liste";
-						break;
-					case "delete" :
-						return "Supprimer";
-						break;
-				}
-			break;
-		}
-				
-				
 	}
 
 	function getMenuItemCount() {

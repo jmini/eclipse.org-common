@@ -11,6 +11,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/link.class.php");
+
 class Nav {
 
 	#*****************************************************************************
@@ -39,18 +40,25 @@ class Nav {
 	
 	# Main constructor
 	function Nav() {
+
+		$www_prefix = "";
 		
+		global $App;
+
+		if(isset($App)) {
+			$www_prefix = $App->getWWWPrefix();
+		}
 
 		$Link = new Link("Committers", "http://wiki.eclipse.org/index.php/Development_Resources", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-		$Link = new Link("Newsgroups", "/newsgroups/", "_self", 1);
+		$Link = new Link("Newsgroups", $www_prefix . "/newsgroups/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
 		$Link = new Link("Bugs", "https://bugs.eclipse.org/bugs/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
-		$Link = new Link("Articles", "/articles/", "_self", 1);
+		$Link = new Link("Articles", $www_prefix . "/articles/", "_self", 1);
 		$this->LinkList[count($this->LinkList)] = $Link;
 
 
@@ -73,40 +81,6 @@ class Nav {
 		$this->LinkList[count($this->LinkList)] = $Link;
 	}
 	
-
-	function getLabel($_Label, $_Language) {
-	
-		switch($_Language) {
-			case "en":
-				switch($_Label) {
-					case "save" :
-						return "Save";
-						break;
-					case "list" :
-						return "Back to list";
-						break;
-					case "delete" :
-						return "Delete";
-						break;
-				}
-			break;
-			case "fr":
-				switch($_Label) {
-					case "save" :
-						return "Sauvegarder";
-						break;
-					case "list" :
-						return "Retour � la liste";
-						break;
-					case "delete" :
-						return "Supprimer";
-						break;
-				}
-			break;
-		}
-				
-				
-	}
 
 	function getLinkCount() {
 		return count($this->LinkList);

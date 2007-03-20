@@ -21,6 +21,7 @@ class App {
 	# Description: Functions and modules related to the application
 	#
 	# HISTORY:
+	#		2007-03-13: added WWW_PREFIX functionality, and default class constructor
 	#
 	#*****************************************************************************
 
@@ -35,9 +36,20 @@ class App {
 	var $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
 	var $DOWNLOAD_BASE_PATH = "/home/data/httpd/download.eclipse.org";
 	
+	var $WWW_PREFIX			= "";  # default is relative
+	
 	var $ExtraHtmlHeaders   = "";
 	
 	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial","Lazarus");
+	
+	# Default constructor
+	function App() {
+		# Set value for WWW_PREFIX
+		if($_SERVER['SERVER_NAME'] != "www.eclipse.org") {
+			$this->WWW_PREFIX = "http://www.eclipse.org";
+		}
+	}
+	
 	
 	function getAppVersion() {
 		return $this->APPVERSION;
@@ -66,6 +78,7 @@ class App {
 		return $this->DEFAULT_ROW_HEIGHT;
 	}
 	
+	
 	function sendXMLHeader() {
 		header("Content-type: text/xml");
 	}
@@ -80,6 +93,10 @@ class App {
 
 	function getPubDownloadServerUrl() {
 		return $this->PUB_DOWNLOAD_URL;
+	}
+	
+	function getWWWPrefix() {
+		return $this->WWW_PREFIX;
 	}
 	
 	function getUserLanguage() {
@@ -140,7 +157,7 @@ class App {
 		 * 
 		 */
 		
-		$currentScript 	= $_SERVER['SCRIPT_NAME'];
+		$currentScript 	= $_SERVER['SCRIPT_FILENAME'];
 		$strLen 		= strlen($currentScript);
 		$found 			= false;
 		$antiLooper		= 0;
@@ -150,8 +167,8 @@ class App {
 		
 		
 		while($strLen > 1 && ! $found) {
-			$currentScript 	= substr($_SERVER['SCRIPT_NAME'], 0, strrpos($currentScript, "/"));
-			$testPath 		= $_SERVER['DOCUMENT_ROOT'] . $currentScript . "/_projectCommon.php";
+			$currentScript 	= substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($currentScript, "/"));
+			$testPath 		= $currentScript . "/_projectCommon.php";
 			
 			if(file_exists($testPath)) {	
 				$found 	= true;
