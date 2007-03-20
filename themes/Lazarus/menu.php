@@ -2,6 +2,7 @@
 	<ul>
 
 <?php
+	global $App;
 	$nextclass = "";
 	
 	for($i = 0; $i < $Menu->getMenuItemCount(); $i++) {
@@ -42,7 +43,7 @@
 			<input type="hidden" name="t" value="Wiki" />
 			<input type="hidden" name="wf" value="574a74" />
 			<input type="text" class="textfield" name="q" value="" />
-			<input type="image" class="button" src="<?= $App->getWWWPrefix() ?>/eclipse.org-common/themes/Phoenix/images/searchbar_submit.gif" alt="Submit" onclick="this.submit();" />
+			<input type="image" class="button" src="/eclipse.org-common/themes/Phoenix/images/searchbar_submit.gif" alt="Submit" onclick="this.submit();" />
 		</form>	
 	</div>
 
