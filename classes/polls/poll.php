@@ -383,13 +383,11 @@ class Poll {
 	 */
 	function flushOldPolls($_dbh) {
 
+		# a Foreign Key constraint will enforce deletion of poll_options 
 		$sql = "DELETE FROM 
-					poll_options, polls 
-				USING 
-					poll_options, polls 
+					polls 
 				WHERE 
-					poll_options.poll_id = polls.poll_id 
-					AND polls.first_seen <=  DATE_SUB(CURDATE(), INTERVAL 3 MONTH)";
+					first_seen <=  DATE_SUB(CURDATE(), INTERVAL 3 MONTH)";
 
 		mysql_query($sql, $_dbh);
 	
