@@ -39,6 +39,7 @@
 			<input name="t" value="Doc" type="hidden" />
 			<input name="t" value="Downloads" type="hidden" />
 			<input name="t" value="Wiki" type="hidden" />
+			<input type="hidden" name="t" value="Live" />
 			<input name="wf" value="574a74" type="hidden" />
 			<label for="q">Search:</label>
 			<input name="q" id="q" value="" type="text" />			

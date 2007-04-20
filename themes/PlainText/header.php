@@ -1,7 +1,6 @@
 <html>
 	<head>
 		<title><?= $pageTitle ?></title>
-		<meta name="author" content="Denis Roy">
 		<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Modern/css/stylesheet.css">
 	</head>
 

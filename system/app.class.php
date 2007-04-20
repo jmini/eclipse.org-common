@@ -40,7 +40,8 @@ class App {
 	
 	var $ExtraHtmlHeaders   = "";
 	
-	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial","Lazarus");
+	# Blue and Industrial are deprecated - 2007-04-04
+	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial", "Lazarus");
 	
 	# Default constructor
 	function App() {
