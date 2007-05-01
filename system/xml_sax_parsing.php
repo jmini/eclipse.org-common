@@ -13,6 +13,9 @@
 
 #*****************************************************************************
 #
+# ** THIS FUNCTIONALITY IN THIS FILE IS DEPRECATED.
+# ** USE THE XML_SIMPLE APIS INSTEAD.
+#
 # news.php
 #
 # Author: 		Wayne Beaton
@@ -32,6 +35,7 @@
  * short files (the entire file contents are loaded into memory).
  * If the RSS files start to get too large, this method will need
  * to be updated.
+ * @deprecated
  */
 function parse_xml_file($file_name, & $file_handler) {
 	$file_handler->initialize();
