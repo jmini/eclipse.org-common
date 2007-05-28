@@ -157,6 +157,7 @@ pre {
 #topnav {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabbg.gif);
 	background-repeat: repeat-x;
+	background-color: #DEDEDE;
 	color: #999;
 	/*  font-size: 0.9em;  */
 }
@@ -170,6 +171,7 @@ pre {
 #topnav li.tabstart {
 	background-image: url(/eclipse.org-common/themes/Phoenix/images/topnav_tabstart_first.gif);
 	background-repeat: no-repeat;
+	width: 10px;
 }
 
 #topnav li.tabstartselected {

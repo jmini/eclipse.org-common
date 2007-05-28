@@ -42,5 +42,6 @@
 	}
 ?>
 <li class="<?= $separatorclass ?>">&#160;&#160;&#160;</li>			
-</ul></div>
+</ul>
 <div id="topnavsep"></div>
+</div>
