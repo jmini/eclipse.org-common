@@ -34,14 +34,13 @@ class App {
 	var $POST_MAX_SIZE		= 262144;   # 256KB Max post
 	var $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
 	var $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
-	var $DOWNLOAD_BASE_PATH = "/home/data/httpd/download.eclipse.org";
+	var $DOWNLOAD_BASE_PATH = "/home/local/data/httpd/download.eclipse.org";
 	
 	var $WWW_PREFIX			= "";  # default is relative
 	
 	var $ExtraHtmlHeaders   = "";
 	
-	# Blue and Industrial are deprecated - 2007-04-04
-	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Blue", "Industrial", "Lazarus");
+	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
 	# Default constructor
 	function App() {
@@ -149,7 +148,7 @@ class App {
 	}
 
 	function getProjectCommon() {
-		/* @return: String
+		/** @return: String
 		 * 
 		 * Walk up the directory structure to find the closest _projectCommon.php file
 		 * 
@@ -664,6 +663,22 @@ class App {
          */
 		function same_month($a, $b) {
 			return date("F", $a) == date("F", $b);
+		}
+		
+		/**
+		 * Returns a string representing the size of a file in the downloads area
+		 * @author droy
+		 * @since Jun 7, 2007
+		 * @param string file File name relative to http://download.eclipse.org (the &file= parameter used)
+		 * @return string Returns a string in the format of XX MB
+		 */
+		function getDownloadFileSizeString($_file) {
+			$fileSize = "N/A";
+			$filesizebytes  = filesize($this->getDownloadBasePath() . $_file);
+			if($filesizebytes > 0) {
+				$fileSize = floor($filesizebytes / 1048576) . " MB";
+			}
+			return $fileSize;
 		}
 }
 
