@@ -34,7 +34,6 @@ class App {
 	var $POST_MAX_SIZE		= 262144;   # 256KB Max post
 	var $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
 	var $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
-	#var $DOWNLOAD_BASE_PATH = "/home/local/data/httpd/download.eclipse.org";
 	var $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
 	
 	var $WWW_PREFIX			= "";  # default is relative
