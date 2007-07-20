@@ -41,7 +41,7 @@
 			</ul>
 		</div>
 		<div id="header-icons">
-			<a href="http://live.eclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_live.png" width="28" height="28" alt="Eclipse Live" title="Eclipse Live" /></a>
+			<a href="http://live.eclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_Live.png" width="28" height="28" alt="Eclipse Live" title="Eclipse Live" /></a>
 			<a href="http://www.eclipseplugincentral.com"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_plugin.png" width="28" height="28" alt="Eclipse Plugin Central" title="Eclipse Plugin Central" /></a>
 			<a href="http://www.planeteclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_planet.png" width="28" height="28" alt="Planet Eclipse" title="Planet Eclipse" /></a>
 		</div>
