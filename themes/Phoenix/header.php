@@ -35,8 +35,8 @@
 
 		<div id="header-global-links">
 			<ul>
-				<li><a href="#" class="first_one">Contact</a></li>
-				<li><a href="#">Legal</a></li>
+				<li><a href="/org/foundation/contact.php" class="first_one">Contact</a></li>
+				<li><a href="/legal/">Legal</a></li>
 			</ul>
 		</div>
 		<div id="header-icons">
@@ -46,15 +46,15 @@
 	</div>
 	<div id="header-nav">
 		<ul>
-			<li><a href="#" class="first_one">Home</a></li>
-			<li><a href="#">Community</a></li>
-			<li><a href="#">Membership</a></li>
+			<li><a href="http://www.eclipse.org/" class="first_one">Home</a></li>
+			<li><a href="/community/">Community</a></li>
+			<li><a href="/membership/">Membership</a></li>
 
-			<li><a href="#">Committers</a></li>
-			<li><a href="#">Downloads</a></li>
-			<li><a href="#">Resources</a></li>
-			<li><a href="#">Projects</a></li>
-			<li><a href="#">About Us</a></li>
+			<li><a href="http://wiki.eclipse.org/index.php/Development_Resources">Committers</a></li>
+			<li><a href="/downloads/">Downloads</a></li>
+			<li><a href="/resources/">Resources</a></li>
+			<li><a href="/projects/">Projects</a></li>
+			<li><a href="/org/">About Us</a></li>
 		</ul>
 
 	</div>
