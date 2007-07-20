@@ -46,7 +46,7 @@
 	</div>
 	<div id="header-nav">
 		<ul>
-			<li><a href="http://www.eclipse.org/" class="first_one">Home</a></li>
+			<li><a href="/" class="first_one">Home</a></li>
 			<li><a href="/community/">Community</a></li>
 			<li><a href="/membership/">Membership</a></li>
 
