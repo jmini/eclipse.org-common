@@ -40,8 +40,9 @@
 			</ul>
 		</div>
 		<div id="header-icons">
-			<a href="#"><img src="/eclipse.org-common/themes/Phoenix/images/eclipse_home_icon.png" width="28" height="28" alt="eclipse foundation button" title="Eclipse Foundation" /></a><a href="#"><img src="/eclipse.org-common/themes/Phoenix/images/planet_icon.png" width="28" height="28" alt="planet eclipse button" title="Planet Eclipse" /></a><a href="#"><img src="/eclipse.org-common/themes/Phoenix/images/plugin_icon.png" width="28" height="28" alt="eclipse plugin central button" title="Eclipse Plugin Central" /></a>
-
+			<a href="http://live.eclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_live.png" width="28" height="28" alt="Eclipse Live" title="Eclipse Live" /></a>
+			<a href="http://www.eclipseplugincentral.com"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_plugin.png" width="28" height="28" alt="Eclipse Plugin Central" title="Eclipse Plugin Central" /></a>
+			<a href="http://www.planeteclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_planet.png" width="28" height="28" alt="Planet Eclipse" title="Planet Eclipse" /></a>
 		</div>
 	</div>
 	<div id="header-nav">
