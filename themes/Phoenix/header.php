@@ -22,6 +22,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title><?= $pageTitle ?></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="author" content="<?= $pageAuthor ?>" />
 <meta name="keywords" content="<?= $pageKeywords ?>" /><link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/small.css" title="small" /><link rel="alternate stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/large.css" title="large" /><link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/visual.css" media="screen" /><link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/layout.css" media="screen" />
+<!--[if IE]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/ie_style.css" media="screen"/> <![endif]-->
 <link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
 <link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/header.css" media="screen" />
 <script type="text/javascript" src="/eclipse.org-common/themes/Phoenix/styleswitcher.js"></script>
