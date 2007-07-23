@@ -10,37 +10,40 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 ?>
-<div id="topnav">
-<ul>
-<li>&nbsp;&nbsp;&nbsp;</li>
+	<div id="header-nav">
+		<ul>
 <?php
+	$firstClass = "class=\"first_one\""; 
 	$nextclass = "";
 	
 	for($i = 0; $i < $Menu->getMenuItemCount(); $i++) {
 		$MenuItem = $Menu->getMenuItemAt($i);
-		$startclass 	= "tabstart";
-		$aclass 		= "";
-		$separatorclass = "tabseparator";
+			
 		
-		if($nextclass != "") {
-			$startclass = $nextclass;
-			$nextclass = "";
-		}
-		
-		
-		if(strpos($_SERVER['SCRIPT_FILENAME'], $MenuItem->getURL())) {
-			$startclass		="tabstartselected";
-			$aclass 		= "tabselected";
-			$nextclass 		= "tabseparatorselected";
-		}
-		
-		
-?>
-<li class="<?= $startclass ?>">&#160;&#160;&#160;</li>
-<li><a class="<?= $aclass ?>" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></li>
-<?php
-	}
-?>
-<li class="<?= $separatorclass ?>">&#160;&#160;&#160;</li>			
-</ul></div>
-<div id="topnavsep"></div>
+		?>
+		<li><a <?=$firstClass;?> href="<?= $MenuItem->getURL(); ?>" target="<?= $MenuItem->getTarget(); ?>"><?= $MenuItem->getText(); ?></a></li> 
+		<?php
+		$firstClass="";
+			}
+		?>
+		</ul>
+
+	</div>
+	<div id="header-utils">
+		<form action="/search/search.cgi" method="get">
+				<input type="hidden" value="All" name="t"/>
+				<input type="hidden" value="Downloads" name="t"/>
+				<input type="hidden" value="Live" name="t"/>
+				<input type="hidden" value="Wiki" name="t"/>
+				<input type="hidden" value="574a74" name="wf"/>
+				<input class="input" type="text" value="" name="q"/>
+
+				<input class="button" type="image" onclick="this.submit();" alt="Submit" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif" width="54" height="18"/>
+		</form>
+		<ul>
+			<li class="rss_feed"><a href="http://www.eclipse.org/home/eclipsenews.rss" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" height="16" width="16" border="0" class="rss_icon" /></a></li>
+			<li class="text_size"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
+		</ul>
+	</div>
+
+</div>

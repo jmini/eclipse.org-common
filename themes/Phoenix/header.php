@@ -46,35 +46,3 @@
 			<a href="http://www.planeteclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_planet.png" width="28" height="28" alt="Planet Eclipse" title="Planet Eclipse" /></a>
 		</div>
 	</div>
-	<div id="header-nav">
-		<ul>
-			<li><a href="/" class="first_one">Home</a></li>
-			<li><a href="/community/">Community</a></li>
-			<li><a href="/membership/">Membership</a></li>
-
-			<li><a href="http://wiki.eclipse.org/index.php/Development_Resources">Committers</a></li>
-			<li><a href="/downloads/">Downloads</a></li>
-			<li><a href="/resources/">Resources</a></li>
-			<li><a href="/projects/">Projects</a></li>
-			<li><a href="/org/">About Us</a></li>
-		</ul>
-
-	</div>
-	<div id="header-utils">
-		<form action="/search/search.cgi" method="get">
-				<input type="hidden" value="All" name="t"/>
-				<input type="hidden" value="Downloads" name="t"/>
-				<input type="hidden" value="Live" name="t"/>
-				<input type="hidden" value="Wiki" name="t"/>
-				<input type="hidden" value="574a74" name="wf"/>
-				<input class="input" type="text" value="" name="q"/>
-
-				<input class="button" type="image" onclick="this.submit();" alt="Submit" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif" width="54" height="18"/>
-		</form>
-		<ul>
-			<li class="rss_feed"><a href="http://www.eclipse.org/home/eclipsenews.rss" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" height="16" width="16" border="0" class="rss_icon" /></a></li>
-			<li class="text_size"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
-		</ul>
-	</div>
-
-</div>
