@@ -13,7 +13,6 @@ position:absolute;
 top:0pt;
 }
 #header .eclipse-main {
-background:transparent url(/eclipse.org-common/themes/Phoenix/images/eclipse_home_header.jpg) no-repeat scroll 0%;
 width:131px;
 }
 #header .bugs {
@@ -158,7 +157,7 @@ background:#FFFFFF url(/eclipse.org-common/themes/Phoenix/images/menu_bg.jpg) re
 height:33px;
 margin:0px;
 padding:0px;	
-clear:all;
+clear:both;
 }
 #header-utils {
 margin:0pt;
@@ -168,7 +167,6 @@ white-space:nowrap;
 }
 #header-utils form {
 float:left;
-
 padding:0pt 15px 0pt 0pt;
 }
 #header-utils form input.input, #header-utils form input.button {
