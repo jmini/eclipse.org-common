@@ -15,6 +15,7 @@ width:131px;
 }
 #header-graphic h1 {
 text-indent:-9999px;
+display:none;
 }
 #header-global-holder {
 height:68px;
