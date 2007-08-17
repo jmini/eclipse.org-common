@@ -78,7 +78,7 @@ function NewsParse( $name, &$html, $id ) {
     $news_name = $array[$loop];
     $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
-	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.html\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
+	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
 	$newssearch = "<FORM NAME=\"$news_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
@@ -119,7 +119,7 @@ function MailParse( $name, &$html, $id ) {
   for ( $loop = 1; $loop < $group_count; $loop+=2) {
     $mail_name = $array[$loop];
     $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\" alt=\"Subscribe\" title=\"Subscribe\" />$mail_name</a>";
-	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.html\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
+	$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
 	$mailsearch = "<FORM name=\"$mail_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $mail_name 
