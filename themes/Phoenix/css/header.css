@@ -4,6 +4,11 @@ height:70px;
 margin:0px;
 padding:0px;
 }
+
+#header .eclipse-main {
+background:transparent url(/eclipse.org-common/themes/Phoenix/images/eclipse_home_header.jpg) no-repeat scroll 0%;
+width:131px;
+}
 #header .bugs {
 background:transparent url(/eclipse.org-common/themes/Phoenix/images/bugs_header.jpg) no-repeat scroll 0%;
 width:240px;
