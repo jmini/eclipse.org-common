@@ -30,7 +30,7 @@
 <body>
 <div id="header">
 	<div id="header-graphic" class="eclipse-main">
-		<a href="/"><img src="/eclipse.org-common/themes/Phoenix/images/eclipse_home_header.jpg"></a><h1>Eclipse</h1>	
+		<a href="/"><img src="/eclipse.org-common/themes/Phoenix/images/eclipse_home_header.jpg" alt="" /></a><h1>Eclipse</h1>	
 	</div>
 	<div id="header-global-holder"  class="eclipse-main-global">
 		
