@@ -79,7 +79,7 @@ function NewsParse( $name, &$html, $id ) {
     $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
     $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
 	$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
-	$newsrss_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\" ><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
+	$newsrss_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\">RSS Feed</a><a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\"><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
 	$newssearch = "<FORM NAME=\"$news_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 			<table bgcolor=#EEEEEE border=0>
   			<TR><TD>Search $news_name 
