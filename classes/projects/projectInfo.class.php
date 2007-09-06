@@ -87,7 +87,7 @@ class ProjectInfo {
 				}
 			}
 		}
-		return $rValue;  # Array of ProjectInfovalues		
+		return $rValue;  # Hashed Array of ProjectInfoValues		
 	}
 	
 	
