@@ -10,36 +10,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-#require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-//require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php";
-#require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-
-	$ProjectInfo = new ProjectInfo("tools.ajdt");
-	
-	echo "Project Name:" . $ProjectInfo->getValue("name") . "\n";
-	echo "Releases:" . "\n";
-	
-
-	
-	
-
-	$list_of_releases_array = $ProjectInfo->getValueList("release");
-	for($i = 0; $i < count($list_of_releases_array); $i++) {
-		$ProjectInfoValue = $list_of_releases_array[$i];
-		echo $i . " " . $ProjectInfoValue->getSubkey() . ": " . $ProjectInfoValue->getValue() . "\n"; 
-	}
-
-
-?>
-
-	
-
-
-
-
-<?php
-
-
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 
 class ProjectInfo {
 	var $projectID		= "";
@@ -47,9 +18,13 @@ class ProjectInfo {
 	
 	
 	# Default constructor
-	function ProjectInfo($_projectID) { 
-		$this->setProjectID($_projectID);
-		$this->selectProjectInfo($_projectID);
+	function ProjectInfo($_projectID = NULL) { 
+		if ($_projectID == NULL)
+		 return;
+		else {
+			$this->setProjectID($_projectID);
+			$this->selectProjectInfo($_projectID);
+		}
 	}
 	
 	function getProjectID() {
@@ -63,7 +38,7 @@ class ProjectInfo {
 		$this->projectID = $_projectID;
 	}
 	
-	function getValue($_mainKey) {
+	function getValue($_mainKey, $_subKey = NULL) {
 		$rValue = "";
 		if($_mainKey != "") {
 			# loop through 
@@ -71,8 +46,10 @@ class ProjectInfo {
 				$ProjectInfoValue = $this->getItemAt($i);
 				
 				if($ProjectInfoValue->getMainKey() == $_mainKey) {
-					$rValue = $ProjectInfoValue->getValue();
-					break;
+					if ($_subKey == NULL || $ProjectInfoValue->getSubKey() == $_subKey) {
+						$rValue = $ProjectInfoValue->getValue();
+						break;
+					}
 				}
 			}
 		}
@@ -80,7 +57,7 @@ class ProjectInfo {
 		return $rValue;
 	}
 
-	function getValueList($_mainKey) {
+	function getValueList($_mainKey, $_subKey = NULL) {
 		$rValue = array();
 		if($_mainKey != "") {
 			# loop through 
@@ -88,7 +65,9 @@ class ProjectInfo {
 				$ProjectInfoValue = $this->getItemAt($i);
 				
 				if($ProjectInfoValue->getMainKey() == $_mainKey) {
-					$rValue[count($rValue)] = $ProjectInfoValue;
+					if($_subKey == NULL || $ProjectInfoValue->getSubKey() == $_subKey) {
+					$rValue[count($rValue)] = $ProjectInfoValue;						
+					}
 				}
 			}
 		}
@@ -96,48 +75,44 @@ class ProjectInfo {
 		return $rValue;  # Array of ProjectInfovalues
 	}
 	
-	function selectProjectInfo($_projectID, $_subkey, $_orderby) {
-
+	function getHashedValueList($_projectInfoID) {
+		$rValue = array();
+		if ($_projectInfoID != "") {
+			# loop through
+			for($i = 0; $i < $this->getCount(); $i++) {
+				$ProjectInfoValue = $this->getItemAt($i);
+				
+				if($ProjectInfoValue->getProjectInfoID() == $_projectInfoID) {
+					$rValue[$ProjectInfoValue->getSubKey()] = $ProjectInfoValue->getValue();
+				}
+			}
+		}
+		return $rValue;  # Array of ProjectInfovalues		
 	}
 	
+	
 	function selectProjectInfo($_projectID) {
-		# $sql = select *everything* for this project
-		# while($mysqlroy) {
-			$ProjectInfoValue = new ProjectInfoValue();
-			$ProjectInfoValue->setProjectInfoID(13822);
-			$ProjectInfoValue->setMainKey("name");
-			$ProjectInfoValue->setSubKey(null);
-			$ProjectInfoValue->setValue("AJDT Developer Tools");
-			$this->add($ProjectInfoValue); 
-
-			$ProjectInfoValue = new ProjectInfoValue();
-			$ProjectInfoValue->setProjectInfoID(19223);
-			$ProjectInfoValue->setMainKey("modulepath");
-			$ProjectInfoValue->setSubKey(null);
-			$ProjectInfoValue->setValue("org.eclipse-cdt.build");
-			$this->add($ProjectInfoValue);
 		
-			$ProjectInfoValue = new ProjectInfoValue();
-			$ProjectInfoValue->setProjectInfoID(2928);
-			$ProjectInfoValue->setMainKey("release");
-			$ProjectInfoValue->setSubKey("status");
-			$ProjectInfoValue->setValue("completed");
-			$this->add($ProjectInfoValue);
+		$dbc = new DBConnection();
+		$dbh = $dbc->Connect();
 
+		$sql = "SELECT ProjectInfo.ProjectInfoID, MainKey, SubKey, Value
+					FROM ProjectInfo, ProjectInfoValues
+					WHERE ProjectID = '$_projectID'
+						AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID";
+		$result = mysql_query($sql, $dbh) or die("projectInfo.SelectProjectInfo Error: " .mysql_error()); 
+		
+		while ($sqlIterator = mysql_fetch_array($result))
+		{
 			$ProjectInfoValue = new ProjectInfoValue();
-			$ProjectInfoValue->setProjectInfoID(2928);
-			$ProjectInfoValue->setMainKey("release");
-			$ProjectInfoValue->setSubKey("name");
-			$ProjectInfoValue->setValue("3.0.2");
-			$this->add($ProjectInfoValue);
+			$ProjectInfoValue->setProjectInfoID($sqlIterator[ProjectInfoID]);
+			$ProjectInfoValue->setMainKey($sqlIterator[MainKey]);
+			$ProjectInfoValue->setSubKey($sqlIterator[SubKey]);
+			$ProjectInfoValue->setValue($sqlIterator[Value]);
+			$this->add($ProjectInfoValue); 
+		}
 
-			$ProjectInfoValue = new ProjectInfoValue();
-			$ProjectInfoValue->setProjectInfoID(2928);
-			$ProjectInfoValue->setMainKey("release");
-			$ProjectInfoValue->setSubKey("date");
-			$ProjectInfoValue->setValue("2005-02-07");
-			$this->add($ProjectInfoValue);
-		# }
+		
 	}
 	
 	
