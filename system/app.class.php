@@ -42,6 +42,9 @@ class App {
 	
 	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
+	# Set to TRUE to disable all database operations
+	var $DB_READ_ONLY		= false;
+	
 	# Default constructor
 	function App() {
 		# Set value for WWW_PREFIX
@@ -77,7 +80,9 @@ class App {
 	function getDefaultRowHeight() {
 		return $this->DEFAULT_ROW_HEIGHT;
 	}
-	
+	function getDBReadOnly() {
+		return $this->DB_READ_ONLY;
+	}	
 	
 	function sendXMLHeader() {
 		header("Content-type: text/xml");
