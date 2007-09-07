@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2006 Eclipse Foundation and others.
+ * Copyright (c) 2007 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,9 @@
  *
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
- *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
+ *    Nathan Gervais (Eclipse Foundation) - Extended GetValue, GetValueList 
+ *                                          to Accept SubKey
+ * 										  - Created new GetHashedValueList()
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 
@@ -18,13 +20,9 @@ class ProjectInfo {
 	
 	
 	# Default constructor
-	function ProjectInfo($_projectID = NULL) { 
-		if ($_projectID == NULL)
-		 return;
-		else {
-			$this->setProjectID($_projectID);
-			$this->selectProjectInfo($_projectID);
-		}
+	function ProjectInfo($_projectID) { 
+		$this->setProjectID($_projectID);
+		$this->selectProjectInfo($_projectID);
 	}
 	
 	function getProjectID() {

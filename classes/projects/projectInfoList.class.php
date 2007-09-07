@@ -1,29 +1,18 @@
 <?php
+/*******************************************************************************
+ * Copyright (c) 2007 Eclipse Foundation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
+ *    Karl Matthias (Eclipse Foundation) - initial API and implementation
+ *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfo.class.php");
-#Proof of Concept
-$classFoo = new ProjectInfoList();
-$classFoo->selectProjectInfoList(NULL, "categories", NULL, "ENT", NULL, NULL);
 
-$count = $classFoo->getCount();
-
-for ($i = 0; $i < $count ;$i++)
-{
-	
-	$FooIterator = $classFoo->getItemAt($i);
-	echo $FooIterator->getProjectID() . "---<br/>";
-	$mailingListIterator = $FooIterator->getValueList("mailinglist", "type");
-	foreach ($mailingListIterator as $pivIt)
-	{
-		$value = $pivIt->getProjectInfoID();
-		$mailingListArray = $FooIterator->getHashedValueList($value);
-		echo "Name: $mailingListArray[name]<br/>";
-		echo "Type: $mailingListArray[type]<br/>";
-		echo "Description: $mailingListArray[description]<br/><br/>";
-
-	}
-}
-# End PoC
 
 class projectInfoList {
 
@@ -81,7 +70,7 @@ class projectInfoList {
 		   		   		   		   
 	   
 		if($wheresql != "") {
-	            $wheresql = " WHERE " . $wheresql. "AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID";
+	            $wheresql = " WHERE " . $wheresql. " AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID";
 	    }
 	
 	    if($_order_by == "") {
