@@ -311,29 +311,33 @@ li.nodash {
 
 /* Footer Rules */
 #footer {
-	background-color: #336;
-	border-color: #99c;
-	border-style: solid;
-	color: #fff;
-	font-size: 0.9em;
-	text-align: right;
+	background-image: url(/eclipse.org-common/themes/Phoenix/images/footer.jpg);
+	background-position: top left;
+	background-repeat: repeat-x;
+	border-top: 1px solid #7A79A7;
+	border-bottom: 2px solid #7A79A7;
+	color: #53528a;
 }
 
 #footernav {
 	list-style: none;
 }
 
-#footernav li {
-	border-color: #ccc;
-	border-style: solid;
+#footernav li.first a{
+	background:none;
+}
+
+#footernav li a{
+	background:transparent url(/eclipse.org-common/themes/Phoenix/images/nav_divider.gif) no-repeat scroll 0%;
+	padding:0pt 0px 0pt 10px;	
 }
 
 #footernav a, #footernav a:link, #footernav a:visited {
-	color: #ccc;
+	color: #663366;
 }
 
 #footernav a:hover, #footernav a:active {
-	color: #fff;
+	color: #663366;
 }
 
 .poll_start {
