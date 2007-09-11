@@ -105,7 +105,7 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 		
 		// Add the RSS image on the right
 		if ($rss_url) {
-			$html .= "<a href=\"$rss_url\"><img src=\"/images/rss.gif\" align=\"right\" title=\"RSS Feed\" alt=\"[RSS]\" /></a>";
+			$html .= "<a href=\"$rss_url\"><img src=\"/images/rss2.gif\" align=\"right\" title=\"RSS Feed\" alt=\"[RSS]\" /></a>";
 		}
 		
 		// Add the title of the channel 
