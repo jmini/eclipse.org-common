@@ -591,7 +591,10 @@ class App {
         function usePolls() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
         }	
-
+        
+        function useProjectInfo() {
+        	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
+        }
         /*
          * This function applies standard formatting to a date. 
          * 
