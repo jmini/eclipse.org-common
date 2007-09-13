@@ -11,7 +11,7 @@
  *    Karl Matthias (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfo.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoData.class.php");
 
 
 class projectInfoList {
@@ -86,8 +86,8 @@ class projectInfoList {
 	    while ($sqlIterator = mysql_fetch_array($result))
 	    {
 	    	$projectID = $sqlIterator[ProjectID];
-	    	$ProjectInfo = new ProjectInfo($projectID);
-	    	$this->add($ProjectInfo); 
+	    	$ProjectInfoData = new ProjectInfoData($projectID);
+	    	$this->add($ProjectInfoData); 
 	    } 		   
     }
     
