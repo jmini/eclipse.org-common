@@ -21,7 +21,7 @@ class ProjectInfoData implements Countable
 
 	function ProjectInfoData( $projectid )
 	{
-		$dbc = new DBConnectionProjectInfo();
+		$dbc = new DBConnection();
 		$dbh = $dbc->connect();
 		$result = mysql_query("
 					SELECT * FROM ProjectInfo, ProjectInfoValues
