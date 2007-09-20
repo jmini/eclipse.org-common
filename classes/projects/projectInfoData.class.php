@@ -10,6 +10,7 @@
  *    Bjorn Freeman-Benson - Initial API
  *    Nathan Gervais - Fixed __get function to return correct values for multirow records
  *    Karl Matthias - Implemented Countable Extension to the class. And Plural __get retreival
+ * 					Added fields() and ProjectInfoID() functions, fixed bug in multi-row sets
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 
@@ -89,7 +90,12 @@ class ProjectInfoData implements Countable
 						return $result;
 					} else {
 						$result = array();
+						$checked = array();
 						foreach( $this->rows as $rr ) {
+							if(isset($checked[$rr['ProjectInfoID']])) {
+								continue;
+							}
+							$checked[$rr['ProjectInfoID']] = true;
 							if( $rr['MainKey'] == $mainkey) {
 								$subrows = array();
 								foreach( $this->rows as $rrr ) {
@@ -131,6 +137,20 @@ class ProjectInfoValues implements Countable {
 
 	function count() {
 		return count($this->rows);
+	}
+
+	function fields() {
+		$fields = array();
+		foreach($this->rows as $row) {
+			$fields[] = $row['SubKey'];
+		}
+		arsort($fields, SORT_STRING);
+		return $fields;
+	}
+
+	function ProjectInfoID() {
+		$row = $this->rows[0];
+		return $row['ProjectInfoID'];
 	}
 }
 ?>
