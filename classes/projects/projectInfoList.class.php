@@ -16,8 +16,26 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/p
 
 class projectInfoList {
 
-	var $List = array();
-
+	var $list = array();
+	
+   	function alphaSortList(){
+		
+   		if (!function_exists("cmp_obj"))
+   		{
+	   		function cmp_obj($a, $b)
+		    {
+		        $al = trim(strtolower($a->projectname));
+		        $bl = trim(strtolower($b->projectname));
+		        if ($al == $bl) {
+		            return 0;
+		        }
+		        return ($al > $bl) ? +1 : -1;
+		   	}	   		
+   		}
+		usort($this->list, "cmp_obj");
+	}
+	
+	
 	function getList() {
 		return $this->$list;
 	} 
@@ -49,7 +67,7 @@ class projectInfoList {
 		   
 		   if ($_projectID) {
 		   	
-		   		$wheresql .= " ProjectID = '$_projectID'";
+		   		$wheresql .= " ProjectID like '$_projectID%'";
 		   }
 		   if ($_mainKey) {
 		   		$wheresql = $this->addAndIfNotNull($wheresql);	
