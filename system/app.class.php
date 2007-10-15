@@ -40,8 +40,8 @@ class App {
 	
 	# Additional page-related variables
 	var $ExtraHtmlHeaders   = "";
-	var $pageRSS			= "";
-	var $pageRSSTitle		= "";
+	var $PageRSS			= "";
+	var $PageRSSTitle		= "";
 	
 	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
