@@ -38,7 +38,10 @@ class App {
 	
 	var $WWW_PREFIX			= "";  # default is relative
 	
+	# Additional page-related variables
 	var $ExtraHtmlHeaders   = "";
+	var $pageRSS			= "";
+	var $pageRSSTitle		= "";
 	
 	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
@@ -334,6 +337,14 @@ class App {
 		
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
+		}
+
+		# page-specific RSS feed
+		if($this->PageRSS != "") {
+			if ($this->PageRSSTitle != "") {
+				$this->PageRSSTitle = "Eclipse RSS Feed";
+			}
+			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->pageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
 		}
 		
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
