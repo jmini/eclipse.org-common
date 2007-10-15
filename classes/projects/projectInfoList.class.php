@@ -103,7 +103,7 @@ class projectInfoList {
 	    
 	    while ($sqlIterator = mysql_fetch_array($result))
 	    {
-	    	$projectID = $sqlIterator[ProjectID];
+	    	$projectID = $sqlIterator['ProjectID'];
 	    	$ProjectInfoData = new ProjectInfoData($projectID);
 	    	$this->add($ProjectInfoData); 
 	    } 		   
