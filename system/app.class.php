@@ -344,7 +344,7 @@ class App {
 			if ($this->PageRSSTitle != "") {
 				$this->PageRSSTitle = "Eclipse RSS Feed";
 			}
-			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->pageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
+			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
 		}
 		
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
@@ -425,25 +425,29 @@ class App {
         if(preg_match_all($regex_windows,$UserAgent,$match))  {
 
 
-                        $v  = $match[2][count($match[0])-1];
-                $v2 = $match[3][count($match[0])-1];
+			$v  = $match[2][count($match[0])-1];
+            $v2 = $match[3][count($match[0])-1];
 
-                        // Establish NT 5.1 as Windows XP
-                        if(stristr($v,'NT') && $v2 == 5.1) $v = 'win32';
+			// Establish NT 6.0 as Vista
+			if(stristr($v,'NT') && $v2 == 6.0) $v = 'win32';
+            
+			// Establish NT 5.1 as Windows XP
+			if(stristr($v,'NT') && $v2 == 5.1) $v = 'win32';
 
-                        // Establish NT 5.0 and Windows 2000 as win2k
+			// Establish NT 5.0 and Windows 2000 as win2k
             elseif($v == '2000') $v = '2k';
-                elseif(stristr($v,'NT') && $v2 == 5.0) $v = 'win32';
-            // Establish 9x 4.90 as Windows 98
+			elseif(stristr($v,'NT') && $v2 == 5.0) $v = 'win32';
+            
+			// Establish 9x 4.90 as Windows 98
             elseif(stristr($v,'9x') && $v2 == 4.9) $v = 'win32';
-                // See if we're running windows 3.1
+			// See if we're running windows 3.1
             elseif($v.$v2 == '16bit') $v = 'win16';
                 // otherwise display as is (31,95,98,NT,ME,XP)
-                        else $v .= $v2;
-                // update browser info container array
-                        if(empty($v)) $v = 'win32';
-                        return (strtolower($v));
-                }
+			else $v .= $v2;
+			// update browser info container array
+			if(empty($v)) $v = 'win32';
+			return (strtolower($v));
+		}
 
                 //  look for amiga OS
                 elseif(preg_match($regex_amiga,$UserAgent,$match))  {
