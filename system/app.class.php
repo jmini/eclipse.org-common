@@ -432,7 +432,7 @@ class App {
 			if(stristr($v,'NT') && $v2 == 6.0) $v = 'win32';
             
 			// Establish NT 5.1 as Windows XP
-			if(stristr($v,'NT') && $v2 == 5.1) $v = 'win32';
+			elseif(stristr($v,'NT') && $v2 == 5.1) $v = 'win32';
 
 			// Establish NT 5.0 and Windows 2000 as win2k
             elseif($v == '2000') $v = '2k';
