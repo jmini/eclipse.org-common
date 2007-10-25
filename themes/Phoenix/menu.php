@@ -16,7 +16,7 @@
 <?php
 	global $App;
 	$www_prefix = "";
-	$pageRSS = "http://www.eclipse.org/home/eclipsenews.rss";
+	$pageRSS = "";
 	
 	if(isset($App)) {
 		$www_prefix = $App->getWWWPrefix();
@@ -54,7 +54,12 @@
 				<input class="button" type="image" onclick="this.submit();" alt="Search" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif" width="54" height="18" />
 		</form>
 		<ul>
-			<li class="rss_feed"><a href="<?= $pageRSS ?>" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" alt="RSS" height="16" width="16" border="0" class="rss_icon" /></a></li>
+			<?php
+				if($pageRSS != "") {
+			?><li class="rss_feed"><a href="<?= $pageRSS ?>" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" alt="RSS" height="16" width="16" border="0" class="rss_icon" /></a></li>
+			<?php
+				} 
+			?>
 			<li class="text_size"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
 		</ul>
 	</div>
