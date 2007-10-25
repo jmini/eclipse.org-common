@@ -227,6 +227,14 @@ pre {
 	border-width: 0 0 1px 0;
 }
 
+.homeitem ol li {
+        list-style-image: none;
+}
+
+
+.homeitem3col ol li {
+        list-style-image: none;
+}
 
 
 
