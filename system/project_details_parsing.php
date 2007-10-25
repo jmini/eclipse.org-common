@@ -64,13 +64,13 @@ function GetFile( $name, $filename, $docroot ) {
  * Modified On : Sep 21/07
  * ChangeLog : Changed this to use the new project info database objects
 ****************************************/
-function NewsParse( $newsgroupArray ) {
+function NewsParse( $newsgroupArray, $id ) {
 
 	if (count($newsgroupArray)){
 	    $news_name = trim($newsgroupArray->name);
 	    if ($news_name != ""){
-	    $news_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/>$news_name</a>";
-	    $webnews_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . "><img src='images/discovery.gif' alt='Web interface' title=\"Web interface\" /></a>";
+	    $news_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . ">$news_name</a>";
+	    $webnews_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/><img src='/images/newsgroup.png' alt='Web interface' title=\"Web interface\" /></a>";
 		$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
 		$newsrss_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\">RSS Feed  </a><a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\"><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
 		$newssearch = "<FORM NAME=\"$news_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
@@ -102,14 +102,14 @@ function NewsParse( $newsgroupArray ) {
  * Modified On : Sep 21/07
  * ChangeLog : Changed this to use the new project info database objects * 
 ****************************************/
-function MailParse( $mailingListArray ) {
+function MailParse( $mailingListArray, $id ) {
 	
 if (count($mailingListArray)) {
 	$mail_name = trim($mailingListArray->name);
     if ($mail_name != ""){
 	    $mail_html = "<a href=\"http://dev.eclipse.org/mailman/listinfo/" . $mail_name . "\" alt=\"Subscribe\" title=\"Subscribe\" />$mail_name</a>";
-		$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists" . $mail_name . "/\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
-		$mailrss_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists." . $mail_name . "/maillist.rss\">RSS Feed  </a><a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.rss\" ><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
+		$mailarch_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/\""  . "alt='Archive' title=\"Archive\" />Mailing list archive</a>";
+		$mailrss_html = "<a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.rss\">RSS Feed  </a><a href=\"http://dev.eclipse.org/mhonarc/lists/" . $mail_name . "/maillist.rss\" ><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
 		$mailsearch = "<FORM name=\"$mail_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 				<table bgcolor=#EEEEEE border=0>
 	  			<TR><TD>Search $mail_name 
@@ -122,7 +122,7 @@ if (count($mailingListArray)) {
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"News\">
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"Mail\"></td></tr></Table></FORM>";
 		$description = $mailingListArray->description;
-	$html = "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailarch_html</p><p>$mailrss_html</p><p>$mailsearch</p></div>";
+	    $html = "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailarch_html</p><p>$mailrss_html</p><p>$mailsearch</p></div>";
     }
   }
   return $html;      
