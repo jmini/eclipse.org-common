@@ -192,7 +192,7 @@ class Friend {
 		if($_email != "") {
 			$App = new App();
 
-			$dbc = new DBConnectionBugsRO();
+			$dbc = new DBConnectionBugs();
 			$dbh = $dbc->connect();
 
 			$sql = "SELECT userid
