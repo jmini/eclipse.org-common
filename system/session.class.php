@@ -144,7 +144,7 @@ class Session {
 							" . $Friend->getBugzillaID() . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
-							" . $App->returnQuotedString($this->data) . ")";
+							'" . $App->returnJSSAfeString($this->data) . "')";
 
 			mysql_query($sql, $dbh);
 
@@ -187,7 +187,7 @@ class Session {
 			$this->setBugzillaID($myrow['bugzilla_id']);
 			$this->setSubnet($myrow['subnet']);
 			$this->setUpdatedAt($myrow['updated_at']);
-			$this->setData($myrow['data']);
+			$this->data = $myrow['data'];
 		}
 		$dbc->disconnect();
 		
