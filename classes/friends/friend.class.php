@@ -11,6 +11,7 @@
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_bugs_ro.class.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 
 class Friend {
 
@@ -128,9 +129,9 @@ class Friend {
 	}
 
 
-	function selectFriend($_friend_id) {
+	function selectFriend($_fieldname, $_searchfor) {
 
-		if($_friend_id != "") {
+		if( ($_fieldname != "") && ($_searchfor != "")) {
 			$App = new App();
 
 			$dbc = new DBConnectionRW();
@@ -143,8 +144,8 @@ class Friend {
 							date_joined,
 							is_anonymous,
 							is_benefit
-					FROM friends
-					WHERE friend_id = " . $App->returnQuotedString($_friend_id);
+					FROM friends 
+					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
 
 			$result = mysql_query($sql, $dbh);
 
@@ -160,6 +161,8 @@ class Friend {
 			$dbc->disconnect();
 		}
 	}
+	
+	function selectFriend($_bugiz)
 
 
 	function selectFriendExists($_friend_id) {
