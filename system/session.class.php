@@ -31,7 +31,7 @@ class Session {
 	 *
 	 * @return null
 	 */
-	function Session($persistent=null) {
+	function Session($persistent=0) {
 		$this->is_persistent = $persistent;
 		$this->validate();			
 	}
