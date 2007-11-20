@@ -14,12 +14,12 @@ require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.
 
 class Contribution {
 	
-	private $friend_id = 0;
-	private $contribution_id = 0;
-	private $date_expired = 0;
-	private $amount = 0;
-	private $message = 0;
-	private $transaction_id = 0;
+	private $friend_id = "";
+	private $contribution_id = "";
+	private $date_expired = "";
+	private $amount = "";
+	private $message = "";
+	private $transaction_id = "";
 	
 	function getFriendID(){
 		return $this->friend_id;
@@ -65,13 +65,13 @@ class Contribution {
 		$dbc = new DBConnectionRW();
 		$dbh = $dbc->connect();
 		
-		if (selectContributionExists($this->getTransactionID())){
+		if ($this->selectContributionExists($this->getTransactionID())){
 			$result = -1;
 		}
 		else
 		{
 			# insert
-			$sql = "INSERT INTO friends_contributons (
+			$sql = "INSERT INTO friends_contributions (
 					friend_id,
 					contribution_id,
 					date_expired,
@@ -82,7 +82,7 @@ class Contribution {
 					" . $App->returnQuotedString($this->getFriendID()) . ",
 					" . $App->returnQuotedString($this->getContributionID()) . ",
 					" . $App->returnQuotedString($this->getDateExpired()) . ",
-					" . $App->returnQuotedString($this->getAmount() . ",
+					" . $App->returnQuotedString($this->getAmount()) . ",
 					" . $App->returnQuotedString($this->getMessage()) . ",
 					" . $App->returnQuotedString($this->getTransactionID()) . ")";
 			mysql_query($sql, $dbh);
@@ -106,15 +106,16 @@ class Contribution {
 					WHERE transaction_id = " . $App->returnQuotedString($_transaction_id);
 
 			$result = mysql_query($sql, $dbh);
-			$myrow = mysql_fetch_array($result);
-
-			$result = $myrow['RecordCount'] > 1 ? 1 : 0;
+			if ($result)
+			{	
+				$myrow = mysql_fetch_array($result);
+				$result = $myrow['RecordCount'] > 1 ? 1 : 0;
+			}
 
 			$dbc->disconnect();
 
 		}
 		return $result;			
-		}
 	}
 	
 	function selectContribution($_contribution_id)

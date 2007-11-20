@@ -16,7 +16,7 @@ require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.
 class Friend {
 
 	private $friend_id 		= 0;
-	private $bugzilla_id	= 0;
+	private $bugzilla_id	= "";
 	private $first_name		= "";
 	private $last_name		= "";
 	private $date_joined	= "";
@@ -57,7 +57,7 @@ class Friend {
 	function setFirstName($_first_name) {
 		$this->first_name = $_first_name;
 	}
-	function setLastName($_LastName) {
+	function setLastName($_last_name) {
 		$this->last_name = $_last_name;
 	}
 	function setDateJoined($_date_joined) {
@@ -71,67 +71,65 @@ class Friend {
 	}
 	
 	function insertUpdateFriend() {
+		$result = 0;
 
-		if($this->getFriendID() != "") {
+		$App = new App();
+		#$ModLog = new ModLog();
+		#$ModLog->setLogTable("Person");
+		#$ModLog->setPK1($this->getPersonID());
 
-			$App = new App();
-			#$ModLog = new ModLog();
-			#$ModLog->setLogTable("Person");
-			#$ModLog->setPK1($this->getPersonID());
+		$dbc = new DBConnectionRW();
+		$dbh = $dbc->connect();
 
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-
-			if($this->selectFriendExists($this->getFriendID())) {
-				# update
-				$sql = "UPDATE friends SET
-							bugzilla_id = " . $App->returnQuotedString($this->getBugzillaID()) . ",
-							first_name = " . $App->returnQuotedString($this->getFirstName()) . ",
-							last_name = " . $App->returnQuotedString($this->getLastName()) . ",
-							date_joinded = " . $App->returnQuotedString($this->getDateJoined()) . ",
-							is_anonymous = " . $App->returnQuotedString($this->getIsAnonymous()) . ",
-							is_benefit = " . $App->returnQuotedString($this->getIsBenefit()) . "
-						WHERE
-							friend_id = " . $this->getFriendID();
-
-					mysql_query($sql, $dbh);
-
-					#$ModLog->setLogAction("UPDATE");
-					#$ModLog->insertModLog();
-
-					# Set the Primary Employer ID
-			}
-			else {
-				# insert
-				$sql = "INSERT INTO friends (
-							bugzilla_id,
-							first_name,
-							last_name,
-							date_joined,
-							is_anonymous,
-							is_benefit)
-						VALUES (
-							" . $App->returnQuotedString($this->getBugzillaID()) . ",
-							" . $App->returnQuotedString($this->getFirstName()) . ",
-							" . $App->returnQuotedString($this->getLastName()) . ",
-							" . $App->returnQuotedString($this->getDateJoined()) . ",
-							" . $App->returnQuotedString($this->getIsAnonymous()) . ",
-							" . $App->returnQuotedString($this->getIsBenefit()) . ")";
+		if($this->selectFriendExists("friend_id", $this->getFriendID())) {
+			# update
+			$sql = "UPDATE friends SET
+						bugzilla_id = " . $App->returnQuotedString($this->getBugzillaID()) . ",
+						first_name = " . $App->returnQuotedString($this->getFirstName()) . ",
+						last_name = " . $App->returnQuotedString($this->getLastName()) . ",
+						date_joinded = " . $App->returnQuotedString($this->getDateJoined()) . ",
+						is_anonymous = " . $App->returnQuotedString($this->getIsAnonymous()) . ",
+						is_benefit = " . $App->returnQuotedString($this->getIsBenefit()) . "
+					WHERE
+						friend_id = " . $this->getFriendID();
 
 				mysql_query($sql, $dbh);
-
-				#$ModLog->setLogAction("INSERT");
+				$result = $this->friend_id;
+				#$ModLog->setLogAction("UPDATE");
 				#$ModLog->insertModLog();
-			}
 
-			$dbc->disconnect();
+				# Set the Primary Employer ID
 		}
+		else {
+			# insert
+			$sql = "INSERT INTO friends (
+						bugzilla_id,
+						first_name,
+						last_name,
+						date_joined,
+						is_anonymous,
+						is_benefit)
+					VALUES (
+						" . $App->returnQuotedString($this->getBugzillaID()) . ",
+						" . $App->returnQuotedString($this->getFirstName()) . ",
+						" . $App->returnQuotedString($this->getLastName()) . ",
+						" . $App->returnQuotedString($this->getDateJoined()) . ",
+						" . $App->returnQuotedString($this->getIsAnonymous()) . ",
+						" . $App->returnQuotedString($this->getIsBenefit()) . ")";
+			mysql_query($sql, $dbh);
+			$result = mysql_insert_id($dbh);
+			#$ModLog->setLogAction("INSERT");
+			#$ModLog->insertModLog();
+		}
+
+		$dbc->disconnect();
+	return $result;
 	}
 
 
-	function selectFriend($_fieldname, $_searchfor) {
+	function selectFriend($_friend_id) {
 
-		if( ($_fieldname != "") && ($_searchfor != "")) {
+		if($_friend_id != "") {
 			$App = new App();
 
 			$dbc = new DBConnectionRW();
@@ -145,7 +143,7 @@ class Friend {
 							is_anonymous,
 							is_benefit
 					FROM friends 
-					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
+					WHERE friend_id = " . $App->returnQuotedString($_friend_id);
 
 			$result = mysql_query($sql, $dbh);
 
@@ -162,10 +160,10 @@ class Friend {
 		}
 	}
 	
-	function selectFriendExists($_friend_id) {
+	function selectFriendExists($_fieldname, $_searchfor) {
 		$result = 0;
 
-		if($_PersonID != "") {
+		if( ($_fieldname != "") && ($_searchfor != "")) {
 			$App = new App();
 
 			$dbc = new DBConnectionRW();
@@ -173,12 +171,13 @@ class Friend {
 
 			$sql = "SELECT friend_id
 					FROM friends
-					WHERE friend_id = " . $App->returnQuotedString($_friend_id);
+					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
 
 			$result = mysql_query($sql, $dbh);
-			$myrow = mysql_fetch_array($result);
-
-			$result = $myrow['RecordCount'] > 1 ? 1 : 0;
+			if ($result){
+				$myrow = mysql_fetch_array($result);
+				$result = $myrow['RecordCount'] > 1 ? $myrow['friend_id'] : 0;
+			}
 
 			$dbc->disconnect();
 
