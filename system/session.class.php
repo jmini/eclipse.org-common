@@ -24,6 +24,7 @@ class Session {
 	private $updated_at	= "";
 	private $persistent	= 0;
 	private $Friend		= null;
+	private $data		= "";
 	
 	/**
 	 * Default constructor
@@ -32,16 +33,7 @@ class Session {
 	 */
 	function Session($persistent=null) {
 		$this->persistent = $persistent;
-		ini_set('session.referer_check', 'dev.eclipse.org/site_login');
-		session_set_cookie_params(0, "/", ".eclipse.org", false);
-		session_start();
-		
-		if(isset($_SESSION['Friend'])) {
-			$this->setFriend($_SESSION['Friend']);
-		}
-		else {
-			$this->setFriend(new Friend());
-		}
+		$this->validate();			
 	}
 	
 
@@ -61,6 +53,9 @@ class Session {
 	function getFriend() {
 		return $this->Friend;
 	}
+	function getData() {
+		return unserialize($this->data);
+	}
 	
 	function setGID($_gid) {
 		$this->gid = $_gid;
@@ -77,6 +72,9 @@ class Session {
 	function setFriend($_friend) {
 		$this->Friend = $_friend;
 	}
+	function setData($_data) {
+		$this->data = serialize($_data);
+	}
 
 	
 	/**
@@ -85,22 +83,19 @@ class Session {
 	 * @return boolean
 	 */
 	function validate() {
-	  $cookie = (isset($_COOKIE[ECLIPSE_SESSION])?$_COOKIE[ECLIPSE_SESSION]:"");
-      $rValue = 1;
-	  
-      /* if ( (!$this->sqlLoad("gid", $gid)) 
-        	|| $gid != $this->_gid
-        	|| $this->getSubnet() != $this->_subnet) {
+		$cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
+		$rValue = false;
+		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin
-        	setcookie(COOKIE_REMEMBER, "", -36000, "/");
-        	$rValue = 0;
+        	setcookie(ECLIPSE_SESSION, "", -36000, "/", "eclipse.org");
+        	$rValue = false;
         }
         else {
-        	# Update the session updated_at
-        	$this->sqlTouch("updated_at");
+			# TODO: update session?
+			$rValue = true;
         	$this->maintenance();
+        	$this->setFriend($this->getData());
         }
-        SetSessionVar('s_userAcct', $this->_userid);  */
         return $rValue;
 	}
 
@@ -122,6 +117,7 @@ class Session {
 	function create() {
 		# create session on the database
 		$Friend = $this->getFriend();
+		$this->setData($Friend);
 		
 		# need to have a bugzilla ID to log in
 		if($Friend->getBugzillaID() > 0) {
@@ -141,12 +137,14 @@ class Session {
 						gid,
 						bugzilla_id,
 						subnet,
-						updated_at)
+						updated_at,
+						data)
 						VALUES (
 							" . $App->returnQuotedString($this->getGID()) . ",
 							" . $Friend->getBugzillaID() . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
-							NOW())";
+							NOW(),
+							" . $App->returnQuotedString($this->data) . ")";
 
 			mysql_query($sql, $dbh);
 
@@ -154,14 +152,48 @@ class Session {
 			#$ModLog->insertModLog();
 			$dbc->disconnect();
 			
+			$cookie_time = 0;
 			if($this->persistent) {
-				setcookie(ECLIPSE_SESSION, $this->getGID(), time()+3600*24*365, "/", "eclipse.org");
+				$cookie_time = time()+3600*24*365;
 			}
-			global $_SESSION;
-			$_SESSION['Friend'] = $Friend;
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");
+			
 			
 		}
 	}
+	
+	function load($_gid) {
+		# need to have a bugzilla ID to log in
+		
+		$rValue = false;
+		
+		$App = new App();
+		$sql = "SELECT	gid,
+						bugzilla_id,
+						subnet,
+						updated_at,
+						data
+				FROM sessions
+				WHERE gid = " . $App->returnQuotedString($_gid) . "
+					AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
+		
+		$dbc = new DBConnectionRW();
+		$dbh = $dbc->connect();
+		$result = mysql_query($sql, $dbh);
+		if($result && mysql_num_rows($result) > 0) {
+			$rValue = true;
+			$myrow = mysql_fetch_assoc($result);
+			$this->setGID($_gid);
+			$this->setBugzillaID($myrow['bugzilla_id']);
+			$this->setSubnet($myrow['subnet']);
+			$this->setUpdatedAt($myrow['updated_at']);
+			$this->setData($myrow['data']);
+		}
+		$dbc->disconnect();
+		
+		return $rValue;
+	}
+	
 	
 	function maintenance() {
 		# Delete sessions older than 14 days
