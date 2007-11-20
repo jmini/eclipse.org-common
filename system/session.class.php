@@ -152,7 +152,7 @@ class Session {
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
 							'" . $App->returnJSSAfeString($this->data) . "',
-							" . $this->getIsPersistent() . ")";
+							'" . $this->getIsPersistent() . "')";
 
 			mysql_query($sql, $dbh);
 
