@@ -21,6 +21,7 @@ class Session {
 	private $bugzilla_id= 0;
 	private $subnet		= "";
 	private $updated_at	= "";
+	private $persistent	= 0;
 	private $Friend		= null;
 	
 	/**
@@ -28,12 +29,10 @@ class Session {
 	 *
 	 * @return null
 	 */
-	function Session($remember=null) {
+	function Session($persistent=null) {
+		$this->persistent = $persistent;
+		session_set_cookie_params(0, "/", "eclipse.org", false, true);
 		session_start();
-		if($remember) {
-			 # setcookie($cookieName,$cookieValue,time()+3600*24*365,"/");
-		}
-		
 	}
 	
 
@@ -115,7 +114,8 @@ class Session {
 		# create session on the database
 		$Friend = $this->getFriend();
 		
-		if($Friend->getFriendID() > 0) {
+		# need to have a bugzilla ID to log in
+		if($Friend->getBugzillaID() > 0) {
 			$App = new App();
 			$this->setGID(md5(uniqid(rand(),true)));
 			$this->setSubnet($this->getClientSubnet());
@@ -145,7 +145,9 @@ class Session {
 			#$ModLog->insertModLog();
 			$dbc->disconnect();
 			
-			setcookie(ECLIPSE_SESSION, $this->getGID(), time()+3600*24*365, "/", "eclipse.org");
+			if($this->persistent) {
+				setcookie(ECLIPSE_SESSION, $this->getGID(), time()+3600*24*365, "/", "eclipse.org");
+			}
 		}
 	}
 	
