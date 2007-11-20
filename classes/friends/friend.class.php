@@ -162,9 +162,6 @@ class Friend {
 		}
 	}
 	
-	function selectFriend($_bugiz)
-
-
 	function selectFriendExists($_friend_id) {
 		$result = 0;
 
