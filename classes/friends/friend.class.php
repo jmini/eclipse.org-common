@@ -207,5 +207,47 @@ class Friend {
 		}
 		return $result;
 	}
+
+
+	function authenticate($email, $password) {
+	/**
+	 * Authenticate user using bugzilla credentials
+	 * 
+	 * @author droy
+	 * @param string Email address
+	 * @param string password
+	 * @return boolean
+	 * @since 2007-11-20
+	 * 
+	 */
+		$rValue = false;
+		
+		if($email != "" && $password != "") {
+			if (eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
+				$sql = "SELECT
+							userid,
+							LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
+							SUBSTR(realname, @loc+2) AS last_name
+					FROM 
+						profiles 
+					WHERE login_name = '$email' 
+						AND cryptpassword = ENCRYPT('$password', cryptpassword)
+						AND disabledtext = ''";
+				$dbc = new DBConnectionBugs();
+				$dbh = $dbc->connect();
+				$result = mysql_query($sql, $dbh);
+				if($result && mysql_num_rows($result) > 0) {
+					$rValue = true;
+					$myrow = mysql_fetch_assoc($result);
+					$this->setBugzillaID($myrow['userid']);
+					$this->setFirstName($myrow['first_name']);
+					$this->setLastName($myrow['last_name']);					
+				}
+				$dbc->disconnect();
+			}
+		}
+		
+		return $rValue;
+	}
 }
 ?>
