@@ -34,6 +34,13 @@ class Session {
 		$this->persistent = $persistent;
 		session_set_cookie_params(0, "/", "eclipse.org", false, true);
 		session_start();
+		
+		if(isset($_SESSION['Friend'])) {
+			$this->setFriend($_SESSION['Friend']);
+		}
+		else {
+			$this->setFriend(new Friend());
+		}
 	}
 	
 
@@ -149,6 +156,8 @@ class Session {
 			if($this->persistent) {
 				setcookie(ECLIPSE_SESSION, $this->getGID(), time()+3600*24*365, "/", "eclipse.org");
 			}
+			
+			$_SESSION['Friend'] = $this->getFriend();
 		}
 	}
 	
