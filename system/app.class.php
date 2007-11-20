@@ -733,9 +733,9 @@ class App {
 			$a = debug_backtrace();
 			$caller = $a[0]['file'];
 			$validCaller = false;
-			for($i = 0; $i < count($this->validPaths); $i++) {
+			for($i = 0; $i < count($_pathArray); $i++) {
 				# TODO: use regexp's to match the leftmost portion for better security 
-				if(strstr($caller, $this->validPaths[$i])) {
+				if(strstr($caller, $_pathArray[$i])) {
 					$validCaller = true;
 					break;
 				}
