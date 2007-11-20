@@ -329,6 +329,8 @@ class App {
 	
 	function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html) {
 		
+		# OPT1: ob_start();
+		
 		# All web page parameters passed for variable scope
 		
 		if($theme == "") {
@@ -359,6 +361,23 @@ class App {
 		
 		echo $html;
 		include($this->getFooterPath($theme));
+		
+		# OPT1:$starttime = microtime();
+		# OPT1:$html = ob_get_contents();
+		# OPT1:ob_end_clean();
+		
+		# OPT1:$stripped_html = $html;
+		# OPT1:$stripped_html = preg_replace("/^\s*/", "", $stripped_html);
+		# OPT1:$stripped_html = preg_replace("/\s{2,}/", " ", $stripped_html);
+		# OPT1:$stripped_html = preg_replace("/^\t*/", "", $stripped_html);
+		# OPT1:$stripped_html = preg_replace("/\n/", "", $stripped_html);
+		# OPT1:$stripped_html = preg_replace("/>\s</", "><", $stripped_html);
+		# $stripped_html = preg_replace("/<!--.*-->/", "", $stripped_html);
+		# OPT1:$endtime = microtime();
+		
+		# OPT1:echo "<!-- unstripped: " . strlen($html) . " bytes/ stripped: " . strlen($stripped_html) . "bytes - " . sprintf("%.2f", strlen($stripped_html) / strlen($html)) . " Bytes saved: " . (strlen($html) - strlen($stripped_html)) . " Time: " . ($endtime - $starttime) . " -->";
+		# echo $stripped_html;
+		echo $html;
 	}
 	
 	function AddExtraHtmlHeader( $string ) {
@@ -702,6 +721,27 @@ class App {
 				$fileSize = floor($filesizebytes / 1048576) . " MB";
 			}
 			return $fileSize;
+		}
+
+		function useSession() {
+			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
+        	$ssn = new Session();
+        	$ssn->validate();
+        	return $ssn;
+		}
+		
+		function isValidCaller($_pathArray) {
+			$a = debug_backtrace();
+			$caller = $a[0]['file'];
+			$validCaller = false;
+			for($i = 0; $i < count($this->validPaths); $i++) {
+				# TODO: use regexp's to match the leftmost portion for better security 
+				if(strstr($caller, $this->validPaths[$i])) {
+					$validCaller = true;
+					break;
+				}
+			}
+			return $validCaller;			
 		}
 }
 

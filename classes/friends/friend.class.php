@@ -221,7 +221,12 @@ class Friend {
 	 */
 		$rValue = false;
 		
-		if($email != "" && $password != "") {
+		$validPaths = array(
+			"/home/data/httpd/dev.eclipse.org/html/site_login/"
+		);
+		$App = new App();
+		
+		if($email != "" && $password != "" && $App->isValidCaller($validPaths)) {
 			if (eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
 				$sql = "SELECT
 							userid,
@@ -245,7 +250,6 @@ class Friend {
 				$dbc->disconnect();
 			}
 		}
-		
 		return $rValue;
 	}
 }
