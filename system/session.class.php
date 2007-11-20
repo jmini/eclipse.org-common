@@ -13,7 +13,7 @@
 define('ECLIPSE_SESSION', 'ECLIPSESESSION');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class Session {
@@ -126,7 +126,7 @@ class Session {
 			#$ModLog->setLogTable("Person");
 			#$ModLog->setPK1($this->getPersonID());
 
-			$dbc = new DBConnection();
+			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
 
 			$sql = "INSERT INTO sessions (
