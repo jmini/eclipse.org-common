@@ -32,6 +32,7 @@ class Session {
 	 */
 	function Session($persistent=null) {
 		$this->persistent = $persistent;
+		ini_set('session.referer_check', 'dev.eclipse.org/site_login');
 		session_set_cookie_params(0, "/", ".eclipse.org", false);
 		session_start();
 		
@@ -156,8 +157,9 @@ class Session {
 			if($this->persistent) {
 				setcookie(ECLIPSE_SESSION, $this->getGID(), time()+3600*24*365, "/", "eclipse.org");
 			}
+			global $_SESSION;
+			$_SESSION['Friend'] = $Friend;
 			
-			$_SESSION['Friend'] = $this->getFriend();
 		}
 	}
 	
