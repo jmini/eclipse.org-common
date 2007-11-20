@@ -31,7 +31,7 @@ class Session {
 	function Session($remember=null) {
 		session_start();
 		if($remember) {
-			 setcookie($cookieName,$cookieValue,time()+3600*24*365,"/");
+			 # setcookie($cookieName,$cookieValue,time()+3600*24*365,"/");
 		}
 		
 	}
@@ -113,7 +113,9 @@ class Session {
 	
 	function create() {
 		# create session on the database
-		if($this->getFriend()->getFriendID() > 0) {
+		$Friend = $this->getFriend();
+		
+		if($Friend->getFriendID() > 0) {
 			$App = new App();
 			$this->setGID(md5(uniqid(rand(),true)));
 			$this->setSubnet($this->getClientSubnet());
