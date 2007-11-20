@@ -22,7 +22,7 @@ class Session {
 	private $bugzilla_id= 0;
 	private $subnet		= "";
 	private $updated_at	= "";
-	private $persistent	= 0;
+	private $is_persistent	= 0;
 	private $Friend		= null;
 	private $data		= "";
 	
@@ -32,7 +32,7 @@ class Session {
 	 * @return null
 	 */
 	function Session($persistent=null) {
-		$this->persistent = $persistent;
+		$this->is_persistent = $persistent;
 		$this->validate();			
 	}
 	
@@ -56,6 +56,9 @@ class Session {
 	function getData() {
 		return unserialize($this->data);
 	}
+	function getIsPersistent() {
+		return $this->is_persistent;
+	}
 	
 	function setGID($_gid) {
 		$this->gid = $_gid;
@@ -74,6 +77,9 @@ class Session {
 	}
 	function setData($_data) {
 		$this->data = serialize($_data);
+	}
+	function setIsPersistent($_is_persistent) {
+		$this->is_persistent = $_is_persistent;
 	}
 
 	
@@ -132,19 +138,21 @@ class Session {
 
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
-
+			
 			$sql = "INSERT INTO sessions (
 						gid,
 						bugzilla_id,
 						subnet,
 						updated_at,
-						data)
+						data,
+						is_persistent)
 						VALUES (
 							" . $App->returnQuotedString($this->getGID()) . ",
 							" . $Friend->getBugzillaID() . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
-							'" . $App->returnJSSAfeString($this->data) . "')";
+							'" . $App->returnJSSAfeString($this->data) . "',
+							" . $this->getIsPersistent() . ")";
 
 			mysql_query($sql, $dbh);
 
@@ -156,9 +164,7 @@ class Session {
 			if($this->persistent) {
 				$cookie_time = time()+3600*24*365;
 			}
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");
-			
-			
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");			
 		}
 	}
 	
@@ -172,7 +178,8 @@ class Session {
 						bugzilla_id,
 						subnet,
 						updated_at,
-						data
+						data,
+						is_persistent
 				FROM sessions
 				WHERE gid = " . $App->returnQuotedString($_gid) . "
 					AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
@@ -188,6 +195,7 @@ class Session {
 			$this->setSubnet($myrow['subnet']);
 			$this->setUpdatedAt($myrow['updated_at']);
 			$this->data = $myrow['data'];
+			$this->setIsPersistent($myrow['is_persistent']);
 		}
 		$dbc->disconnect();
 		
@@ -196,8 +204,16 @@ class Session {
 	
 	
 	function maintenance() {
-		# Delete sessions older than 14 days
-		#$this->sqlCmd("DELETE FROM {SELF} WHERE updated_at < DATE_SUB(NOW(), INTERVAL 14 DAY)");
+		$dbc = new DBConnectionRW();
+		$dbh = $dbc->connect();
+			
+		$sql = "DELETE FROM sessions 
+				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND is_persistent = 0) 
+				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $this->getGID() . "')"; 
+
+		mysql_query($sql, $dbh);
+
+		$dbc->disconnect();
 	}
 		
 	function getClientSubnet() {

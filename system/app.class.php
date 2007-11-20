@@ -377,7 +377,6 @@ class App {
 		
 		# OPT1:echo "<!-- unstripped: " . strlen($html) . " bytes/ stripped: " . strlen($stripped_html) . "bytes - " . sprintf("%.2f", strlen($stripped_html) / strlen($html)) . " Bytes saved: " . (strlen($html) - strlen($stripped_html)) . " Time: " . ($endtime - $starttime) . " -->";
 		# echo $stripped_html;
-		echo $html;
 	}
 	
 	function AddExtraHtmlHeader( $string ) {
