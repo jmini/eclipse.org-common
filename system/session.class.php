@@ -136,7 +136,7 @@ class Session {
 						updated_at)
 						VALUES (
 							" . $App->returnQuotedString($this->getGID()) . ",
-							" . $this->getBugzillaID() . ",
+							" . $Friend->getBugzillaID() . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW())";
 
