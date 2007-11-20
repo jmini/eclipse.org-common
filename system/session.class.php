@@ -126,7 +126,7 @@ class Session {
 			#$ModLog->setLogTable("Person");
 			#$ModLog->setPK1($this->getPersonID());
 
-			$dbc = new DBConnectionRW();
+			$dbc = new DBConnection();
 			$dbh = $dbc->connect();
 
 			$sql = "INSERT INTO sessions (
