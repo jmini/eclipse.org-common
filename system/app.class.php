@@ -731,7 +731,7 @@ class App {
 		
 		function isValidCaller($_pathArray) {
 			$a = debug_backtrace();
-			$caller = $a[0]['file'];
+			$caller = $a[1]['file'];  # Caller 0 is the class that called App();
 			$validCaller = false;
 			for($i = 0; $i < count($_pathArray); $i++) {
 				# TODO: use regexp's to match the leftmost portion for better security 
