@@ -10,6 +10,8 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 
+define('MAX_LOG_DAYS', 365);
+
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 
 class EvtLog {
@@ -115,11 +117,25 @@ class EvtLog {
 			}
 			
 			$dbc->disconnect();
+			
+			# 1% of each hits will perform clean up	
+			if(rand(0, 100) < 1) {
+				$this->cleanup();
+			}
 		}
 		else {
 			echo "An unknown system error has occurred while logging information.  Please contact the System Administrator.";
 			exit;
 		}
+	}
+	
+	function cleanup() {
+		 $sql = "DELETE FROM SYS_EvtLog WHERE EvtDateTime < " . MAX_LOG_DAYS;
+					
+		$dbc = new DBConnectionRW();
+		$dbh = $dbc->connect();
+		mysql_query($sql, $dbh);
+		$dbc->disconnect();
 	}
 }
 ?>
