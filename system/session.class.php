@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2006 Eclipse Foundation and others.
+ * Copyright (c) 2007 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,7 @@ define('ECLIPSE_SESSION', 'ECLIPSESESSION');
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 
 class Session {
 
@@ -31,7 +32,7 @@ class Session {
 	 *
 	 * @return null
 	 */
-	function Session($persistent=0) {
+	function Session($persistent=null) {
 		$this->is_persistent = $persistent;
 		$this->validate();			
 	}
@@ -57,7 +58,7 @@ class Session {
 		return unserialize($this->data);
 	}
 	function getIsPersistent() {
-		return $this->is_persistent;
+		return $this->is_persistent == null ? 0 : $this->is_persistent;
 	}
 	
 	function setGID($_gid) {
@@ -105,19 +106,24 @@ class Session {
         return $rValue;
 	}
 
+
 	function destroy() {
-	  $cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
-      $rValue = 1;
-	  
-/*        if($nbr) {
-        	# TODO: untaint
-        	$sql = "DELETE FROM sessions WHERE userid = " . $nbr;
-        	sqlQuery($sql);
-        	unset($_SESSION['s_userAcct']);
-  			unset($_SESSION['s_userName']);
-  			unset($_SESSION['s_userType']);
-        }
-      }*/
+		if($this->getBugzillaID() != 0) {
+        	$sql = "DELETE FROM sessions WHERE bugzilla_id = " . $this->getBugzillaID();
+        	$dbc = new DBConnectionRW();
+			$dbh = $dbc->connect();
+			mysql_query($sql, $dbh);
+			$dbc->disconnect();
+			setcookie(ECLIPSE_SESSION, "", -36000, "/", "eclipse.org");
+			
+			# Log this event
+			$EvtLog = new EvtLog();
+			$EvtLog->setLogTable("sessions");
+			$EvtLog->setPK1($this->getBugzillaID());
+			$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+			$EvtLog->setLogAction("DELETE");
+			$EvtLog->insertModLog("apache");
+		}
 	}
 	
 	function create() {
@@ -132,10 +138,6 @@ class Session {
 			$this->setSubnet($this->getClientSubnet());
 			$this->setUpdatedAt($App->getCURDATE());
 			
-			#$ModLog = new ModLog();
-			#$ModLog->setLogTable("Person");
-			#$ModLog->setPK1($this->getPersonID());
-
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
 			
@@ -155,10 +157,17 @@ class Session {
 							'" . $this->getIsPersistent() . "')";
 
 			mysql_query($sql, $dbh);
-
-			#$ModLog->setLogAction("INSERT");
-			#$ModLog->insertModLog();
 			$dbc->disconnect();
+			
+			
+			# Log this event
+			$EvtLog = new EvtLog();
+			$EvtLog->setLogTable("sessions");
+			$EvtLog->setPK1($this->getBugzillaID());
+			$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+			$EvtLog->setLogAction("INSERT");
+			$EvtLog->insertModLog("apache");
+
 			
 			$cookie_time = 0;
 			if($this->persistent) {
@@ -172,33 +181,33 @@ class Session {
 		# need to have a bugzilla ID to log in
 		
 		$rValue = false;
-		
-		$App = new App();
-		$sql = "SELECT	gid,
-						bugzilla_id,
-						subnet,
-						updated_at,
-						data,
-						is_persistent
-				FROM sessions
-				WHERE gid = " . $App->returnQuotedString($_gid) . "
-					AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
-		
-		$dbc = new DBConnectionRW();
-		$dbh = $dbc->connect();
-		$result = mysql_query($sql, $dbh);
-		if($result && mysql_num_rows($result) > 0) {
-			$rValue = true;
-			$myrow = mysql_fetch_assoc($result);
-			$this->setGID($_gid);
-			$this->setBugzillaID($myrow['bugzilla_id']);
-			$this->setSubnet($myrow['subnet']);
-			$this->setUpdatedAt($myrow['updated_at']);
-			$this->data = $myrow['data'];
-			$this->setIsPersistent($myrow['is_persistent']);
-		}
-		$dbc->disconnect();
-		
+		if($_gid != "") {
+			$App = new App();
+			$sql = "SELECT	gid,
+							bugzilla_id,
+							subnet,
+							updated_at,
+							data,
+							is_persistent
+					FROM sessions
+					WHERE gid = " . $App->returnQuotedString($_gid) . "
+						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
+			
+			$dbc = new DBConnectionRW();
+			$dbh = $dbc->connect();
+			$result = mysql_query($sql, $dbh);
+			if($result && mysql_num_rows($result) > 0) {
+				$rValue = true;
+				$myrow = mysql_fetch_assoc($result);
+				$this->setGID($_gid);
+				$this->setBugzillaID($myrow['bugzilla_id']);
+				$this->setSubnet($myrow['subnet']);
+				$this->setUpdatedAt($myrow['updated_at']);
+				$this->data = $myrow['data'];
+				$this->setIsPersistent($myrow['is_persistent']);
+			}
+			$dbc->disconnect();
+		}		
 		return $rValue;
 	}
 	
