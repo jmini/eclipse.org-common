@@ -414,6 +414,8 @@ class App {
 			$rValue = $_POST[$_param_name];
 		}
 		
+		# sanitize parameter
+		
 		return $rValue;
 	}
 
@@ -741,6 +743,20 @@ class App {
 				}
 			}
 			return $validCaller;			
+		}
+
+		function sqlSanitize($_value, $_dbh) {
+		/**
+		 * Sanitize incoming value to prevent SQL injections
+		 * @param string value to sanitize
+		 * @param dbh database resource to use
+		 * @return string santized string
+		 */
+			if(get_magic_quotes_gpc()) {
+				$_value = stripslashes($_value);
+			}
+			$_value = mysql_real_escape_string($_value, $_dbh);
+        	return $_value;
 		}
 }
 

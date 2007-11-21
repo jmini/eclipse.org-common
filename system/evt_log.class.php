@@ -101,11 +101,11 @@ class EvtLog {
 						EvtDateTime)
 					VALUES (
 						NULL,
-						" . $App->returnQuotedString($this->getLogTable()) . ",
-						" . $App->returnQuotedString($this->getPK1()) . ",
-						" . $App->returnQuotedString($this->getPK2()) . ",
-						" . $App->returnQuotedString($this->getLogAction()) . ",
-						" . $App->returnQuotedString($uid) . ",
+						" . $App->returnQuotedString($App->sqlSanitize($this->getLogTable(),$dbh)) . ",
+						" . $App->returnQuotedString($App->sqlSanitize($this->getPK1(),$dbh)) . ",
+						" . $App->returnQuotedString($App->sqlSanitize($this->getPK2(),$dbh)) . ",
+						" . $App->returnQuotedString($App->sqlSanitize($this->getLogAction(),$dbh)) . ",
+						" . $App->returnQuotedString($App->sqlSanitize($uid),$dbh) . ",
 						NOW()
 					)";
 					
@@ -130,7 +130,7 @@ class EvtLog {
 	}
 	
 	function cleanup() {
-		 $sql = "DELETE FROM SYS_EvtLog WHERE EvtDateTime < " . MAX_LOG_DAYS;
+		$sql = "DELETE FROM SYS_EvtLog WHERE EvtDateTime < " . MAX_LOG_DAYS;
 					
 		$dbc = new DBConnectionRW();
 		$dbh = $dbc->connect();

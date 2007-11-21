@@ -84,14 +84,14 @@ class Friend {
 		if($this->selectFriendExists("friend_id", $this->getFriendID())) {
 			# update
 			$sql = "UPDATE friends SET
-						bugzilla_id = " . $App->returnQuotedString($this->getBugzillaID()) . ",
-						first_name = " . $App->returnQuotedString($this->getFirstName()) . ",
-						last_name = " . $App->returnQuotedString($this->getLastName()) . ",
-						date_joinded = " . $App->returnQuotedString($this->getDateJoined()) . ",
-						is_anonymous = " . $App->returnQuotedString($this->getIsAnonymous()) . ",
-						is_benefit = " . $App->returnQuotedString($this->getIsBenefit()) . "
+						bugzilla_id = " . $App->returnQuotedString($App->sqlSanitize($this->getBugzillaID(), $dbh)) . ",
+						first_name = " . $App->returnQuotedString($App->sqlSanitize($this->getFirstName(), $dbh)) . ",
+						last_name = " . $App->returnQuotedString($App->sqlSanitize($this->getLastName(), $dbh)) . ",
+						date_joinded = " . $App->returnQuotedString($App->sqlSanitize($this->getDateJoined(), $dbh)) . ",
+						is_anonymous = " . $App->returnQuotedString($App->sqlSanitize($this->getIsAnonymous(), $dbh)) . ",
+						is_benefit = " . $App->returnQuotedString($App->sqlSanitize($this->getIsBenefit(), $dbh)) . "
 					WHERE
-						friend_id = " . $this->getFriendID();
+						friend_id = " . $App->sqlSanitize($this->getFriendID(), $dbh);
 
 				mysql_query($sql, $dbh);
 				$result = $this->friend_id;
@@ -134,7 +134,8 @@ class Friend {
 
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
-
+			$_friend_id = $App->sqlSanitize($_friend_id, $dbh);
+			
 			$sql = "SELECT friend_id,
 							bugzilla_id,
 							first_name,
@@ -168,7 +169,9 @@ class Friend {
 
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
-
+			$_fieldname = $App->sqlSanitize($_fieldname, $dbh);
+			$_searchfor = $App->sqlSanitize($_searchfor, $dbh);
+			
 			$sql = "SELECT friend_id
 					FROM friends
 					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
@@ -193,7 +196,8 @@ class Friend {
 
 			$dbc = new DBConnectionBugs();
 			$dbh = $dbc->connect();
-
+			$_email 		= $App->sqlSanitize($_email, $dbh);
+			
 			$sql = "SELECT userid
 					FROM profiles
 					WHERE login_name = " . $App->returnQuotedString($_email);
@@ -228,6 +232,12 @@ class Friend {
 		
 		if($email != "" && $password != "" && $App->isValidCaller($validPaths)) {
 			if (eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
+
+				$dbc = new DBConnectionBugs();
+				$dbh = $dbc->connect();
+				$email 		= $App->sqlSanitize($email, $dbh);
+				$password 	= $App->sqlSanitize($password, $dbh);
+
 				$sql = "SELECT
 							userid,
 							LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
