@@ -135,6 +135,7 @@ class Session {
 			$this->setGID(md5(uniqid(rand(),true)));
 			$this->setSubnet($this->getClientSubnet());
 			$this->setUpdatedAt($App->getCURDATE());
+			$this->setBugzillaID($Friend->getBugzillaID());
 			
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
