@@ -32,11 +32,10 @@ class Session {
 	 *
 	 * @return null
 	 */
-	function Session($persistent=null) {
-		$this->is_persistent = $persistent;
+	function Session($persistent=0) {
+		$this->setIsPersistent($persistent);
 		$this->validate();			
 	}
-	
 
 	
 	function getGID() {
@@ -106,7 +105,6 @@ class Session {
         return $rValue;
 	}
 
-
 	function destroy() {
 		if($this->getBugzillaID() != 0) {
         	$sql = "DELETE FROM sessions WHERE bugzilla_id = " . $this->getBugzillaID();
@@ -125,7 +123,7 @@ class Session {
 			$EvtLog->insertModLog("apache");
 		}
 	}
-	
+
 	function create() {
 		# create session on the database
 		$Friend = $this->getFriend();
@@ -170,13 +168,13 @@ class Session {
 
 			
 			$cookie_time = 0;
-			if($this->persistent) {
+			if($this->getIsPersistent()) {
 				$cookie_time = time()+3600*24*365;
 			}
 			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");			
 		}
 	}
-	
+
 	function load($_gid) {
 		# need to have a bugzilla ID to log in
 		
@@ -210,8 +208,7 @@ class Session {
 		}		
 		return $rValue;
 	}
-	
-	
+
 	function maintenance() {
 		$dbc = new DBConnectionRW();
 		$dbh = $dbc->connect();
