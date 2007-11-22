@@ -53,7 +53,7 @@ class Session {
 		return $this->updated_at;
 	}
 	function getFriend() {
-		if(!isset($this->Friend)) {
+		if($this->Friend == null) {
 			$this->Friend = new Friend();
 		}
 		return $this->Friend;
