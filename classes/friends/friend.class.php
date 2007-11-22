@@ -162,7 +162,7 @@ class Friend {
 	}
 
 	
-	function selectFriendExists($_fieldname, $_searchfor) {
+	function selectFriendID($_fieldname, $_searchfor) {
 		$result = 0;
 
 		if( ($_fieldname != "") && ($_searchfor != "")) {
@@ -180,7 +180,7 @@ class Friend {
 			$result = mysql_query($sql, $dbh);
 			if ($result){
 				$myrow = mysql_fetch_array($result);
-				$result = $myrow['RecordCount'] > 1 ? $myrow['friend_id'] : 0;
+				$result = $myrow['friend_id'];
 			}
 
 			$dbc->disconnect();
@@ -258,7 +258,7 @@ class Friend {
 					$this->setBugzillaID($myrow['userid']);
 					
 					# Load up the rest of the Friend record
-					$friend_id = $this->selectFriendExists("bugzilla_id", $this->getBugzillaID());
+					$friend_id = $this->selectFriendID("bugzilla_id", $this->getBugzillaID());
 					if($friend_id > 0) {
 						$this->selectFriend($friend_id);
 					}
