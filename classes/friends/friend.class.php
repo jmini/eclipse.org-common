@@ -160,6 +160,7 @@ class Friend {
 			$dbc->disconnect();
 		}
 	}
+
 	
 	function selectFriendExists($_fieldname, $_searchfor) {
 		$result = 0;
@@ -253,7 +254,16 @@ class Friend {
 				if($result && mysql_num_rows($result) > 0) {
 					$rValue = true;
 					$myrow = mysql_fetch_assoc($result);
+					
 					$this->setBugzillaID($myrow['userid']);
+					
+					# Load up the rest of the Friend record
+					$friend_id = $this->selectFriendExists("bugzilla_id", $this->getBugzillaID());
+					if($friend_id > 0) {
+						$this->selectFriend($friend_id);
+					}
+					
+					# Override the friend record with (known good) Bugzilla info
 					$this->setFirstName($myrow['first_name']);
 					$this->setLastName($myrow['last_name']);					
 				}
