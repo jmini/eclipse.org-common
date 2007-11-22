@@ -12,6 +12,7 @@
 
 define('ECLIPSE_SESSION', 'ECLIPSESESSION');
 define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
+define('LOGINPAGE', 'https://dev.eclipse.org/site_login/');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
