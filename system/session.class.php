@@ -11,6 +11,7 @@
  *******************************************************************************/
 
 define('ECLIPSE_SESSION', 'ECLIPSESESSION');
+define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
@@ -149,11 +150,11 @@ class Session {
 						is_persistent)
 						VALUES (
 							" . $App->returnQuotedString($this->getGID()) . ",
-							" . $Friend->getBugzillaID() . ",
+							" . $App->sqlSanitize($Friend->getBugzillaID() ,$dbh) . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
 							'" . $App->returnJSSAfeString($this->data) . "',
-							'" . $this->getIsPersistent() . "')";
+							'" . $App->sqlSanitize($this->getIsPersistent(),$dbh) . "')";
 
 			mysql_query($sql, $dbh);
 			$dbc->disconnect();
@@ -172,7 +173,15 @@ class Session {
 			if($this->getIsPersistent()) {
 				$cookie_time = time()+3600*24*365;
 			}
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");			
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");
+
+			# add session to the .htaccess file
+			# TODO: implement a smart locking
+			$fh = fopen(HTACCESS, 'a') or die("can't open file");
+			$new_line = 'SetEnvIf Cookie "' . $this->getGID() . '" eclipsefriend=1\n';
+			fwrite($fh, $new_line);
+			fclose($fh);
+			
 		}
 	}
 
@@ -181,6 +190,9 @@ class Session {
 		
 		$rValue = false;
 		if($_gid != "") {
+			$dbc = new DBConnectionRW();
+			$dbh = $dbc->connect();
+			
 			$App = new App();
 			$sql = "SELECT	gid,
 							bugzilla_id,
@@ -189,11 +201,9 @@ class Session {
 							data,
 							is_persistent
 					FROM sessions
-					WHERE gid = " . $App->returnQuotedString($_gid) . "
+					WHERE gid = " . $App->sqlSanitize($App->returnQuotedString($_gid),$dbh) . "
 						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
 			
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
 			$result = mysql_query($sql, $dbh);
 			if($result && mysql_num_rows($result) > 0) {
 				$rValue = true;
@@ -216,7 +226,7 @@ class Session {
 			
 		$sql = "DELETE FROM sessions 
 				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND is_persistent = 0) 
-				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $this->getGID() . "')"; 
+				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), $dbh) . "')"; 
 
 		mysql_query($sql, $dbh);
 

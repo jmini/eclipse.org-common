@@ -413,9 +413,6 @@ class App {
 		if(isset($_POST[$_param_name]) && $_method != "GET") {	
 			$rValue = $_POST[$_param_name];
 		}
-		
-		# sanitize parameter
-		
 		return $rValue;
 	}
 
