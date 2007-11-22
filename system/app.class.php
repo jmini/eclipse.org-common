@@ -721,10 +721,12 @@ class App {
 			return $fileSize;
 		}
 
-		function useSession() {
+		function useSession($required="") {
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
         	$ssn = new Session();
-        	$ssn->validate();
+        	if ($ssn->validate() && $required == "required") {
+        		$ssn->redirectToLogin();
+			}
         	return $ssn;
 		}
 		

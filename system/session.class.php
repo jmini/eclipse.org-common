@@ -52,6 +52,9 @@ class Session {
 		return $this->updated_at;
 	}
 	function getFriend() {
+		if(!isset($this->Friend)) {
+			$this->Friend = new Friend();
+		}
 		return $this->Friend;
 	}
 	function getData() {
@@ -237,6 +240,12 @@ class Session {
 	function getClientSubnet() {
 		# return class-c subnet
 		return substr($_SERVER['REMOTE_ADDR'], 0, strrpos($_SERVER['REMOTE_ADDR'], ".")) . ".0";
-	}	
+	}
+	
+	function redirectToLogin() {
+		header("Location: " . LOGINPAGE);
+		exit;
+	}
+	
 }    
 ?>
