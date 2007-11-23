@@ -206,9 +206,8 @@ class Session {
 							data,
 							is_persistent
 					FROM sessions
-					WHERE gid = " . $App->sqlSanitize($App->returnQuotedString($_gid),$dbh) . "
+					WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid,$dbh)) . "
 						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
-			echo $sql;
 			
 			$result = mysql_query($sql, $dbh);
 			if($result && mysql_num_rows($result) > 0) {
