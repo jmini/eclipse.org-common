@@ -235,8 +235,36 @@ class Session {
 				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), $dbh) . "')"; 
 
 		mysql_query($sql, $dbh);
-
 		$dbc->disconnect();
+		
+		# 1/500 of each maintenance calls will perform htaccess cleanup	
+		if(rand(0, 500) < 1) {
+			$this->regenrate_htaccess();
+		}
+	}
+	
+	private function regenrate_htaccess() {
+		$dbc = new DBConnectionRW();
+		$dbh = $dbc->connect();
+		$App = new App();
+			
+		$sql = "SELECT gid 
+				FROM sessions AS S 
+					INNER JOIN friends AS F ON F.bugzilla_id = S.bugzilla_id 
+				WHERE F.is_benefit = 1"; 
+
+		$result = mysql_query($sql, $dbh);
+		$new_file = "";
+		while($myrow = mysql_fetch_assoc($result)) {
+			$new_file .= "SetEnvIf Cookie \"" . $myrow['gid'] . "\" eclipsefriend=1\n";	
+		}
+		$dbc->disconnect();
+		
+		if($new_file != "") {
+			$fh = fopen(HTACCESS, 'w') or die("can't open file");
+			fwrite($fh, $new_file);
+			fclose($fh);
+		}
 	}
 		
 	function getClientSubnet() {
