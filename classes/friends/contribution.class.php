@@ -83,12 +83,12 @@ class Contribution {
 					message,
 					transaction_id)
 					VALUES (
-					" . $App->returnQuotedString($App->sqlSerialze($this->getFriendID(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSerialze($this->getContributionID(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getFriendID(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getContributionID(), $dbh)) . ",
 					" . $default_date_expired . ",
-					" . $App->returnQuotedString($App->sqlSerialze($this->getAmount(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSerialze($this->getMessage(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSerialze($this->getTransactionID(), $dbh)) . ")";
+					" . $App->returnQuotedString($App->sqlSanitize($this->getAmount(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getMessage(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getTransactionID(), $dbh)) . ")";
 			mysql_query($sql, $dbh);
 		}
 
@@ -107,7 +107,7 @@ class Contribution {
 
 			$sql = "SELECT transaction_id
 					FROM friends_contributions
-					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitze($_transaction_id, $dbh));
+					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitize($_transaction_id, $dbh));
 
 			$result = mysql_query($sql, $dbh);
 			if ($result)
