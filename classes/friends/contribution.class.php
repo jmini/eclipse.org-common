@@ -16,7 +16,7 @@ class Contribution {
 	
 	private $friend_id = "";
 	private $contribution_id = "";
-	private $date_expired = "";
+	private $date_expired = NULL;
 	private $amount = "";
 	private $message = "";
 	private $transaction_id = "";
@@ -70,6 +70,10 @@ class Contribution {
 		}
 		else
 		{
+			if ($this->date_expired == NULL)
+				$default_date_expired = "DATE_ADD(NOW(), INTERVAL 1 YEAR)";
+			else
+				$default_date_expired = $App->returnQuotedString($App->sqlSerialze($this->date_expired, $dbh));
 			# insert
 			$sql = "INSERT INTO friends_contributions (
 					friend_id,
@@ -79,12 +83,12 @@ class Contribution {
 					message,
 					transaction_id)
 					VALUES (
-					" . $App->returnQuotedString($this->getFriendID()) . ",
-					" . $App->returnQuotedString($this->getContributionID()) . ",
-					" . $App->returnQuotedString($this->getDateExpired()) . ",
-					" . $App->returnQuotedString($this->getAmount()) . ",
-					" . $App->returnQuotedString($this->getMessage()) . ",
-					" . $App->returnQuotedString($this->getTransactionID()) . ")";
+					" . $App->returnQuotedString($App->sqlSerialze($this->getFriendID(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSerialze($this->getContributionID(), $dbh)) . ",
+					" . $default_date_expired . ",
+					" . $App->returnQuotedString($App->sqlSerialze($this->getAmount(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSerialze($this->getMessage(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSerialze($this->getTransactionID(), $dbh)) . ")";
 			mysql_query($sql, $dbh);
 		}
 
@@ -93,7 +97,7 @@ class Contribution {
 	}
 	
 	function selectContributionExists($_transaction_id){
-		$result = 0;
+		$retVal = FALSE;
 		if ($_transaction_id != "")
 		{
 			$App = new App();
@@ -101,21 +105,22 @@ class Contribution {
 			$dbc = new DBConnectionRW();
 			$dbh = $dbc->connect();
 
-			$sql = "SELECT transactionID
+			$sql = "SELECT transaction_id
 					FROM friends_contributions
-					WHERE transaction_id = " . $App->returnQuotedString($_transaction_id);
+					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitze($_transaction_id, $dbh));
 
 			$result = mysql_query($sql, $dbh);
 			if ($result)
 			{	
 				$myrow = mysql_fetch_array($result);
-				$result = $myrow['RecordCount'] > 1 ? 1 : 0;
+				if ($myrow['transaction_id'] == $_transaction_id)
+				$retVal = TRUE;
 			}
 
 			$dbc->disconnect();
 
 		}
-		return $result;			
+		return $retVal;			
 	}
 	
 	function selectContribution($_contribution_id)
@@ -133,7 +138,7 @@ class Contribution {
 							message,
 							transaction,
 					FROM friends_contributions 
-					WHERE contribution_id = " . $App->returnQuotedString($_contribution_id);
+					WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($_contribution_id, $dbh));
 
 			$result = mysql_query($sql, $dbh);
 
