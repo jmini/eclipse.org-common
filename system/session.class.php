@@ -228,6 +228,7 @@ class Session {
 	function maintenance() {
 		$dbc = new DBConnectionRW();
 		$dbh = $dbc->connect();
+		$App = new App();
 			
 		$sql = "DELETE FROM sessions 
 				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND is_persistent = 0) 

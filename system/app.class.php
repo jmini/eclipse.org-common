@@ -722,7 +722,6 @@ class App {
 		}
 
 		function useSession($required="") {
-			echo "req: " . $required;
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
         	$ssn = new Session();
         	if ((!$ssn->validate()) && $required == "required") {
