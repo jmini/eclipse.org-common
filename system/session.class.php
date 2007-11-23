@@ -95,6 +95,7 @@ class Session {
 	 */
 	function validate() {
 		$cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
+		echo "cookie: " . $cookie;
 		$rValue = false;
 		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin

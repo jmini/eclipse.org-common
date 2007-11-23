@@ -725,7 +725,7 @@ class App {
 			echo "req: " . $required;
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
         	$ssn = new Session();
-        	if (! ($ssn->validate()) && $required == "required") {
+        	if ((!$ssn->validate()) && $required == "required") {
         		$ssn->redirectToLogin();
 			}
         	return $ssn;
