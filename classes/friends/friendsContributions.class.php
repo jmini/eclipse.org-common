@@ -10,8 +10,8 @@
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/contribution.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
+require_once("classes/contribution.class.php");
+require_once("classes/friend.class.php");
 
 class FriendsContributions {
 	private $friend_id;
@@ -37,7 +37,7 @@ class FriendsContributions {
 	function getFriendObject() {
 		return $this->friendObject;
 	}
-	function getCategoryObject() {
+	function getContributionObject() {
 		return $this->contributionObject;
 	}
 	
