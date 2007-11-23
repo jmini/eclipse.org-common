@@ -19,7 +19,7 @@ class Friend {
 	private $bugzilla_id	= "";
 	private $first_name		= "";
 	private $last_name		= "";
-	private $date_joined	= "";
+	private $date_joined	= NULL;
 	private $is_anonymous	= 0;
 	private $is_benefit		= 0;
 
@@ -71,7 +71,7 @@ class Friend {
 	}
 	
 	function insertUpdateFriend() {
-		$result = 0;
+		$retVal = 0;
 
 		$App = new App();
 		#$ModLog = new ModLog();
@@ -80,21 +80,25 @@ class Friend {
 
 		$dbc = new DBConnectionRW();
 		$dbh = $dbc->connect();
-
-		if($this->selectFriendExists("friend_id", $this->getFriendID())) {
+		if ($this->date_joined == NULL)
+			$default_date_joined = "NOW()";
+		else
+			$default_date_joined = $App->returnQuotedString($this->date_joined);
+		
+		if($this->selectFriendID("friend_id", $this->getFriendID())) {
 			# update
 			$sql = "UPDATE friends SET
 						bugzilla_id = " . $App->returnQuotedString($App->sqlSanitize($this->getBugzillaID(), $dbh)) . ",
 						first_name = " . $App->returnQuotedString($App->sqlSanitize($this->getFirstName(), $dbh)) . ",
 						last_name = " . $App->returnQuotedString($App->sqlSanitize($this->getLastName(), $dbh)) . ",
-						date_joinded = " . $App->returnQuotedString($App->sqlSanitize($this->getDateJoined(), $dbh)) . ",
+						date_joinded = " . $default_date_joined . ",
 						is_anonymous = " . $App->returnQuotedString($App->sqlSanitize($this->getIsAnonymous(), $dbh)) . ",
 						is_benefit = " . $App->returnQuotedString($App->sqlSanitize($this->getIsBenefit(), $dbh)) . "
 					WHERE
 						friend_id = " . $App->sqlSanitize($this->getFriendID(), $dbh);
 
 				mysql_query($sql, $dbh);
-				$result = $this->friend_id;
+				$retVal = $this->friend_id;
 				#$ModLog->setLogAction("UPDATE");
 				#$ModLog->insertModLog();
 
@@ -113,17 +117,17 @@ class Friend {
 						" . $App->returnQuotedString($this->getBugzillaID()) . ",
 						" . $App->returnQuotedString($this->getFirstName()) . ",
 						" . $App->returnQuotedString($this->getLastName()) . ",
-						" . $App->returnQuotedString($this->getDateJoined()) . ",
+						" . $default_date_joined . ",
 						" . $App->returnQuotedString($this->getIsAnonymous()) . ",
 						" . $App->returnQuotedString($this->getIsBenefit()) . ")";
 			mysql_query($sql, $dbh);
-			$result = mysql_insert_id($dbh);
+			$retVal = mysql_insert_id($dbh);
 			#$ModLog->setLogAction("INSERT");
 			#$ModLog->insertModLog();
 		}
 
 		$dbc->disconnect();
-	return $result;
+	return $retVal;
 	}
 
 
@@ -160,10 +164,9 @@ class Friend {
 			$dbc->disconnect();
 		}
 	}
-
 	
 	function selectFriendID($_fieldname, $_searchfor) {
-		$result = 0;
+		$retVal = 0;
 
 		if( ($_fieldname != "") && ($_searchfor != "")) {
 			$App = new App();
@@ -180,13 +183,13 @@ class Friend {
 			$result = mysql_query($sql, $dbh);
 			if ($result){
 				$myrow = mysql_fetch_array($result);
-				$result = $myrow['friend_id'];
+				$retVal = $myrow['friend_id'];
 			}
 
 			$dbc->disconnect();
 
 		}
-		return $result;
+		return $retVal;
 	}
 	
 	function getBugzillaIDFromEmail($_email) {
@@ -270,6 +273,7 @@ class Friend {
 				$dbc->disconnect();
 			}
 		}
+		
 		return $rValue;
 	}
 }
