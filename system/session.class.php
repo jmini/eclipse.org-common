@@ -95,7 +95,6 @@ class Session {
 	 */
 	function validate() {
 		$cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
-		echo "cookie: " . $cookie;
 		$rValue = false;
 		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin
@@ -209,6 +208,7 @@ class Session {
 					FROM sessions
 					WHERE gid = " . $App->sqlSanitize($App->returnQuotedString($_gid),$dbh) . "
 						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
+			echo $sql;
 			
 			$result = mysql_query($sql, $dbh);
 			if($result && mysql_num_rows($result) > 0) {
