@@ -24,10 +24,10 @@ class Link {
 	#
 	#*****************************************************************************	
 	
-	var $Text	= "";
-	var $URL	= "";
-	var $Target	= "";
-	var $Level = 0;
+	private $Text	= "";
+	private $URL	= "";
+	private $Target	= "";
+	private $Level = 0;
 	
 	
 	function getText() {

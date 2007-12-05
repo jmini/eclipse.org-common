@@ -25,9 +25,9 @@ class Menu {
 	#
 	#*****************************************************************************	
 	
-	var $MenuItemList = array();
+	private $MenuItemList = array();
 	
-	var $projectBranding = "";
+	private $projectBranding = "";
 
 	function getProjectBranding() {
 	  return $this->projectBranding;

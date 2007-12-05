@@ -27,7 +27,7 @@ class Nav {
 	#
 	#*****************************************************************************	
 	
-	var $LinkList = array();
+	private $LinkList = array();
 	
 	
 	function getLinkList() {

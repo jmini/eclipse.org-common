@@ -25,28 +25,28 @@ class App {
 	#
 	#*****************************************************************************
 
-	var $APPVERSION 	= "1.0";
-	var $APPNAME		= "Eclipse.org";
+	private $APPVERSION 	= "1.0";
+	private $APPNAME		= "Eclipse.org";
 	
 	
-	var $DEFAULT_ROW_HEIGHT	= 20;
+	private $DEFAULT_ROW_HEIGHT	= 20;
 	
-	var $POST_MAX_SIZE		= 262144;   # 256KB Max post
-	var $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
-	var $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
-	var $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
+	private $POST_MAX_SIZE		= 262144;   # 256KB Max post
+	private $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
+	private $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
+	private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
 	
-	var $WWW_PREFIX			= "";  # default is relative
+	private $WWW_PREFIX			= "";  # default is relative
 	
 	# Additional page-related variables
-	var $ExtraHtmlHeaders   = "";
-	var $PageRSS			= "";
-	var $PageRSSTitle		= "";
+	private $ExtraHtmlHeaders   = "";
+	private $PageRSS			= "";
+	private $PageRSSTitle		= "";
 	
-	var $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
+	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
 	# Set to TRUE to disable all database operations
-	var $DB_READ_ONLY		= false;
+	private $DB_READ_ONLY		= false;
 	
 	# Default constructor
 	function App() {
