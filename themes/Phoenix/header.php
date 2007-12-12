@@ -32,12 +32,10 @@
 	<div id="header-graphic" class="eclipse-main">
 		<a href="/"><img src="/eclipse.org-common/themes/Phoenix/images/eclipse_home_header.jpg" alt="" /></a><h1>Eclipse</h1>	
 	</div>
-	<div id="header-global-holder"  class="eclipse-main-global">
-		
+	<div id="header-global-holder" class="eclipse-main-global">
 		<div id="header-global-links">
 			<ul>
-				<li><a href="/org/foundation/contact.php" class="first_one">Contact</a></li>
-				<li><a href="/legal/">Legal</a></li>
+				<li><a href="/org/foundation/contact.php" class="first_one">Contact</a></li><li><a href="/legal/">Legal</a></li>
 			</ul>
 		</div>
 		<div id="header-icons">
@@ -45,5 +43,4 @@
 			<a href="http://www.eclipseplugincentral.com"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_plugin.png" width="28" height="28" alt="Eclipse Plugin Central" title="Eclipse Plugin Central" /></a>
 			<a href="http://www.planeteclipse.org"><img src="/eclipse.org-common/themes/Phoenix/images/Icon_planet.png" width="28" height="28" alt="Planet Eclipse" title="Planet Eclipse" /></a>
 		</div>
-	</div>
-</div>
+	</div></div>
