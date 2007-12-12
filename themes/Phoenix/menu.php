@@ -10,8 +10,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 ?>
-<div id="header-menu">
-	<div id="header-nav">
+<div id="header-menu"><div id="header-nav">
 		<ul>
 <?php
 	global $App;
@@ -40,17 +39,10 @@
 			}
 		?>
 		</ul>
-
 	</div>
 	<div id="header-utils">
 		<form action="/search/search.cgi" method="get">
-				<input type="hidden" value="All" name="t"/>
-				<input type="hidden" value="Downloads" name="t"/>
-				<input type="hidden" value="Live" name="t"/>
-				<input type="hidden" value="Wiki" name="t"/>
-				<input type="hidden" value="574a74" name="wf"/>
 				<input class="input" type="text" value="" name="q"/>
-
 				<input class="button" type="image" onclick="this.submit();" alt="Search" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif" width="54" height="18" />
 		</form>
 		<ul>
@@ -62,7 +54,4 @@
 			?>
 			<li class="text_size"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
 		</ul>
-	</div>
-</div>
-
-
+	</div></div>
