@@ -43,7 +43,7 @@
 	<div id="header-utils">
 		<form action="/search/search.cgi" method="get">
 				<input class="input" type="text" value="" name="q"/>
-				<input class="button" type="image" onclick="this.submit();" alt="Search" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif" width="54" height="18" />
+				<input class="button" type="image" onclick="this.submit();" alt="Search" title="Search" src="/eclipse.org-common/themes/Phoenix/images/search_btn.gif"/>
 		</form>
 		<ul>
 			<?php
