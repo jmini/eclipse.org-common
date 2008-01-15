@@ -34,17 +34,12 @@
 <div id="header">
 	<a href="/"><img src="/eclipse.org-common/themes/Miasma/images/header_logo.gif" alt="Eclipse Logo" class="logo" border="0" height="71" width="128" /></a>
 	<div id="searchbar">
-		<form method="get" action="<?= $www_prefix ?>/search/search.cgi">
-			<input name="t" value="All" type="hidden" />
-			<input name="t" value="Doc" type="hidden" />
-			<input name="t" value="Downloads" type="hidden" />
-			<input name="t" value="Wiki" type="hidden" />
-			<input type="hidden" name="t" value="Live" />
-			<input name="wf" value="574a74" type="hidden" />
-			<label for="q">Search:</label>
-			<input name="q" id="q" value="" type="text" />			
-			<input class="button" alt="Submit" onclick="this.submit();" type="submit" value="Go" name="searchbtn" id="searchbtn" />
-		</form>
+<form action="http://www.google.com/cse" id="searchbox_001774807050229944597:xrjquhh7kg8">
+  <input type="hidden" name="cx" value="001774807050229944597:xrjquhh7kg8" />
+  <input class="input" type="text" name="q" size="60" />
+  <input class="button" type="button" name="sa" value="Search" onclick="this.submit();" alt="Search" title="Search" />
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_001774807050229944597%3Axrjquhh7kg8&lang=en"></script>
 	</div>
 	<ul id="headernav">
 		<li class="first"><a href="<?= $www_prefix ?>/org/foundation/contact.php">Contact</a></li>
