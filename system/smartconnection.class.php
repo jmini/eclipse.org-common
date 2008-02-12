@@ -13,10 +13,12 @@
 
 	if (file_exists("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php")) {
 		require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php";
-		require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection_epic_ro.class.php";		
+		require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection_epic_ro.class.php";	
+		require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection_live_rw.class.php";	
 	} else {
 		require_once ($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/dbconnection.class.php");
-		require_once ($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/dbconnection_epic_ro.class.php");		
+		require_once ($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/dbconnection_epic_ro.class.php");
+		require_once ($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/dbconnection_live_rw.class.php");		
 	}
 
 ?>
