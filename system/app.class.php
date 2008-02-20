@@ -40,7 +40,7 @@ class App {
 	
 	# Additional page-related variables
 	private $ExtraHtmlHeaders   = "";
-	private $PageRSS			= "";
+	private	$PageRSS			= "";
 	private $PageRSSTitle		= "";
 	
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
@@ -758,7 +758,7 @@ class App {
         	return $_value;
 		}
 		
-	private getGoogleSearchHTML() {
+	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 	 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
