@@ -757,6 +757,18 @@ class App {
 			$_value = mysql_real_escape_string($_value, $_dbh);
         	return $_value;
 		}
+		
+	private getGoogleSearchHTML() {
+		$strn = <<<EOHTML
+		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
+	 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
+  		<input type="text" name="q" size="25" />
+  		<input type="submit" name="sa" value="Search" />
+		</form>
+		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>";
+EOHTML;
+		return $strn;
+	}
 }
 
 ?>
