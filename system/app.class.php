@@ -765,7 +765,7 @@ class App {
   		<input type="text" name="q" size="25" />
   		<input type="submit" name="sa" value="Search" />
 		</form>
-		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>";
+		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
 EOHTML;
 		return $strn;
 	}
