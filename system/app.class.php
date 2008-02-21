@@ -39,7 +39,7 @@ class App {
 	private $WWW_PREFIX			= "";  # default is relative
 	
 	# Additional page-related variables
-	private $ExtraHtmlHeaders   = "";
+	public $ExtraHtmlHeaders   = "";
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
 	
