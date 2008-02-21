@@ -85,7 +85,7 @@ function NewsParse( $newsgroupArray, $id ) {
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"News\">
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"Mail\"></td></tr></Table></FORM>";
 		$description = $newsgroupArray->description;
-		$html = "<p><a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html </p><div id=\"$news_name.$id\" class=\"switchcontent\"> <p>$description </p> <p>$newsarch_html</p> <p>$newsrss_html</p> <p>$newssearch</p></div>";
+		$html = "<p><a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html </p><div id=\"$news_name.$id\" class=\"switchcontent\"> <p>$description </p> <p>$newsarch_html</p> <p>$newsrss_html</p></div>";
 	    }
 	}     
 	return $html;     
@@ -122,7 +122,7 @@ if (count($mailingListArray)) {
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"News\">
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"Mail\"></td></tr></Table></FORM>";
 		$description = $mailingListArray->description;
-	    $html = "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailarch_html</p><p>$mailrss_html</p><p>$mailsearch</p></div>";
+	    $html = "<p><a href=\"javascript:switchMenu('$mail_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a> $mail_html </p> <div id=\"$mail_name.$id\" class=\"switchcontent\"> <p> $description </p><p>$mailarch_html</p><p>$mailrss_html</p></div>";
     }
   }
   return $html;      
