@@ -35,7 +35,7 @@ class ProjectList {
 	
 	
 	function getList() {
-		return $this->$list;
+		return $this->list;
 	}
 	function setList($_list) {
 		$this->list = $_list;
