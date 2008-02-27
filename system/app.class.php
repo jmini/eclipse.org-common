@@ -42,7 +42,7 @@ class App {
 	public $ExtraHtmlHeaders   = "";
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
-	
+	public  $Promotion			= "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
 	# Set to TRUE to disable all database operations
@@ -73,6 +73,10 @@ class App {
 	function getFooterPath($_theme) {
 		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/footer.php";
 	}
+	function getPromotionPath($_theme) {
+		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/promotion.php";		
+	}
+	
 	
 	function getAppName() {
 		return $this->APPNAME;
@@ -355,6 +359,9 @@ class App {
 		
 		if ($Menu != NULL)
 		include($this->getMenuPath($theme));
+		
+		if ($this->Promotion == TRUE)
+		include($this->getPromotionPath($theme));
 		
 		if ($Nav != NULL)
 		include($this->getNavPath($theme));
