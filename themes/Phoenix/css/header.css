@@ -176,6 +176,8 @@ margin:0pt;
 margin-top:5px;
 float:right;
 white-space:nowrap;
+position:relative;
+z-index:20;
 }
 #header-utils form {
 float:left;
