@@ -46,7 +46,7 @@ class App {
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
 	
 	# Set to TRUE to disable all database operations
-	private $DB_READ_ONLY		= true;
+	private $DB_READ_ONLY		= false;
 	
 	# Default constructor
 	function App() {
