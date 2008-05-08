@@ -23,6 +23,7 @@
 		if(isset($App->PageRSS)) {
 			if($App->PageRSS != "") {
 				$pageRSS = $App->PageRSS;
+			}
 		}
 	}
 
