@@ -98,7 +98,7 @@ class Session {
 		$rValue = false;
 		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin
-        	setcookie(ECLIPSE_SESSION, "", -36000, "/", "eclipse.org");
+        	setcookie(ECLIPSE_SESSION, "", -36000, "/", ".eclipse.org");
         	$rValue = false;
         }
         else {
@@ -117,7 +117,7 @@ class Session {
 			$dbh = $dbc->connect();
 			mysql_query($sql, $dbh);
 			$dbc->disconnect();
-			setcookie(ECLIPSE_SESSION, "", -36000, "/", "eclipse.org");
+			setcookie(ECLIPSE_SESSION, "", -36000, "/", ".eclipse.org");
 			
 			# Log this event
 			$EvtLog = new EvtLog();
@@ -177,7 +177,7 @@ class Session {
 			if($this->getIsPersistent()) {
 				$cookie_time = time()+3600*24*365;
 			}
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", "eclipse.org");
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
 
 			# add session to the .htaccess file
 			# TODO: implement a smart locking

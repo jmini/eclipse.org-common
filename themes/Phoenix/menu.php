@@ -20,8 +20,9 @@
 	if(isset($App)) {
 		$www_prefix = $App->getWWWPrefix();
 		
-		if($App->PageRSS != "") {
-			$pageRSS = $App->PageRSS;
+		if(isset($App->PageRSS)) {
+			if($App->PageRSS != "") {
+				$pageRSS = $App->PageRSS;
 		}
 	}
 

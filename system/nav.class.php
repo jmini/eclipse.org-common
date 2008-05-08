@@ -49,19 +49,6 @@ class Nav {
 			$www_prefix = $App->getWWWPrefix();
 		}
 
-		$Link = new Link("Committers", "http://wiki.eclipse.org/index.php/Development_Resources", "_self", 1);
-		$this->LinkList[count($this->LinkList)] = $Link;
-
-		$Link = new Link("Newsgroups", $www_prefix . "/newsgroups/", "_self", 1);
-		$this->LinkList[count($this->LinkList)] = $Link;
-
-		$Link = new Link("Bugs", "https://bugs.eclipse.org/bugs/", "_self", 1);
-		$this->LinkList[count($this->LinkList)] = $Link;
-
-		$Link = new Link("Articles", $www_prefix . "/articles/", "_self", 1);
-		$this->LinkList[count($this->LinkList)] = $Link;
-
-
 	}
 	
 	function addCustomNav($_Text, $_URL, $_Target, $_Level) {
