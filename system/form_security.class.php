@@ -2,7 +2,7 @@
 /*
  * Name: form_security.class.php
  * Function: contains routines created to stop people from using 'bots' to auto complete the forms with spam info.
- * I/O: functions take various parameters, Some return values.
+ * I/O: functions take various parmaters, Some return values.
  * By: M. Ward
  * 
  */
@@ -101,7 +101,7 @@ class FormSecurity {
       print("<p>Error in SecureQuestion:  You didn't specify a salt value to encrypt with.</p>");
       return;
     }
-              
+                  
     //compute the result .
     if ( $Security_Values[2] == 0)
       $Result = $Security_Values[0] + $Security_Values[1];
@@ -131,7 +131,7 @@ class FormSecurity {
       print("<p>Error in Crypt:  You didn't specify a password to encrypt with.</p>");
       return -1;
     }
-    if( $key == "" ) {
+    if( !isset($key) ) {
       print("<p>Error in Crypt:  You didn't specify a value to encrypt.</p>");
       return -1;
     }  
@@ -181,7 +181,7 @@ class FormSecurity {
       print("<p>Error in Verify:  You didn't specify a password to encrypt with.</p>");
       return -1;
     }
-    if( $key == "" ) {
+    if( !isset($key) ) {
       print("<p>Error in Verify:  You didn't specify a value to encrypt.</p>");
       return -1;
     }

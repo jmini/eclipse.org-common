@@ -68,6 +68,51 @@ class Nav {
 		$this->LinkList[count($this->LinkList)] = $Link;
 	}
 	
+	function addMetaNav($_Project){
+      if (!class_exists("projectInfoList")) {
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
+      }
+      
+      #set the default depth
+      $depth = 1;
+      #New info data instance
+      $MetaNav = new projectInfoList;
+      #get the data
+      $MetaNav->selectProjectInfoList($_Project,"projectleftnav");
+      #sort the data & extract the data, which in this case should always be at 0
+      $MetaLeftNav = $this->orderNavList($MetaNav->list[0]->projectleftnav);
+      #is there something there?
+      if ( $MetaLeftNav != NULL ) {
+        #loop through the leftnav items and add them to the output array
+        foreach( $MetaLeftNav as $item ) {
+          #the url has to start with http(s):// and be an eclipse.org site, or we'll ignore it
+          if ( preg_match("/^http[s]{0,1}:\/\/(\S.+eclipse.org(\/|$)|eclipseplugincentral.com)/i",$item->url) >= 1 ) {
+            if ( $item->separator == 1 ){
+              $this->addNavSeparator($item->title, $item->url);
+            } else {
+              $this->addCustomNav($item->title, $item->url, "", $depth+$item->indent);
+              $depth = 1;
+            }
+          }
+        }  
+      }
+    }
+
+    #remove list function from projectInfoList class, and put it here where it really belongs
+	function orderNavList ($_InfoList) {
+      if (!function_exists("cmp_navobj")) {
+        function cmp_navobj($a, $b) {
+          $al = $a->order;
+          $bl = $b->order;
+          if ($al == $bl) {    
+            return 0;
+          }
+          return ($al > $bl) ? +1 : -1;
+        }
+      }
+      usort($_InfoList, "cmp_navobj");
+      return $_InfoList;
+    }
 
 	function getLinkCount() {
 		return count($this->LinkList);
