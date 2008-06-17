@@ -44,13 +44,14 @@ class ProjectInfoData implements Countable
 				$this->subkeys[$mainkey] = true;
 		}
 	}
-
+	
 	function __get( $varname )
 	{
 		$check_multiples = false;
 		if(preg_match('/s$/', $varname)) // see if we need to look for "newsgroups" instead of just "newsgroup" for example
 			$check_multiples = true;
 		foreach( $this->rows as $row ) {
+			if (preg_match('/projectid/i', $varname)) {	return $row['ProjectID'];}
 			$mainkey = $row['MainKey'];
 			$exactmatch = ($mainkey == $varname);
 			$pluralmatch = ($mainkey . 's' == $varname);
