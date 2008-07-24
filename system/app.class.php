@@ -43,7 +43,12 @@ class App {
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
 	public  $Promotion			= "";
+	private $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
+	
+	#Google Analytics Variables
+	private $projectGoogleAnalyticsCode = "";
+	private $googleJavaScript = "";
 	
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
@@ -360,13 +365,51 @@ class App {
 		if ($Menu != NULL)
 		include($this->getMenuPath($theme));
 		
-		if ($this->Promotion == TRUE)
-		include($this->getPromotionPath($theme));
+		if ($this->Promotion == TRUE) {
+			if ($this->CustomPromotionPath != "") {
+				include($this->CustomPromotionPath);
+			}
+			else {
+				include($this->getPromotionPath($theme));
+			}
+		}
 		
 		if ($Nav != NULL)
 		include($this->getNavPath($theme));
 		
 		echo $html;
+		
+		#first lets insert the sitewide Analytics
+		$this->googleJavaScript  = <<<EOHTML
+		<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+		var pageTracker = _gat._getTracker("UA-910670-2");
+		pageTracker._initData();
+		pageTracker._trackPageview();
+		</script>
+EOHTML;
+
+		#Now let Check to see if the project is also providing a GA code and include that if they are.
+		if ($this->projectGoogleAnalyticsCode != "")
+		{
+			$gaCode = $this->projectGoogleAnalyticsCode;
+			$this->googleJavaScript .= <<<EOHTML
+			<script type="text/javascript">
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<script type="text/javascript">
+			var pageTracker = _gat._getTracker("$gaCode");
+			pageTracker._initData();
+			pageTracker._trackPageview();
+			</script>
+EOHTML;
+		}
+		
+		echo $this->googleJavaScript;
 		include($this->getFooterPath($theme));
 		
 		# OPT1:$starttime = microtime();
@@ -775,6 +818,14 @@ class App {
 		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
 EOHTML;
 		return $strn;
+	}
+	
+	function setGoogleAnalyticsTrackingCode($gaUniqueID) {
+		$this->projectGoogleAnalyticsCode = $gaUniqueID;
+	}
+	
+	function setPromotionPath($_path) {
+		$this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;		
 	}
 }
 
