@@ -61,8 +61,8 @@ class Menu {
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
-		$MenuText = "Community";
-		$MenuItem = new MenuItem($MenuText, $www_prefix . "/community/", "_self", 0);
+		$MenuText = "Users";
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/users/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Membership";
