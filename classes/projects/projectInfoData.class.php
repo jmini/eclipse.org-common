@@ -9,10 +9,10 @@
  * Contributors:
  *    Bjorn Freeman-Benson - Initial API
  *    Nathan Gervais - Fixed __get function to return correct values for multirow records
- *    Karl Matthias - Implemented Countable Extension to the class. And Plural __get retreival
+ *    Karl Matthias - Implemented Countable Extension to the class. And Plural __get retrieval
  * 					Added fields() and ProjectInfoID() functions, fixed bug in multi-row sets
+ * 					Modified to work with new $App-managed database handles
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 
 class ProjectInfoData implements Countable
 {
@@ -22,12 +22,12 @@ class ProjectInfoData implements Countable
 
 	function ProjectInfoData( $projectid )
 	{
-		$dbc = new DBConnection();
-		$dbh = $dbc->connect();
-		$result = mysql_query("
+		global $App;
+
+		$result = $App->projectinfo_sql("
 					SELECT * FROM ProjectInfo, ProjectInfoValues
 						WHERE ProjectID = '$projectid'
-						  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID", $dbh);
+						  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID");
 		$this->rows = array();
 		$this->mainkeys = array();
 		$this->subkeys = array();

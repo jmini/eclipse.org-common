@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
+ *    Karl Matthias (Eclipse Foundation) - Database access management
  *******************************************************************************/
 class App {
 
@@ -22,22 +23,24 @@ class App {
 	#
 	# HISTORY:
 	#		2007-03-13: added WWW_PREFIX functionality, and default class constructor
+	#		2008-09-15:	Added database connectivity and handle management
 	#
 	#*****************************************************************************
 
 	private $APPVERSION 	= "1.0";
 	private $APPNAME		= "Eclipse.org";
-	
-	
+
+
 	private $DEFAULT_ROW_HEIGHT	= 20;
-	
+
 	private $POST_MAX_SIZE		= 262144;   # 256KB Max post
 	private $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
 	private $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
 	private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
-	
+	private $DB_CLASS_PATH		= "/home/data/httpd/eclipse-php-classes/system/"; # ends with '/'
+
 	private $WWW_PREFIX			= "";  # default is relative
-	
+
 	# Additional page-related variables
 	public $ExtraHtmlHeaders   = "";
 	public	$PageRSS			= "";
@@ -45,27 +48,66 @@ class App {
 	public  $Promotion			= "";
 	private $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
-	
+
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
-	
+
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
+
+	# Database config and handle cache
+	private $databases;
+
+	# Flag to determine whether this is development mode or not (for databases)
+	public $devmode 			= false;
 	
+	# Flag to log SQL even on production systems
+	public $logsql				= false;
+
+	# Arbitrary storage hash
+	private $hash;
+
+	# SQL Backtrace storage
+	public $query_btrace;
+
 	# Default constructor
 	function App() {
 		# Set value for WWW_PREFIX
 		if($_SERVER['SERVER_NAME'] != "www.eclipse.org") {
 			$this->WWW_PREFIX = "http://www.eclipse.org";
 		}
+
+		$this->databases = array();
+
+		# Figure out if we're in devmode by whether the classes are installed or not
+		if(!file_exists($this->DB_CLASS_PATH)) {
+			$this->devmode = true;
+		}
+
+		# Configure databases (not connected)
+		$this->configureDatabases();
+		
+		# Make it easy to override database and other settings (don't check app-config.php in to CVS!)
+		if($this->devmode) {
+			if(file_exists(getcwd() . '/app-config.php')) {
+				include(getcwd() . '/app-config.php');
+				# We call a function inside app-config.php and pass it a reference to ourselves because
+				# this class is still in the constructor and might not be available externally by name.
+				# File just contains a function called app_config() which is called.  Nothing more is needed.
+				app_config($this);
+			}
+		}
+
+		# Initialize backtrace storage
+		$this->query_btrace = array();
 	}
-	
-	
+
+
 	function getAppVersion() {
 		return $this->APPVERSION;
 	}
-	
+
 	function getHeaderPath($_theme) {
 		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/header.php";
 	}
@@ -79,10 +121,10 @@ class App {
 		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/footer.php";
 	}
 	function getPromotionPath($_theme) {
-		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/promotion.php";		
+		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/promotion.php";
 	}
-	
-	
+
+
 	function getAppName() {
 		return $this->APPNAME;
 	}
@@ -94,8 +136,8 @@ class App {
 	}
 	function getDBReadOnly() {
 		return $this->DB_READ_ONLY;
-	}	
-	
+	}
+
 	function sendXMLHeader() {
 		header("Content-type: text/xml");
 	}
@@ -111,26 +153,26 @@ class App {
 	function getPubDownloadServerUrl() {
 		return $this->PUB_DOWNLOAD_URL;
 	}
-	
+
 	function getWWWPrefix() {
 		return $this->WWW_PREFIX;
 	}
-	
+
 	function getUserLanguage() {
 		/* @return: String
-		 * 
+		 *
 		 * Check the browser's default language and return
-		 * 
+		 *
 		 * 2006-06-28: droy
-		 * 
+		 *
 		 */
-		
+
 		$validLanguages = array('en', 'de', 'fr');
 		$defaultLanguage = "en";
-		
+
 		# get the default browser language (first one reported)
 		$language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		
+
 		if(array_search($language, $validLanguages)) {
 				return $language;
 		}
@@ -141,24 +183,24 @@ class App {
 
 	function getLocalizedContentFilename() {
 		/* @return: String
-		 * 
+		 *
 		 * return the content/xx_filename.php filename, according to availability of the file
-		 * 
+		 *
 		 * 2006-06-28: droy
-		 * 
+		 *
 		 */
-		
+
 		$language = $this->getUserLanguage();
 		$filename = "content/" . $language . "_" . $this->getScriptName();
-		
+
 		if(!file_exists($filename)) {
 			$filename = "content/en_" . $this->getScriptName();
 		}
-		
+
 		return $filename;
 	}
 
-	
+
 	function getScriptName() {
 		# returns only the filename portion of a script
 		return substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/") + 1);
@@ -166,33 +208,33 @@ class App {
 
 	function getProjectCommon() {
 		/** @return: String
-		 * 
+		 *
 		 * Walk up the directory structure to find the closest _projectCommon.php file
-		 * 
+		 *
 		 * 2005-12-06: droy
-		 * - created basic code to walk up all the way to the DocumentRoot  
-		 * 
+		 * - created basic code to walk up all the way to the DocumentRoot
+		 *
 		 */
-		
+
 		$currentScript 	= $_SERVER['SCRIPT_FILENAME'];
 		$strLen 		= strlen($currentScript);
 		$found 			= false;
 		$antiLooper		= 0;
-		
+
 		# default to /home/_projectCommon.php
-		$rValue 		= $_SERVER['DOCUMENT_ROOT'] . "/home/_projectCommon.php";  
-		
-		
+		$rValue 		= $_SERVER['DOCUMENT_ROOT'] . "/home/_projectCommon.php";
+
+
 		while($strLen > 1 && ! $found) {
 			$currentScript 	= substr($_SERVER['SCRIPT_FILENAME'], 0, strrpos($currentScript, "/"));
 			$testPath 		= $currentScript . "/_projectCommon.php";
-			
-			if(file_exists($testPath)) {	
+
+			if(file_exists($testPath)) {
 				$found 	= true;
 				$rValue = $testPath;
 			}
 			$strLen = strlen($currentScript);
-			
+
 			# break free from endless loops
 			$antiLooper++;
 			if($antiLooper > 20) {
@@ -205,7 +247,7 @@ class App {
 
 	function runStdWebAppCacheable() {
 		 session_start();
-		 
+
 		 header("Cache-control: private");
 		 header("Expires: 0");
 	}
@@ -214,8 +256,8 @@ class App {
 	{
 		# Accept: int - number of chars
 		# return: string - random alphanumeric code
-		
-	
+
+
 		# Generate alpha code
 		$addstring = "";
 		for ($i = 1; $i <= $_NumChars; $i++) {
@@ -237,31 +279,31 @@ class App {
 	function addOrIfNotNull($_String) {
 		# Accept: String - String to be AND'ed
 		# return: string - AND'ed String
-		
+
 		if($_String != "") {
 			$_String = $_String . " OR ";
 		}
-		
+
 		return $_String;
 	}
 
 	function addAndIfNotNull($_String) {
 		# Accept: String - String to be AND'ed
 		# return: string - AND'ed String
-		
+
 		if($_String != "") {
 			$_String = $_String . " AND ";
 		}
-		
+
 		return $_String;
 	}
-	
+
 	function getNumCode($_NumChars)
 	{
 		# Accept: int - number of chars
 		# return: int - random numeric code
-		
-	
+
+
 		# Generate code
 		$addstring = "";
 		for ($i = 1; $i <= $_NumChars; $i++) {
@@ -278,9 +320,9 @@ class App {
 
 	function str_replace_count($find, $replace,$subject, $count) {
 		# Replaces $find with $replace in $subnect $count times only
-		
+
 		$nC = 0;
-		
+
 		$subjectnew = $subject;
 		$pos = strpos($subject, $find);
 		if ($pos !== FALSE)   {
@@ -301,10 +343,10 @@ class App {
 	{
 		# Accept: String - String to be quoted
 		# return: string - Quoted String
-		
+
 		// replace " with '
 		$_String = str_replace('"', "'", $_String);
-	
+
 		return "\"" . $_String . "\"";
 	}
 
@@ -312,12 +354,12 @@ class App {
 	{
 		# Accept: String - String to be HTMLSafified
 		# return: string
-		
+
 		// replace " with '
 		$_String = str_replace('<', "&lt;", $_String);
 		$_String = str_replace('<', "&gt;", $_String);
 		$_String = str_replace("\n", "<br />", $_String);
-	
+
 		return $_String;
 	}
 
@@ -325,27 +367,27 @@ class App {
 	{
 		# Accept: String - String to be quoted
 		# return: string - Quoted String
-		
+
 		// replace " with '
 		$_String = str_replace("'", "\\'", $_String);
-	
+
 		return $_String;
 	}
 
 	function replaceEnterWithBR($_String) {
 		return str_replace("\n", "<br />", $_String);
 	}
-	
+
 	function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html) {
-		
+
 		# OPT1: ob_start();
-		
+
 		# All web page parameters passed for variable scope
-		
+
 		if($theme == "") {
 			$theme = "Phoenix";
 		}
-		
+
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
 		}
@@ -357,14 +399,14 @@ class App {
 			}
 			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
 		}
-		
+
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
 
 		include($this->getHeaderPath($theme));
-		
+
 		if ($Menu != NULL)
 		include($this->getMenuPath($theme));
-		
+
 		if ($this->Promotion == TRUE) {
 			if ($this->CustomPromotionPath != "") {
 				include($this->CustomPromotionPath);
@@ -373,12 +415,12 @@ class App {
 				include($this->getPromotionPath($theme));
 			}
 		}
-		
+
 		if ($Nav != NULL)
 		include($this->getNavPath($theme));
-		
+
 		echo $html;
-		
+
 		#first lets insert the sitewide Analytics
 		$this->googleJavaScript  = <<<EOHTML
 		<script type="text/javascript">
@@ -408,14 +450,14 @@ EOHTML;
 			</script>
 EOHTML;
 		}
-		
+
 		echo $this->googleJavaScript;
 		include($this->getFooterPath($theme));
-		
+
 		# OPT1:$starttime = microtime();
 		# OPT1:$html = ob_get_contents();
 		# OPT1:ob_end_clean();
-		
+
 		# OPT1:$stripped_html = $html;
 		# OPT1:$stripped_html = preg_replace("/^\s*/", "", $stripped_html);
 		# OPT1:$stripped_html = preg_replace("/\s{2,}/", " ", $stripped_html);
@@ -424,35 +466,35 @@ EOHTML;
 		# OPT1:$stripped_html = preg_replace("/>\s</", "><", $stripped_html);
 		# $stripped_html = preg_replace("/<!--.*-->/", "", $stripped_html);
 		# OPT1:$endtime = microtime();
-		
+
 		# OPT1:echo "<!-- unstripped: " . strlen($html) . " bytes/ stripped: " . strlen($stripped_html) . "bytes - " . sprintf("%.2f", strlen($stripped_html) / strlen($html)) . " Bytes saved: " . (strlen($html) - strlen($stripped_html)) . " Time: " . ($endtime - $starttime) . " -->";
 		# echo $stripped_html;
 	}
-	
+
 	function AddExtraHtmlHeader( $string ) {
 		$this->ExtraHtmlHeaders .= $string;
 	}
-	
+
 	function getThemeURL($_theme) {
 		if($_theme == "") {
 			$theme = "Phoenix";
 		}
-		
+
 		return "/eclipse.org-common/themes/" . $_theme;
-		
+
 	}
-	
+
 	function getHTTPParameter($_param_name, $_method="") {
 		/** @author droy
 		 * @since version - Oct 19, 2006
 		 * @param String _param_name name of the HTTP GET/POST parameter
-		 * @param String _method GET or POST, or the empty string for POST,GET order 
+		 * @param String _method GET or POST, or the empty string for POST,GET order
 		 * @return String HTTP GET/POST parameter value, or the empty string
-		 *  
+		 *
 		 * Fetch the HTTP parameter
-		 * 
+		 *
 		 */
-		
+
 		$rValue = "";
 		$_method = strtoupper($_method);
 
@@ -460,7 +502,7 @@ EOHTML;
 		if(isset($_GET[$_param_name])) {
 			$rValue = $_GET[$_param_name];
 		}
-		if(isset($_POST[$_param_name]) && $_method != "GET") {	
+		if(isset($_POST[$_param_name]) && $_method != "GET") {
 			$rValue = $_POST[$_param_name];
 		}
 		return $rValue;
@@ -497,14 +539,14 @@ EOHTML;
 
 			// Establish NT 6.0 as Vista
 			if(stristr($v,'NT') && $v2 == 6.0) $v = 'win32';
-            
+
 			// Establish NT 5.1 as Windows XP
 			elseif(stristr($v,'NT') && $v2 == 5.1) $v = 'win32';
 
 			// Establish NT 5.0 and Windows 2000 as win2k
             elseif($v == '2000') $v = '2k';
 			elseif(stristr($v,'NT') && $v2 == 5.0) $v = 'win32';
-            
+
 			// Establish 9x 4.90 as Windows 98
             elseif(stristr($v,'9x') && $v2 == 4.9) $v = 'win32';
 			// See if we're running windows 3.1
@@ -635,32 +677,32 @@ EOHTML;
                         }
                 }
         }
-        
+
 
 
         function isValidTheme($_theme) {
 		/* @return: bool
-		 * 
+		 *
 		 * returns true if supplied theme is in the array of valid themes
-		 * 
+		 *
 		 * 2005-12-07: droy
-		 * 
+		 *
 		 */
         	return array_search($_theme, $this->THEME_LIST);
         }
-        	
-        
+
+
         function getUserPreferedTheme() {
 		/* @return: String
-		 * 
+		 *
 		 * returns theme name in a browser cookie, or the Empty String
-		 * 
+		 *
 		 * 2005-12-07: droy
-		 * 
+		 *
 		 */
         	if(isset($_COOKIE["theme"])) {
 				$theme = $_COOKIE["theme"];
-				
+
 				if($this->isValidTheme($theme)) {
 					return $theme;
 				}
@@ -669,23 +711,23 @@ EOHTML;
 				}
         	}
         }
-        
+
         function usePolls() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
-        }	
-        
+        }
+
         function useProjectInfo() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
         }
         /*
-         * This function applies standard formatting to a date. 
-         * 
-         * The first parameter is either a string or a number representing a date. 
-         * If it's a string, it must be in a format that is parseable by the 
-         * strtotime() function. If it is a number, it must be an integer representing 
-         * a UNIX timestamp (number of seconds since January 1 1970 00:00:00 GMT) 
-         * which, conveniently, is the output of the strtotime() function. 
-         * 
+         * This function applies standard formatting to a date.
+         *
+         * The first parameter is either a string or a number representing a date.
+         * If it's a string, it must be in a format that is parseable by the
+         * strtotime() function. If it is a number, it must be an integer representing
+         * a UNIX timestamp (number of seconds since January 1 1970 00:00:00 GMT)
+         * which, conveniently, is the output of the strtotime() function.
+         *
          * The second (optional) parameter is the format for the result. This must
          * one of 'short', or 'long'.
          */
@@ -696,10 +738,10 @@ EOHTML;
         		case 'short' : return date("d M y", $date);
         	}
         }
-        
+
         /*
-         * This function applies standard formatting to a date range. 
-         * 
+         * This function applies standard formatting to a date range.
+         *
          * See the comments for getFormattedDate($date, $format) for information
          * concerning what's expected in the parameters of this method).
          */
@@ -707,10 +749,10 @@ EOHTML;
         	if (is_string($start_date)) $start_date = strtotime($start_date);
         	if (is_string($end_date)) $end_date = strtotime($end_date);
         	switch ($format) {
-        		case 'long' : 
+        		case 'long' :
         			if ($this->same_year($start_date, $end_date)) {
 						if ($this->same_month($start_date, $end_date)) {
-							return date("F", $start_date) 
+							return date("F", $start_date)
 								. date(" d", $start_date)
 								. date("-d, Y", $end_date);
 						} else {
@@ -721,10 +763,10 @@ EOHTML;
 						return date("F d, Y", $start_date)
 							. date("-F d, Y", $end_date);
 					}
-        		case 'short' :         	
+        		case 'short' :
         			if ($this->same_year($start_date, $end_date)) {
 						if ($this->same_month($start_date, $end_date)) {
-							return date("d", $start_date) 
+							return date("d", $start_date)
 								. date ("-d", $end_date)
 								. date(" M", $start_date)
 								. date(" y", $end_date);
@@ -737,7 +779,7 @@ EOHTML;
 							. date("-d M y", $end_date);
 					}
         	}
-        }       
+        }
 
         /*
          * This method answers true if the two provided values represent
@@ -746,7 +788,7 @@ EOHTML;
 		function same_year($a, $b) {
 			return date("Y", $a) == date("Y", $b);
 		}
-		
+
         /*
          * This method answers true if the two provided values represent
          * dates that occur in the same month.
@@ -754,7 +796,7 @@ EOHTML;
 		function same_month($a, $b) {
 			return date("F", $a) == date("F", $b);
 		}
-		
+
 		/**
 		 * Returns a string representing the size of a file in the downloads area
 		 * @author droy
@@ -779,19 +821,19 @@ EOHTML;
 			}
         	return $ssn;
 		}
-		
+
 		function isValidCaller($_pathArray) {
 			$a = debug_backtrace();
 			$caller = $a[1]['file'];  # Caller 0 is the class that called App();
 			$validCaller = false;
 			for($i = 0; $i < count($_pathArray); $i++) {
-				# TODO: use regexp's to match the leftmost portion for better security 
+				# TODO: use regexp's to match the leftmost portion for better security
 				if(strstr($caller, $_pathArray[$i])) {
 					$validCaller = true;
 					break;
 				}
 			}
-			return $validCaller;			
+			return $validCaller;
 		}
 
 		function sqlSanitize($_value, $_dbh) {
@@ -807,7 +849,7 @@ EOHTML;
 			$_value = mysql_real_escape_string($_value, $_dbh);
         	return $_value;
 		}
-		
+
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
@@ -819,14 +861,231 @@ EOHTML;
 EOHTML;
 		return $strn;
 	}
-	
+
 	function setGoogleAnalyticsTrackingCode($gaUniqueID) {
 		$this->projectGoogleAnalyticsCode = $gaUniqueID;
 	}
-	
+
 	function setPromotionPath($_path) {
-		$this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;		
+		$this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;
 	}
+
+	# Record a database record
+	public function setDatabase( $key, $host, $user, $pwd, $db ) {
+		$rec = array() ;
+		$rec['HOST'] = $host;
+		$rec['USERNAME'] = $user;
+		$rec['PASSWORD'] = $pwd;
+		$rec['DATABASE'] = $db;
+		$rec['CONNECTION'] = null;
+		$this->databases[$key] = $rec;
+  	}
+
+  	# Setup the handling of database connections.  On production systems, reference the database connection
+  	# classes, but on development systems, use the standardized local database distribution.
+	private function configureDatabases() {
+		#-----------------------------------------------------------------------------------------------------
+		# Dev Mode Databases
+		$this->setDatabase( "myfoundation", "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "foundation",   "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "eclipse",      "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "bugzilla",     "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "downloads",	"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "polls", 		"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "projectinfo",	"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "ipzilla", 		"localhost", "dashboard", "draobhsad", "ipzilla_demo" );
+		$this->setDatabase( "ipzillatest",	"localhost", "dashboard", "draobhsad", "ipzilla_demo" );
+		$this->setDatabase( "live",			"localhost", "dashboard", "draobhsad", "live_demo" );
+		$this->setDatabase( "epic", 		"localhost", "dashboard", "draobhsad", "epic_demo" );
+		$this->setDatabase( "conferences",  "localhost", "dashboard", "draobhsad", "conferences_demo" );
+		#-----------------------------------------------------------------------------------------------------
+
+		#-----------------------------------------------------------------------------------------------------
+		# Production Databases
+		$this->set("bugzilla_db_classfile_ro",	'dbconnection_bugs_ro.class.php');
+		$this->set("bugzilla_db_class_ro",		'DBConnectionBugs');
+		$this->set("bugzilla_db_classfile",	 	'dbconnection_bugs_rw.class.php');
+		$this->set("bugzilla_db_class",		 	'DBConnectionBugsRW');
+		$this->set("dashboard_db_classfile",	'dbconnection_dashboard_rw.class.php');
+		$this->set("dashboard_db_class",	 	'DBConnectionDashboard');
+		$this->set("downloads_db_classfile_ro",	'dbconnection_downloads_ro.class.php');
+		$this->set("downloads_db_class_ro",	 	'DBConnectionDownloads');
+		$this->set("epic_db_classfile_ro",	 	'dbconnection_epic_ro.class.php');
+		$this->set("epic_db_class_ro",	 	 	'DBConnectionEPIC');
+		$this->set("foundation_db_classfile",	'dbconnection_workaround.class.php');
+		$this->set("foundation_db_class",	 	'FoundationDBConnectionRW');
+		$this->set("foundation_db_classfile_ro",'dbconnection_foundation_ro.class.php');
+		$this->set("foundation_db_class_ro", 	'DBConnectionFoundation');
+		$this->set("ipzilla_db_classfile_ro",	'dbconnection_ipzilla_ro.class.php');
+		$this->set("ipzilla_db_class_ro",	 	'DBConnectionIPZillaRO');
+		$this->set("ipzilla_db_classfile",	 	'dbconnection_ipzilla_rw.class.php');
+		$this->set("ipzilla_db_class",	 	 	'DBConnectionIPZillaRW');
+		$this->set("ipzillatest_db_classfile",	'dbconnection_ipzillatest_rw.class.php');
+		$this->set("ipzillatest_db_class",	 	'DBConnectionIPZillaRW');
+		$this->set("live_db_classfile",	 	 	'dbconnection_live_rw.class.php');
+		$this->set("live_db_class",	 	 		'DBConnectionLIVE');
+		$this->set("polls_db_classfile",	 	'dbconnection_polls_rw.class.php');
+		$this->set("polls_db_class",		 	'DBConnectionPollsRW');
+		$this->set("myfoundation_db_classfile",	'dbconnection_portal_rw.class.php');
+		$this->set("myfoundation_db_class",	 	'DBConnectionPortalRW');
+		$this->set("projectinfo_db_classfile_ro",'dbconnection_projectinfo_ro.class.php');
+		$this->set("projectinfo_db_class_ro", 	'DBConnectionProjectInfo');
+		$this->set("eclipse_db_classfile",	 	'dbconnection_rw.class.php');
+		$this->set("eclipse_db_class",		 	'DBConnectionRW');
+		$this->set("eclipse_db_classfile_ro",	'dbconnection.class.php');
+		$this->set("eclipse_db_class_ro",	 	'DBConnection');
+		$this->set("conferences_db_classfile",	'dbconnection.conferences_rw.class.php');
+		$this->set("conferences_db_class", 	 	'DBConnectionConferencesRW');
+		#-----------------------------------------------------------------------------------------------------
+	}
+
+	# Open a database and store the record
+	public function database( $key, $query ) {
+		$rec = $this->databases[$key];
+		$dbh = null;
+		if($this->devmode) { 	# For DEV machines
+				$dbh = $rec['CONNECTION'];
+				if( $dbh == null ) {
+					$dbh = mysql_connect( $rec['HOST'], $rec['USERNAME'], $rec['PASSWORD']);
+				}
+		} else { 				# For PRODUCTION machines
+			$class = null;
+
+			if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT') {  // Try to use read-only when possible
+				$classfile = $this->get($key . '_db_classfile_ro');
+				$class = $this->get($key . '_db_class_ro');
+			}
+
+			if($class == null) {
+				$classfile = $this->get($key . '_db_classfile');
+				$class = $this->get($key . '_db_class');
+			}
+
+			require_once($this->DB_CLASS_PATH . $classfile);
+			$dbc = new $class();
+			$dbh = $dbc->connect();
+		}
+		$this->databases[$key]['CONNECTION'] = $dbh;
+		$this->set('DBHANDLEMAP ' . $dbh, $key);
+		mysql_select_db( $rec['DATABASE'], $dbh );
+		return $dbh;
+	}
+
+	# Return a record for a database by name
+	public function databaseName( $key ) {
+		$rec = $this->databases[$key];
+		return $rec['DATABASE'];
+	}
+
+	# Return the name of a database by database handle
+	public function databaseNameForHandle($dbh) {
+		return $this->get('DBHANDLEMAP ' . $dbh);
+	}
+
+	# Storage functions for arbitraray hash
+	public function get( $key ) {
+		if(isset($this->hash[$key])) {
+			return $this->hash[$key];
+		}
+	}
+
+	# Storage functions for arbitraray hash
+	public function set( $key, $value ) {
+		$this->hash[$key] = $value;
+	}
+
+	# Storage functions for arbitraray hash
+	public function ifEmptyThenSet( $key, $value ) {
+		if( !isset($this->hash[$key])) {
+			$this->hash[$key] = $value;
+		}
+	}
+
+	# Display a backtrace of all the SQL queries run in this session.  Only available when devmode == true or logsql == true.
+	function SQLBacktrace () {
+		if(($this->devmode && (count($this->query_btrace) > 0)) || $this->logsql){
+	    	$row = 1;
+	    	echo "<p><table cellpadding=10 width=800 bgcolor=#ffcccc><tr><td>";
+	    	echo "<p><font size=\"+2\">Query Trace: </font> In ascending order from oldest to newest";
+	    	echo "<div style=\"font-family: courier;\">";
+	    	foreach ($this->query_btrace as $query) {
+	  			echo "&nbsp;&nbsp;&nbsp;&nbsp;<b>$row.) " .
+	  				$query{0} ." (" . $query{2} . ")rows:</b> " . $query{1} . "<br>\n";
+	  			$row++;
+	    	}
+	    	echo "</div>";
+	  		echo "</p>\n";
+	  		echo "</table></p>\n";
+	  	}
+	}
+
+	# Check if a MySQL error occurred and display it.  If $this->devmode then an
+	# SQL backtrace is shown as well.
+	function mysqlErrorCheck () {
+		$error = mysql_error();
+		if ($error) {
+			echo "<p><table cellpadding=10 width=400 bgcolor=#ffcccc><tr><td><font size=+2>SQL Trouble: </font>";
+			echo "<font color=red>";
+			echo htmlspecialchars ($error);
+			echo "</font>\n";
+			if($this->devmode || $this->logsql) {
+				$backtrace = debug_backtrace();
+				$file = $backtrace[2]['file'];
+				$line = $backtrace[2]['line'];
+				$function = $backtrace[2]['function'];
+				echo "<br/>file: $file<br/>line: $line<br/>function: $function<br/>";
+			}
+		echo "</table></p>\n";
+		if($this->devmode || $this->logsql) {
+			$this->SQLBacktrace();
+		}
+		exit();
+		}
+	}
+
+	# All in one query function
+	function sql ($statement, $dbname, $logstring = null) {
+		$dbh = $this->database( $dbname, $statement );
+
+		$result = mysql_query($statement, $dbh);
+		$rowcount = 0;
+
+		# Only keep information in devmode so we don't waste RAM
+		if($this->devmode || $this->logsql) {
+			# Report on the number of rows affected by the query
+			if(($result !== TRUE) && ($result !== FALSE)) {
+				$rowcount = mysql_num_rows($result);
+			} else {
+				$rowcount = mysql_affected_rows($dbh);
+			}
+
+			if($logstring) {
+				# This is used when inserting binary blobs so that the blob does not appear in the log
+				$this->query_btrace[] = array($this->databaseNameForHandle($dbh), $logstring, $rowcount);
+			} else {
+				$this->query_btrace[] = array($this->databaseNameForHandle($dbh), $statement, $rowcount);
+			}
+		}
+
+		$this->mysqlErrorCheck();
+		return $result;
+	}
+
+	# These don't match the naming convention in $App but are used in the portal and submissions systems like this
+	# so we'll leave them alone for consistency.
+	function bugzilla_sql ($statement) 	{ return $this->sql ($statement, "bugzilla"); } 		// Bugzilla
+	function conference_sql ($statement){ return $this->sql ($statement, "conferences"); }		// Conferences
+	function dashboard_sql ($statement) { return $this->sql ($statement, "dashboard"); }		// Dash
+	function downloads_sql ($statement) { return $this->sql ($statement, "downloads"); }		// Downloads
+	function eclipse_sql ($statement) 	{ return $this->sql ($statement, "eclipse"); }			// Whole Eclipse database
+	function epic_sql ($statement) 		{ return $this->sql ($statement, "epic"); }				// EPIC (read-only!)
+	function foundation_sql($statement) { return $this->sql ($statement, "foundation"); }		// Foundation internal database
+	function ipzilla_sql ($statement) 	{ return $this->sql ($statement, "ipzilla"); }			// IPZilla
+	function ipzillatest_sql ($statement) { return $this->sql ($statement, "ipzillatest"); }	// IPZilla test database
+	function live_sql ($statement) 		{ return $this->sql ($statement, "live"); }				// Eclipse Live (read-only!)
+	function polls_sql ($statement) 	{ return $this->sql ($statement, "polls"); }			// Polls
+	function portal_sql	($statement) 	{ return $this->sql ($statement, "myfoundation"); }		// MyFoundation Portal
+	function projectinfo_sql ($statement) { return $this->sql ($statement, "projectinfo"); }	// ProjectInfo tables only (read-only!)
 }
 
 ?>
