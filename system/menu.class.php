@@ -70,7 +70,7 @@ class Menu {
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Committers";
-		$MenuItem = new MenuItem($MenuText, "http://wiki.eclipse.org/index.php/Development_Resources", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/committers/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 		
 
