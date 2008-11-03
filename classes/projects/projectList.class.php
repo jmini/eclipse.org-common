@@ -12,8 +12,6 @@
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/drops/drop.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/project.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class ProjectList {
@@ -101,9 +99,6 @@ class ProjectList {
 	    $_order_by = " ORDER BY " . $_order_by;
 	
 	
-	    $dbc = new DBConnection();
-	    $dbh = $dbc->connect();
-	
 	    $sql = "SELECT 
 					PRJ.project_id,
 					PRJ.name,
@@ -125,7 +120,7 @@ class ProjectList {
 				. $WHERE
 				. $_order_by;
 # echo $sql;	
-	    $result = mysql_query($sql, $dbh);
+	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result))
 	    {
@@ -149,10 +144,6 @@ class ProjectList {
 	            $this->add($Project);
 	    }
 	    
-	    	
-	    $dbc->disconnect();
-	    $dbh 	= null;
-	    $dbc 	= null;
 	    $result = null;
 	    $myrow	= null;
 	}
