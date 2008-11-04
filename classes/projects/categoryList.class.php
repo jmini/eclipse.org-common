@@ -11,9 +11,7 @@
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/category.class.php");
-//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class CategoryList {
@@ -72,10 +70,7 @@ class CategoryList {
 					categories AS CAT 
 				ORDER BY CAT.description ";
 				
-	    $dbc = new DBConnection();
-	    $dbh = $dbc->connect();
-
-	    $result = mysql_query($sql, $dbh);
+	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result)) {
 	    		
@@ -87,9 +82,6 @@ class CategoryList {
 	            $this->add($Category);
 	    }
 
-	    $dbc->disconnect();
-	    $dbh 	= null;
-	    $dbc 	= null;
 	    $result = null;
 	    $myrow	= null;
 	}

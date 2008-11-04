@@ -11,8 +11,8 @@
  *    Nathan Gervais - Fixed __get function to return correct values for multirow records
  *    Karl Matthias - Implemented Countable Extension to the class. And Plural __get retrieval
  * 					Added fields() and ProjectInfoID() functions, fixed bug in multi-row sets
- * 					Modified to work with new $App-managed database handles
  *******************************************************************************/
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class ProjectInfoData implements Countable
 {
@@ -22,9 +22,8 @@ class ProjectInfoData implements Countable
 
 	function ProjectInfoData( $projectid )
 	{
-		global $App;
-
-		$result = $App->projectinfo_sql("
+		$App = new App();
+		$result = $App->eclipse_sql("
 					SELECT * FROM ProjectInfo, ProjectInfoValues
 						WHERE ProjectID = '$projectid'
 						  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID");

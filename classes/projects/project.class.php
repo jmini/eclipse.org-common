@@ -10,8 +10,6 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-//require_once "/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php";
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class Project {
@@ -158,9 +156,6 @@ class Project {
 
             $WHERE .= " WHERE PRJ.project_id = " . $App->returnQuotedString($_project_id);
 	
-		    $dbc = new DBConnection();
-		    $dbh = $dbc->connect();
-		
 		    $sql = "SELECT 
 						PRJ.project_id,
 						PRJ.name,
@@ -181,7 +176,7 @@ class Project {
 						projects AS PRJ "
 					. $WHERE;
 
-		    $result = mysql_query($sql, $dbh);
+		    $result = $App->eclipse_sql($sql);
 	
 			if($myrow = mysql_fetch_array($result)) {
 		    		
@@ -202,9 +197,6 @@ class Project {
 				$this->setIsProject		($myrow["is_project"]);
 		    }
 		    
-		    $dbc->disconnect();
-		    $dbh 	= null;
-		    $dbc 	= null;
 		    $result = null;
 		    $myrow	= null;
 

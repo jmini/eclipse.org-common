@@ -10,9 +10,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectCategory.class.php");
-//require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class ProjectCategoryList {
@@ -106,10 +104,7 @@ class ProjectCategoryList {
 				. $WHERE
 				. $_order_by;
 				
-	    $dbc = new DBConnection();
-	    $dbh = $dbc->connect();
-	
-	    $result = mysql_query($sql, $dbh);
+	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result))
 	    {
@@ -146,9 +141,6 @@ class ProjectCategoryList {
 	    }
 	    
 	    	
-	    $dbc->disconnect();
-	    $dbh 	= null;
-	    $dbc 	= null;
 	    $result = null;
 	    $myrow	= null;
 	}

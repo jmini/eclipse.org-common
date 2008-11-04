@@ -10,12 +10,12 @@
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *    Karl Matthias (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoData.class.php");
-
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class projectInfoList {
 
+	
 	var $list = array();
 	
    	function alphaSortList(){
@@ -59,8 +59,7 @@ class projectInfoList {
 
 	function selectProjectInfoList($_projectID = NULL, $_mainKey = NULL, $_subKey = NULL, $_value = NULL, $_projectInfoID = NULL , $_order_by = NULL) {
 
-		   $dbc = new DBConnection();
-		   $dbh = $dbc->Connect();		   	
+		   $App = new App();
 		   	
 		   $sql = "SELECT DISTINCT ProjectID
 						FROM ProjectInfo, ProjectInfoValues";
@@ -99,7 +98,7 @@ class projectInfoList {
 	    $sql = $sql . $wheresql . $_order_by;
 	    
 	    
-	    $result = mysql_query($sql, $dbh) or die ("ProjectInfoList.selectProjectInfoList: ". mysql_error());
+	    $result = $App->eclipse_sql($sql) or die ("ProjectInfoList.selectProjectInfoList: ". mysql_error());
 	    
 	    while ($sqlIterator = mysql_fetch_array($result))
 	    {
