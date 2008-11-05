@@ -893,6 +893,7 @@ EOHTML;
 		$this->setDatabase( "downloads",	"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
 		$this->setDatabase( "polls", 		"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
 		$this->setDatabase( "projectinfo",	"localhost", "dashboard", "draobhsad", "myfoundation_demo" );
+		$this->setDatabase( "packaging", 	"localhost", "dashboard", "draobhsad", "packaging_demo" );
 		$this->setDatabase( "ipzilla", 		"localhost", "dashboard", "draobhsad", "ipzilla_demo" );
 		$this->setDatabase( "ipzillatest",	"localhost", "dashboard", "draobhsad", "ipzilla_demo" );
 		$this->setDatabase( "live",			"localhost", "dashboard", "draobhsad", "live_demo" );
@@ -912,6 +913,8 @@ EOHTML;
 		$this->set("downloads_db_class_ro",	 	'DBConnectionDownloads');
 		$this->set("epic_db_classfile_ro",	 	'dbconnection_epic_ro.class.php');
 		$this->set("epic_db_class_ro",	 	 	'DBConnectionEPIC');
+		$this->set("packaging_db_classfile_ro",	'dbconnection_packaging_ro.class.php');
+		$this->set("packaging_db_class_ro",		'DBConnectionPackaging');
 		$this->set("foundation_db_classfile",	'dbconnection_workaround.class.php');
 		$this->set("foundation_db_class",	 	'FoundationDBConnectionRW');
 		$this->set("foundation_db_classfile_ro",'dbconnection_foundation_ro.class.php');
@@ -1086,6 +1089,7 @@ EOHTML;
 	function polls_sql ($statement) 	{ return $this->sql ($statement, "polls"); }			// Polls
 	function portal_sql	($statement) 	{ return $this->sql ($statement, "myfoundation"); }		// MyFoundation Portal
 	function projectinfo_sql ($statement) { return $this->sql ($statement, "projectinfo"); }	// ProjectInfo tables only (read-only!)
+	function packaging_sql ($statement)  { return $this->sql ($statement, "packaging"); } 		// Packaging Database
 }
 
 ?>
