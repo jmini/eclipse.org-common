@@ -14,7 +14,7 @@
 <ul id="footernav">
 <li class="first"><a href="<?= $App->getWWWPrefix() ?>/">Home</a></li>
 <li><a href="<?= $App->getWWWPrefix() ?>/legal/privacy.php">Privacy Policy</a></li>
-<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a><img src="/images/updated2.gif" align="absmiddle" /></li>
 </ul>
 <p>Copyright &copy; <?=date("Y");?> The Eclipse Foundation. All Rights Reserved</p>
 </div></body></html>
