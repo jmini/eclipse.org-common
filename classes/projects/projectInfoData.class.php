@@ -19,10 +19,30 @@ class ProjectInfoData implements Countable
 	private $rows; // raw query results for database, ProjectID, MainKey, SubKey, Value, ProjectInfoID
 	private $mainkeys; // [main key] -> # of rows
 	private $subkeys;  // [main key] -> true if has subkeys, false otherwise
+	public $original_projectid;
+	public $effective_projectid;
 
 	function ProjectInfoData( $projectid )
 	{
 		$App = new App();
+		$this->original_projectid = $projectid;
+		while( 1) {
+			$result = $App->eclipse_sql("
+						SELECT COUNT(1) AS count FROM ProjectInfo, ProjectInfoValues
+							WHERE ProjectID = '$projectid'
+							  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID
+							  AND MainKey = 'inherit'	
+							  AND Value = 'true'");
+			$row = mysql_fetch_object( $result );
+			if( $row && $row->count > 0 ) {
+				$words = explode( '.', $projectid );
+				array_pop( $words);
+				$projectid = implode( '.', $words );
+			} else {
+				break;
+			}
+		}
+		$this->effective_projectid = $projectid;
 		$result = $App->eclipse_sql("
 					SELECT * FROM ProjectInfo, ProjectInfoValues
 						WHERE ProjectID = '$projectid'
