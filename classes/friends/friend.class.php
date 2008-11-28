@@ -9,9 +9,6 @@
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_bugs_ro.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
 
 class Friend {
 
@@ -22,6 +19,9 @@ class Friend {
 	private $date_joined	= NULL;
 	private $is_anonymous	= 0;
 	private $is_benefit		= 0;
+	private $email			= "";
+	private $roles			= ""; 	## FORMAT: ::XX::  where XX is a Foundation role (CM, PL, PM, etc)
+									## Concatenate for multiples: ::CM::::PL::::PM::
 
 
 	function getFriendID() {
@@ -44,6 +44,12 @@ class Friend {
 	}
 	function getIsBenefit() {
 		return $this->is_benefit;
+	}	
+	function getEmail() {
+		return $this->email;
+	}
+	private function getRoles() {
+		return $this->roles;
 	}
 	
 
@@ -69,6 +75,26 @@ class Friend {
 	function setIsBenefit($_is_benefit) {
 		$this->is_benefit = $_is_benefit;
 	}
+	function setEmail($_email) {
+		$this->email = $_email;
+	}
+	private function setRoles($_roles) {
+		$this->roles = $_roles;
+	}
+	
+	
+	/**
+	 * getIsCommitter() - return committer status
+	 * @see authenticate()
+	 * @return bool user is a committer
+	 */
+	function getIsCommitter() {
+		$rValue = strpos($this->getRoles(), "::CM::");
+		if($rValue !== false && $rValue >= 0) {
+			$rValue = true;		
+		}
+		return $rValue;
+	}
 	
 	function insertUpdateFriend() {
 		$retVal = 0;
@@ -78,8 +104,6 @@ class Friend {
 		#$ModLog->setLogTable("Person");
 		#$ModLog->setPK1($this->getPersonID());
 
-		$dbc = new DBConnectionRW();
-		$dbh = $dbc->connect();
 		if ($this->date_joined == NULL)
 			$default_date_joined = "NOW()";
 		else
@@ -91,13 +115,13 @@ class Friend {
 						bugzilla_id = " . $App->returnQuotedString($App->sqlSanitize($this->getBugzillaID(), $dbh)) . ",
 						first_name = " . $App->returnQuotedString($App->sqlSanitize($this->getFirstName(), $dbh)) . ",
 						last_name = " . $App->returnQuotedString($App->sqlSanitize($this->getLastName(), $dbh)) . ",
-						date_joinded = " . $default_date_joined . ",
+						date_joined = " . $default_date_joined . ",
 						is_anonymous = " . $App->returnQuotedString($App->sqlSanitize($this->getIsAnonymous(), $dbh)) . ",
 						is_benefit = " . $App->returnQuotedString($App->sqlSanitize($this->getIsBenefit(), $dbh)) . "
 					WHERE
 						friend_id = " . $App->sqlSanitize($this->getFriendID(), $dbh);
 
-				mysql_query($sql, $dbh);
+				$App->eclipse_sql($sql);
 				$retVal = $this->friend_id;
 				#$ModLog->setLogAction("UPDATE");
 				#$ModLog->insertModLog();
@@ -120,14 +144,12 @@ class Friend {
 						" . $default_date_joined . ",
 						" . $App->returnQuotedString($this->getIsAnonymous()) . ",
 						" . $App->returnQuotedString($this->getIsBenefit()) . ")";
-			mysql_query($sql, $dbh);
-			$retVal = mysql_insert_id($dbh);
+			$App->eclipse_sql($sql);
+			$retVal = mysql_insert_id();
 			#$ModLog->setLogAction("INSERT");
 			#$ModLog->insertModLog();
 		}
-
-		$dbc->disconnect();
-	return $retVal;
+		return $retVal;
 	}
 
 
@@ -135,9 +157,6 @@ class Friend {
 
 		if($_friend_id != "") {
 			$App = new App();
-
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
 			$_friend_id = $App->sqlSanitize($_friend_id, $dbh);
 			
 			$sql = "SELECT friend_id,
@@ -150,7 +169,7 @@ class Friend {
 					FROM friends 
 					WHERE friend_id = " . $App->returnQuotedString($_friend_id);
 
-			$result = mysql_query($sql, $dbh);
+			$result = $App->eclipse_sql($sql);
 
 			if ($myrow = mysql_fetch_array($result))	{
 				$this->setFriendID		($myrow["friend_id"]);
@@ -161,7 +180,6 @@ class Friend {
 				$this->setIsAnonymous	($myrow["is_anonymous"]);
 				$this->setIsBenefit		($myrow["is_benefit"]);
 			}
-			$dbc->disconnect();
 		}
 	}
 	
@@ -170,24 +188,18 @@ class Friend {
 
 		if( ($_fieldname != "") && ($_searchfor != "")) {
 			$App = new App();
-
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-			$_fieldname = $App->sqlSanitize($_fieldname, $dbh);
-			$_searchfor = $App->sqlSanitize($_searchfor, $dbh);
+			$_fieldname = $App->sqlSanitize($_fieldname, null);
+			$_searchfor = $App->sqlSanitize($_searchfor, null);
 			
 			$sql = "SELECT friend_id
 					FROM friends
 					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
 
-			$result = mysql_query($sql, $dbh);
+			$result = $App->eclipse_sql($sql);
 			if ($result){
 				$myrow = mysql_fetch_array($result);
 				$retVal = $myrow['friend_id'];
 			}
-
-			$dbc->disconnect();
-
 		}
 		return $retVal;
 	}
@@ -198,52 +210,48 @@ class Friend {
 		if($_email != "") {
 			$App = new App();
 
-			$dbc = new DBConnectionBugs();
-			$dbh = $dbc->connect();
 			$_email 		= $App->sqlSanitize($_email, $dbh);
 			
 			$sql = "SELECT userid
 					FROM profiles
 					WHERE login_name = " . $App->returnQuotedString($_email);
 
-			$result = mysql_query($sql, $dbh);
+			$result = $App->bugzilla_sql($sql);
 			$myrow = mysql_fetch_array($result);
 
 			$result = $myrow['userid'];
-			$dbc->disconnect();
 		}
 		return $result;
 	}
 
-
-	function authenticate($email, $password) {
 	/**
-	 * Authenticate user using bugzilla credentials
+	 * authenticate() - Authenticate user using bugzilla credentials
 	 * 
 	 * @author droy
 	 * @param string Email address
 	 * @param string password
-	 * @return boolean
+	 * @return boolean - auth was successful or not
 	 * @since 2007-11-20
 	 * 
 	 */
+	function authenticate($email, $password) {
+
 		$rValue = false;
 		
 		$validPaths = array(
 			"/home/data/httpd/dev.eclipse.org/html/site_login/"
 		);
 		$App = new App();
-		
-		if($email != "" && $password != "" && $App->isValidCaller($validPaths)) {
+		if($email != "" && $password != "" && ($App->isValidCaller($validPaths) || $App->devmode)) {
+			
 			if (eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
 
-				$dbc = new DBConnectionBugs();
-				$dbh = $dbc->connect();
-				$email 		= $App->sqlSanitize($email, $dbh);
-				$password 	= $App->sqlSanitize($password, $dbh);
+				$email 		= $App->sqlSanitize($email, null);
+				$password 	= $App->sqlSanitize($password, null);
 
 				$sql = "SELECT
 							userid,
+							login_name,
 							LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
 							SUBSTR(realname, @loc+2) AS last_name
 					FROM 
@@ -251,14 +259,13 @@ class Friend {
 					WHERE login_name = '$email' 
 						AND cryptpassword = ENCRYPT('$password', cryptpassword)
 						AND disabledtext = ''";
-				$dbc = new DBConnectionBugs();
-				$dbh = $dbc->connect();
-				$result = mysql_query($sql, $dbh);
+				$result = $App->bugzilla_sql($sql);
 				if($result && mysql_num_rows($result) > 0) {
 					$rValue = true;
 					$myrow = mysql_fetch_assoc($result);
 					
 					$this->setBugzillaID($myrow['userid']);
+					$this->setEmail($myrow['login_name']);
 					
 					# Load up the rest of the Friend record
 					$friend_id = $this->selectFriendID("bugzilla_id", $this->getBugzillaID());
@@ -268,12 +275,26 @@ class Friend {
 					
 					# Override the friend record with (known good) Bugzilla info
 					$this->setFirstName($myrow['first_name']);
-					$this->setLastName($myrow['last_name']);					
+					$this->setLastName($myrow['last_name']);
+					
+					
+					# Get user roles				
+					# Committer
+					$sql = "SELECT /* friend.class.php authenticate */ COUNT(1) AS RecordCount FROM PeopleProjects AS PRJ
+						INNER JOIN People AS P ON P.PersonID = PRJ.PersonID
+						WHERE P.EMail = '$email' AND PRJ.Relation = 'CM' 
+						AND (LEFT(PRJ.InactiveDate,10) = '0000-00-00' OR PRJ.InactiveDate IS NULL OR PRJ.InactiveDate > NOW())";
+
+					$result = $App->foundation_sql($sql);
+					if($result && mysql_num_rows($result) > 0) {
+						$myrow = mysql_fetch_assoc($result);
+						if($myrow['RecordCount'] > 0) {
+							$this->roles .= "::CM::";
+						}			
+					}
 				}
-				$dbc->disconnect();
 			}
 		}
-		
 		return $rValue;
 	}
 }

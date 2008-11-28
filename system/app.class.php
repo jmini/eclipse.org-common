@@ -91,12 +91,17 @@ class App {
 		# Make it easy to override database and other settings (don't check app-config.php in to CVS!)
 		if($this->devmode) {
 			if(file_exists(getcwd() . '/app-config.php')) {
-				include(getcwd() . '/app-config.php');
+				include_once(getcwd() . '/app-config.php');
 				# We call a function inside app-config.php and pass it a reference to ourselves because
 				# this class is still in the constructor and might not be available externally by name.
 				# File just contains a function called app_config() which is called.  Nothing more is needed.
 				app_config($this);
 			}
+			else if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/system/app-config.php'))
+			{
+				include_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/system/app-config.php');
+				app_config($this);
+			}			
 		}
 
 		# Initialize backtrace storage
@@ -813,6 +818,13 @@ EOHTML;
 			return $fileSize;
 		}
 
+		/**
+		 * useSession(String) - use auth sessions
+		 * @author droy
+		 * @since Jun 7, 2007
+		 * @param string 'optional' or 'required'
+		 * @return Session object
+		 */
 		function useSession($required="") {
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
         	$ssn = new Session();
@@ -836,16 +848,16 @@ EOHTML;
 			return $validCaller;
 		}
 
-		function sqlSanitize($_value, $_dbh) {
-		/**
+		function sqlSanitize($_value, $_dbh=NULL) {
+		 /**
 		 * Sanitize incoming value to prevent SQL injections
 		 * @param string value to sanitize
 		 * @param dbh database resource to use
 		 * @return string santized string
 		 */
-			if(get_magic_quotes_gpc()) {
-				$_value = stripslashes($_value);
-			}
+			if ($_dbh==NULL) {
+				 $_dbh = $this->database( "eclipse", "" );
+				}
 			$_value = mysql_real_escape_string($_value, $_dbh);
         	return $_value;
 		}
@@ -950,6 +962,10 @@ EOHTML;
 				$dbh = $rec['CONNECTION'];
 				if( $dbh == null ) {
 					$dbh = mysql_connect( $rec['HOST'], $rec['USERNAME'], $rec['PASSWORD']);
+				}				
+				if(get_magic_quotes_gpc())
+				{
+					trigger_error("magic_quotes_gpc is currently set to ON in your php.ini. This is highly DISCOURAGED.  Please change your setting or comment out this line.");
 				}
 		} else { 				# For PRODUCTION machines
 			$class = null;

@@ -9,8 +9,7 @@
  * Contributors:
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class Contribution {
 	
@@ -62,8 +61,6 @@ class Contribution {
 	function insertContribution(){
 		$result = 0;
 		$App = new App();
-		$dbc = new DBConnectionRW();
-		$dbh = $dbc->connect();
 		
 		if ($this->selectContributionExists($this->getTransactionID())){
 			$result = -1;
@@ -73,7 +70,7 @@ class Contribution {
 			if ($this->date_expired == NULL)
 				$default_date_expired = "DATE_ADD(NOW(), INTERVAL 1 YEAR)";
 			else
-				$default_date_expired = $App->returnQuotedString($App->sqlSerialze($this->date_expired, $dbh));
+				$default_date_expired = $App->returnQuotedString($App->sqlSerialze($this->date_expired));
 			# insert
 			$sql = "INSERT INTO friends_contributions (
 					friend_id,
@@ -83,16 +80,15 @@ class Contribution {
 					message,
 					transaction_id)
 					VALUES (
-					" . $App->returnQuotedString($App->sqlSanitize($this->getFriendID(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSanitize($this->getContributionID(), $dbh)) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getFriendID())) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getContributionID())) . ",
 					" . $default_date_expired . ",
-					" . $App->returnQuotedString($App->sqlSanitize($this->getAmount(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSanitize($this->getMessage(), $dbh)) . ",
-					" . $App->returnQuotedString($App->sqlSanitize($this->getTransactionID(), $dbh)) . ")";
-			mysql_query($sql, $dbh);
+					" . $App->returnQuotedString($App->sqlSanitize($this->getAmount())) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getMessage())) . ",
+					" . $App->returnQuotedString($App->sqlSanitize($this->getTransactionID())) . ")";
+			$App->eclipse_sql($sql);
 		}
 
-		$dbc->disconnect();
 		return $result;
 	}
 	
@@ -102,14 +98,11 @@ class Contribution {
 		{
 			$App = new App();
 
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-
 			$sql = "SELECT transaction_id
 					FROM friends_contributions
-					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitize($_transaction_id, $dbh));
+					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitize($_transaction_id));
 
-			$result = mysql_query($sql, $dbh);
+			$result = $App->eclipse_sql($sql);
 			if ($result)
 			{	
 				$myrow = mysql_fetch_array($result);
@@ -117,7 +110,6 @@ class Contribution {
 				$retVal = TRUE;
 			}
 
-			$dbc->disconnect();
 
 		}
 		return $retVal;			
@@ -128,9 +120,6 @@ class Contribution {
 		if($_contribution_id != "")  {
 			$App = new App();
 
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-
 			$sql = "SELECT friend_id,
 							contribution_id,
 							date_expired,
@@ -138,9 +127,9 @@ class Contribution {
 							message,
 							transaction,
 					FROM friends_contributions 
-					WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($_contribution_id, $dbh));
+					WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($_contribution_id));
 
-			$result = mysql_query($sql, $dbh);
+			$result = $App->eclipse_sql($sql);
 
 			if ($myrow = mysql_fetch_array($result))	{
 				$this->setFriendID			($myrow["friend_id"]);
@@ -150,7 +139,6 @@ class Contribution {
 				$this->setMessage			($myrow["message"]);
 				$this->setTransactionID		($myrow["transaction_id"]);
 			}
-			$dbc->disconnect();
 		}
 	}
 }

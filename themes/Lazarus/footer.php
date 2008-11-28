@@ -2,7 +2,7 @@
 	<ul id="footernav">
 		<li class="first"><a href="/">Home</a></li>
 		<li><a href="<?= $App->getWWWPrefix() ?>/legal/privacy.php">Privacy Policy</a></li>
-		<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a></li>
+		<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a><img src="/images/updated.png" align="absmiddle" /></li>
 		<li><a href="<?= $App->getWWWPrefix() ?>/org/foundation/contact.php">Contact</a></li>
 		<li><a href="<?= $App->getWWWPrefix() ?>/legal/">Legal</a></li>
 		<li class="spacer">&nbsp;</li>

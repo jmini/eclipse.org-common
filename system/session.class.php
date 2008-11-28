@@ -15,9 +15,9 @@ define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
 define('LOGINPAGE', 'https://dev.eclipse.org/site_login/');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+
 
 class Session {
 
@@ -63,6 +63,9 @@ class Session {
 	}
 	function getIsPersistent() {
 		return $this->is_persistent == null ? 0 : $this->is_persistent;
+	}
+	function getLoginPageURL() {
+		return LOGINPAGE;
 	}
 	
 	function setGID($_gid) {
@@ -111,21 +114,21 @@ class Session {
 	}
 
 	function destroy() {
+		$App = new App();
 		if($this->getBugzillaID() != 0) {
         	$sql = "DELETE FROM sessions WHERE bugzilla_id = " . $this->getBugzillaID();
-        	$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-			mysql_query($sql, $dbh);
-			$dbc->disconnect();
+        	$App->eclipse_sql($sql);
 			setcookie(ECLIPSE_SESSION, "", -36000, "/", ".eclipse.org");
 			
-			# Log this event
-			$EvtLog = new EvtLog();
-			$EvtLog->setLogTable("sessions");
-			$EvtLog->setPK1($this->getBugzillaID());
-			$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
-			$EvtLog->setLogAction("DELETE");
-			$EvtLog->insertModLog("apache");
+			if(!$App->devmode) {
+				# Log this event
+				$EvtLog = new EvtLog();
+				$EvtLog->setLogTable("sessions");
+				$EvtLog->setPK1($this->getBugzillaID());
+				$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+				$EvtLog->setLogAction("DELETE");
+				$EvtLog->insertModLog("apache");
+			}
 		}
 	}
 
@@ -142,9 +145,6 @@ class Session {
 			$this->setUpdatedAt($App->getCURDATE());
 			$this->setBugzillaID($Friend->getBugzillaID());
 			
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-			
 			$sql = "INSERT INTO sessions (
 						gid,
 						bugzilla_id,
@@ -154,39 +154,39 @@ class Session {
 						is_persistent)
 						VALUES (
 							" . $App->returnQuotedString($this->getGID()) . ",
-							" . $App->sqlSanitize($Friend->getBugzillaID() ,$dbh) . ",
+							" . $App->sqlSanitize($Friend->getBugzillaID(), null) . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
 							'" . $App->returnJSSAfeString($this->data) . "',
-							'" . $App->sqlSanitize($this->getIsPersistent(),$dbh) . "')";
+							'" . $App->sqlSanitize($this->getIsPersistent(), null) . "')";
 
-			mysql_query($sql, $dbh);
-			$dbc->disconnect();
+			$App->eclipse_sql($sql);
 			
-			
-			# Log this event
-			$EvtLog = new EvtLog();
-			$EvtLog->setLogTable("sessions");
-			$EvtLog->setPK1($this->getBugzillaID());
-			$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
-			$EvtLog->setLogAction("INSERT");
-			$EvtLog->insertModLog("apache");
+			if(!$App->devmode) {
+				# Log this event
+				$EvtLog = new EvtLog();
+				$EvtLog->setLogTable("sessions");
+				$EvtLog->setPK1($this->getBugzillaID());
+				$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+				$EvtLog->setLogAction("INSERT");
+				$EvtLog->insertModLog("apache");
 
+				# add session to the .htaccess file
+				# TODO: implement a smart locking
+				if($Friend->getIsBenefit()) {
+					$fh = fopen(HTACCESS, 'a') or die("can't open file");
+					$new_line = "SetEnvIf Cookie \"" . $this->getGID() . "\" eclipsefriend=1\n";
+					fwrite($fh, $new_line);
+					fclose($fh);
+				}
+			}
 			
 			$cookie_time = 0;
 			if($this->getIsPersistent()) {
 				$cookie_time = time()+3600*24*365;
 			}
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
 
-			# add session to the .htaccess file
-			# TODO: implement a smart locking
-			if($Friend->getIsBenefit()) {
-				$fh = fopen(HTACCESS, 'a') or die("can't open file");
-				$new_line = "SetEnvIf Cookie \"" . $this->getGID() . "\" eclipsefriend=1\n";
-				fwrite($fh, $new_line);
-				fclose($fh);
-			}
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
 		}
 	}
 
@@ -195,9 +195,6 @@ class Session {
 		
 		$rValue = false;
 		if($_gid != "") {
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
-			
 			$App = new App();
 			$sql = "SELECT	gid,
 							bugzilla_id,
@@ -206,10 +203,10 @@ class Session {
 							data,
 							is_persistent
 					FROM sessions
-					WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid,$dbh)) . "
+					WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, null)) . "
 						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
 			
-			$result = mysql_query($sql, $dbh);
+			$result = $App->eclipse_sql($sql);
 			if($result && mysql_num_rows($result) > 0) {
 				$rValue = true;
 				$myrow = mysql_fetch_assoc($result);
@@ -220,22 +217,18 @@ class Session {
 				$this->data = $myrow['data'];
 				$this->setIsPersistent($myrow['is_persistent']);
 			}
-			$dbc->disconnect();
 		}		
 		return $rValue;
 	}
 
 	function maintenance() {
-		$dbc = new DBConnectionRW();
-		$dbh = $dbc->connect();
 		$App = new App();
 			
 		$sql = "DELETE FROM sessions 
 				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND is_persistent = 0) 
-				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), $dbh) . "')"; 
+				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), null) . "')"; 
 
-		mysql_query($sql, $dbh);
-		$dbc->disconnect();
+		$App->eclipse_sql($sql);
 		
 		# 1/500 of each maintenance calls will perform htaccess cleanup	
 		if(rand(0, 500) < 1) {
@@ -244,26 +237,26 @@ class Session {
 	}
 	
 	private function regenrate_htaccess() {
-		$dbc = new DBConnectionRW();
-		$dbh = $dbc->connect();
 		$App = new App();
-			
-		$sql = "SELECT gid 
-				FROM sessions AS S 
-					INNER JOIN friends AS F ON F.bugzilla_id = S.bugzilla_id 
-				WHERE F.is_benefit = 1"; 
-
-		$result = mysql_query($sql, $dbh);
-		$new_file = "";
-		while($myrow = mysql_fetch_assoc($result)) {
-			$new_file .= "SetEnvIf Cookie \"" . $myrow['gid'] . "\" eclipsefriend=1\n";	
-		}
-		$dbc->disconnect();
 		
-		if($new_file != "") {
-			$fh = fopen(HTACCESS, 'w') or die("can't open file");
-			fwrite($fh, $new_file);
-			fclose($fh);
+		if(!$App->devmode) {
+			
+			$sql = "SELECT gid 
+					FROM sessions AS S 
+						INNER JOIN friends AS F ON F.bugzilla_id = S.bugzilla_id 
+					WHERE F.is_benefit = 1"; 
+	
+			$result = $App->eclipse_sql($sql);
+			$new_file = "";
+			while($myrow = mysql_fetch_assoc($result)) {
+				$new_file .= "SetEnvIf Cookie \"" . $myrow['gid'] . "\" eclipsefriend=1\n";	
+			}
+			
+			if($new_file != "") {
+				$fh = fopen(HTACCESS, 'w') or die("can't open file");
+				fwrite($fh, $new_file);
+				fclose($fh);
+			}
 		}
 	}
 		
@@ -276,6 +269,5 @@ class Session {
 		header("Location: " . LOGINPAGE);
 		exit;
 	}
-	
-}    
+}
 ?>
