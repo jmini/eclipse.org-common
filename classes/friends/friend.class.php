@@ -244,8 +244,7 @@ class Friend {
 		$App = new App();
 		if($email != "" && $password != "" && ($App->isValidCaller($validPaths) || $App->devmode)) {
 			
-			if (eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
-
+			if (eregi('^[a-zA-Z0-9\+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
 				$email 		= $App->sqlSanitize($email, null);
 				$password 	= $App->sqlSanitize($password, null);
 

@@ -101,7 +101,7 @@ class Session {
 		$rValue = false;
 		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin
-        	setcookie(ECLIPSE_SESSION, "", -36000, "/", ".eclipse.org");
+        	setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
         	$rValue = false;
         }
         else {
@@ -118,7 +118,7 @@ class Session {
 		if($this->getBugzillaID() != 0) {
         	$sql = "DELETE FROM sessions WHERE bugzilla_id = " . $this->getBugzillaID();
         	$App->eclipse_sql($sql);
-			setcookie(ECLIPSE_SESSION, "", -36000, "/", ".eclipse.org");
+			setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
 			
 			if(!$App->devmode) {
 				# Log this event
