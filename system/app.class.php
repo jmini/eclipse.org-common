@@ -828,7 +828,7 @@ EOHTML;
 		function useSession($required="") {
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
         	$ssn = new Session();  # constructor calls validate 
-        	if ($ssn->getGID() != "" && $required == "required") {
+        	if ($ssn->getGID() == "" && $required == "required") {
         		$ssn->redirectToLogin();
 			}
         	return $ssn;
