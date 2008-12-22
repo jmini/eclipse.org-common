@@ -101,7 +101,8 @@ class Session {
 		$rValue = false;
 		if ( (!$this->load($cookie))) {
         	# Failed - no such session, or session no match.  Need to relogin
-        	setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
+        	# Bug 257675
+        	# setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
         	$rValue = false;
         }
         else {
