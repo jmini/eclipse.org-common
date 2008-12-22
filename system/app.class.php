@@ -856,8 +856,8 @@ EOHTML;
 		 * @return string santized string
 		 */
 			if ($_dbh==NULL) {
-				 $_dbh = $this->database( "eclipse", "" );
-				}
+				$_dbh = $this->database( "eclipse", "" );
+			}
 			$_value = mysql_real_escape_string($_value, $_dbh);
         	return $_value;
 		}
@@ -970,7 +970,8 @@ EOHTML;
 		} else { 				# For PRODUCTION machines
 			$class = null;
 
-			if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT') {  // Try to use read-only when possible
+			if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT' 
+			&& strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") {  // Try to use read-only when possible
 				$classfile = $this->get($key . '_db_classfile_ro');
 				$class = $this->get($key . '_db_class_ro');
 			}

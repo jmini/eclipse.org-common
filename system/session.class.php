@@ -197,12 +197,7 @@ class Session {
 		$rValue = false;
 		if($_gid != "") {
 			$App = new App();
-			$sql = "SELECT	gid,
-							bugzilla_id,
-							subnet,
-							updated_at,
-							data,
-							is_persistent
+			$sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,	is_persistent
 					FROM sessions
 					WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, null)) . "
 						AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
