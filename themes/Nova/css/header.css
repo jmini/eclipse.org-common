@@ -1,0 +1,205 @@
+#header {
+	background:transparent url('/eclipse.org-common/themes/Nova/images/header.png') top left no-repeat;
+	height:4.7em;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
+#logo {
+	float:left;
+	z-index:9999; /*Something Insanely High*/
+	overflow:hidden;
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+#menu ul {
+	height:4.7em;
+	margin-left:2em;
+	margin-top:1em;
+	margin-bottom:-0.5em;
+	float:left;
+}
+
+#menu ul li {
+	height:100%;
+	font-size:1.3em;
+	display:block;
+	float:left;
+	cursor:pointer;
+	text-transform:capitalize;
+	color:#0D3656;
+	padding-top:10px;
+}
+
+#menu ul li a{
+	font-weight:400;
+	color:#0D3656;
+	text-align:center;
+	padding:0px 10px;
+}
+
+#search {
+	float:right;
+	position:relative;
+	padding-top:14px;
+	padding-right:7px;
+}
+
+#searchBox {
+	width:230px;
+	font-size:1.2em;		
+	border:none !important;
+	position:relative;
+	right:7px;
+}
+
+#searchButton {
+	font-size:1.5em;
+	padding-left:0px;
+}
+
+#otherSites{
+	background:transparent url('/eclipse.org-common/themes/Nova/images/siteSelector.png') no-repeat;
+	display:block;
+	clear:none;
+	height:7.8em;
+	width:34em;
+	float:right;	
+	margin-top:1em;
+	margin-bottom:0px;
+	margin-right:2em;
+	text-align:right;
+}
+
+#otherSites #arrow {
+	margin-right:10px;	
+}
+
+#otherSitesButton {
+	cursor:pointer;
+	font-size:1.4em;
+	text-decoration:none;
+	line-height:35px;
+	margin-right:20px;
+}
+
+#otherSitesButton a {
+	color:#FFF;	
+}
+
+#sitesHolder {
+	width:100%;
+	background:#5FA4C7 url('/eclipse.org-common/themes/Nova/images/sitesBG.png') repeat-x;	
+	border-bottom:1px solid #0D3656;
+	overflow:hidden;
+	height:10em;
+}
+
+#sites {
+	text-align:center;
+	position:relative;
+	z-index:4;
+	clear:both;
+	margin:0 auto;
+}
+
+#sites ul {
+	padding-left:2.5em;
+	padding-top:0.5em;
+	margin:3em auto 0;
+}
+
+#sites ul li{
+	text-align:center;
+	width:5.2em;
+	float:left;
+	display:block;
+}
+
+#sites ul li a {
+	position:relative;
+	display:block;
+	width:32px;
+	height:32px;
+	font-size:1.2em;
+	text-decoration:none;
+	color:#FFF;
+}
+
+#promos {
+	text-align:center;
+	padding:20px;	
+}
+
+#promotion {
+	float:left;
+	width:500px;
+	padding-left:50px;
+	text-align:center;
+	clear:none;
+}
+
+#promotionDetails {
+	background:transparent url('/eclipse.org-common/themes/Nova/images/ESE08.png') no-repeat 0 -10px;
+	padding-left:3em;
+	font-size:1.4em;
+	font-weight:bold;
+	line-height:2em;
+	float:left;	
+	overflow:hidden;
+	
+}
+
+#promotionDetails a {
+	color:#0D3656;	
+}
+
+#sitesHolder.visible {
+	display:block;
+}
+
+#sitesHolder.invisible {
+	display:none;
+}
+
+#arrow.visible {
+	background:transparent url('/eclipse.org-common/themes/Nova/images/up.png') no-repeat right;
+}
+
+#arrow.invisible {
+	background:transparent url('/eclipse.org-common/themes/Nova/images/down.png') no-repeat right;
+}
+
+#epic		{	background:transparent url('http://dev.eclipse.org/custom_icons/network-wired-bw.png') no-repeat; }
+#live		{	background:transparent url('http://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png') no-repeat; }
+#bugzilla 	{	background:transparent url('http://dev.eclipse.org/custom_icons/system-search-bw.png') no-repeat; }
+#planet		{	background:transparent url('http://dev.eclipse.org/large_icons/devices/audio-card.png') no-repeat; }
+#wiki		{	background:transparent url('http://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png') no-repeat; }
+#portal 	{	background:transparent url('http://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png') no-repeat; }
+
+#epic:hover  	{	background:transparent url('http://dev.eclipse.org/large_icons/devices/network-wired.png') no-repeat; }
+#live:hover  	{ 	background:transparent url('http://dev.eclipse.org/large_icons/devices/audio-input-microphone.png') no-repeat; }
+#bugzilla:hover {	background:transparent url('http://dev.eclipse.org/large_icons/actions/system-search.png') no-repeat; }
+#planet:hover  	{ 	background:transparent url('http://dev.eclipse.org/large_icons/devices/audio-card.png') no-repeat; }
+#wiki:hover  	{	background:transparent url('http://dev.eclipse.org/large_icons/apps/accessories-text-editor.png') no-repeat; }
+#portal:hover  	{	background:transparent url('http://dev.eclipse.org/large_icons/apps/preferences-system-network-proxy.png') no-repeat; }
+
+#sites ul li a div {
+	display:none;	
+	white-space: nowrap;
+}
+
+#sites ul li a:hover div {
+	display:block;
+	position:absolute;
+	padding:5px;
+	top:40px;
+ 	color:#EFEFEF;
+ 	background:#333;
+ 	border:1px solid #666;
+ 	-moz-border-radius:5px;
+ 		
+}
