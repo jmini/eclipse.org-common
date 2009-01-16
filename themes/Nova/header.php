@@ -22,6 +22,7 @@ if(isset($App)) {
 <head>
 	<title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/menu/assets/skins/sam/menu.css" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/reset.css"/>
@@ -30,6 +31,7 @@ if(isset($App)) {
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/footer.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/visual.css" media="screen" />
 	<!--[if IE]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie_style.css" media="screen"/> <![endif]-->
+	<!--[if IE 6]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie6_style.css" media="screen"/> <![endif]-->
 	<!-- Dependencies --> 
 	<!-- Source File -->
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
@@ -39,23 +41,19 @@ if(isset($App)) {
 	<div id="novaWrapper"><?//This Div is closed in footer.php?>
 		<div id="clearHeader">
 			<div id="logo">
-				<img src="/eclipse.org-common/themes/Nova/images/eclipse.png"/>
+				<img src="/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse.org"/>
 			</div>
 			<div id="otherSites">
 				<div id="sites">
 				<ul id="sitesUL">
-					<li><a id="epic" href='http://www.eclipseplugincentral.com' alt="Eclipse Plugin Central">&nbsp;<div>Eclipse Plugin Central</div></a></li>
-					<li><a id="live" href='http://live.eclipse.org' alt="Eclipse Live">&nbsp;<div>Eclipse Live</div></a></li>
-		    		<li><a id="bugzilla" href='https://bugs.eclipse.org/bugs/' alt="Bugzilla">&nbsp;<div>Bugzilla</div></a></li>
-		    		<li><a id="planet" href='http://www.planeteclipse.org/' alt="Planet Eclipse">&nbsp;<div>Planet Eclipse</div></a></li>
-		    		<li><a id="wiki" href='http://wiki.eclipse.org/' alt="Eclipse Wiki">&nbsp;<div>Eclipse Wiki</div></a></li>
-		    		<li><a id="portal" href='http://portal.eclipse.org' alt="MyFoundation Portal">&nbsp;<div>My Foundation Portal</div></a></li>
+					<li><a id="epic" href='http://www.eclipseplugincentral.com'><img alt="Eclipse Plugin Central" src="http://dev.eclipse.org/custom_icons/network-wired-bw.png"/>&nbsp;<div>Eclipse Plugin Central</div></a></li>
+					<li><a id="live" href='http://live.eclipse.org'><img alt="Eclipse Live" src="http://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<div>Eclipse Live</div></a></li>
+		    		<li><a id="bugzilla" href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="http://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<div>Bugzilla</div></a></li>
+		    		<li><a id="planet" href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="http://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<div>Planet Eclipse</div></a></li>
+		    		<li><a id="wiki" href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="http://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<div>Eclipse Wiki</div></a></li>
+		    		<li><a id="portal" href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="http://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><div>My Foundation Portal</div></a></li>
 		    	</ul>
 		    	</div>
-
-				<!-- <div id="arrow" class="<?=$siteShow;?>">
-					<a class="yui-button" id="otherSitesButton">Other Eclipse Sites</a>
-				</div> -->
 			</div>		
 		</div>
 

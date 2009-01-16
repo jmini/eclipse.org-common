@@ -52,5 +52,5 @@
 	<div id="novaContent">
 	<? } 
 	else { ?>
-	<div id="novaContent" class="faux">
+	<div id="novaContent" class="faux">		<br style="clear:both;height:1em;"/>
 	<? } ?>
