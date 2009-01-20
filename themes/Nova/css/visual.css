@@ -247,8 +247,10 @@ a {
 
 #midcolumn p {
 	font-size:12px;
-	padding-bottom:10px;	
+	padding-bottom:10px;
+	line-height:15px;	
 }
+
 
 .homeitem3col, .homeitem {
 	font-size:12px;
@@ -321,11 +323,12 @@ a {
 	color:#333333;
 }
 
-.homeitem3col ul, .homeitem ul {
+#midcolumn ul, .midcolumn ol {
 	margin-left:10px;	
 }
 
-.homeitem3col li, .homeitem li {
+#midcolumn li {
+	font-size:12px;
 	margin-left:10px;
 	list-style-position:outside;	
 	list-style-image:url('/eclipse.org-common/themes/Nova/images/homeitemBulletIE.gif');	
