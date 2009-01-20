@@ -12,7 +12,7 @@ body {
 }
 #novaWrapper {
 	min-height: 100%; /* gives layout 100% height */
-	width: 98em; /* centered div must be given a width */
+	width: 980px; /* centered div must be given a width */
 	margin: 0 auto; /* centers #wrapper */
 }
 * html #wrapper { 
@@ -20,16 +20,16 @@ body {
 }
 #clearHeader {
 	text-align:left;
-	height: 9.2em; /* provides space for the #footer */
+	height: 92px /* provides space for the #footer */
 }
 #clearFooter {
 	clear:both;
-	height: 3.4em; /* provides space for the #footer */
+	height: 34px; /* provides space for the #footer */
 }
 #footer {
-	height: 4.7em;
-	width: 98em; /* centered div must be given a width */
-	margin: -4em auto; /* -80px sucks it back in & auto centers it */
+	height: 47px;
+	width: 980px; /* centered div must be given a width */
+	margin: -40px auto; /* -80px sucks it back in & auto centers it */
 }
 
 #novaContent {

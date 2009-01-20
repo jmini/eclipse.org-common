@@ -47,7 +47,7 @@ class App {
 	public  $PageRSSTitle		= "";
 	public  $Promotion			= "";
 	private $CustomPromotionPath = "";
-	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus");
+	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
 
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";

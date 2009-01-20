@@ -23,14 +23,14 @@ a {
 #bd {
 	background:#fff;
 	margin-top:0px;
-	padding-top:-1em;
-	padding-left:1.8em;
-	padding-right:2em;
+	padding-top:-10px;
+	padding-left:18px;
+	padding-right:20px;
 	text-align:left;	
 	
 }
 .yui-gb {
-	padding-top:2em;	
+	padding-top:20px;	
 }
 
 .yui-gc div.first {
@@ -38,7 +38,7 @@ a {
 }
 
 .yui-u {
-	margin:0 0 2em 0;
+	margin:0 0 20px 0;
 }
 
 .yui-u .modal {
@@ -49,12 +49,12 @@ a {
 
 .yui-u h6 {
 	padding:8px 5px;
-	height:1em;
-	font-size:1.8em;
+	height:10px;
+	font-size:18px;
 	display:block;
 	color:#0D3656;
 	border-bottom:1px solid #e2e2e8;
-	margin-top:1.5em;
+	margin-top:15px;
 }
 
 .yui-u h6.first {
@@ -78,7 +78,7 @@ a {
 }
 
 .yui-u ul li {
-	font-size:1.2em;
+	font-size:12px;
 	padding-top:3px;
 	padding-bottom:3px;	
 	margin-left:20px;
@@ -94,7 +94,7 @@ a {
 
 .posted {
 	color:#888;	
-	font-size:0.8em;
+	font-size:8px;
 }
 
 .rss {
@@ -102,7 +102,7 @@ a {
 }
 
 .epicLegend {
-	width:20em;
+	width:200px;
 	float:left;
 }
 
@@ -113,7 +113,7 @@ a {
 
 .more {
 	width:100%;
-	height:2em;
+	height:20px;
 	margin-top:3px;
 }
 
@@ -140,14 +140,14 @@ a {
 
 .details {
 	margin:5px 0;
-	line-height:1.3em;
+	line-height:13px;
 }
 .details ul {
-	margin-left:1.5em;
+	margin-left:15px;
 }
 
 .details ul li {
-	font-size:1.1em;
+	font-size:11px;
 }
 
 .link {
@@ -167,7 +167,6 @@ a {
 
 #widecontainer {
 	background:#FFF;
-	font-size:1.2em;
 }
 
 .newsPosts {
@@ -176,7 +175,7 @@ a {
 
 .newsPosts .date {
 	vertical-align:top;
-	padding-right:2em;
+	padding-right:20px;
 	color:#666;
 }
 
@@ -188,57 +187,57 @@ a {
 
 .newsPosts a.link {
 	color:#753cbc;
-	font-size:1.4em;	
+	font-size:14px;	
 }
 
 .newsPosts div.details {
 	color:#515151;
-	font-size:1.1em;	
+	font-size:11px;	
 }
 
 #leftcol {
-	width:18.5em;
+	width:185px;
 	float:left;
 	clear:both;
-	margin-right:2em;
+	margin-right:20px;
 	background:transparent;
 }
 
 
 #midcolumn {
-	width:49.5em;
+	width:495px;
 	float:left;
-	margin-right:2em;
+	margin-right:20px;
 	background:transparent;	
 }
 
 #rightcolumn {
-	width:24em;
+	width:240px;
 	float:left;
-	padding-right:1.5em;
+	padding-right:15px;
 	background:transparent;	
 }
 
 #novaContent.faux { 
 	background:#FFF url('/eclipse.org-common/themes/Nova/images/faux.jpg') repeat-y;	
-	padding-top:2em;
-	padding-bottom:2em;
+	padding-top:20px;
+	padding-bottom:20px;
 }
 
 #midcolumn h1 {
-	font-size:1.8em;
-	padding-bottom:1em;
+	font-size:18px;
+	padding-bottom:10px;
 }
 
 #midcolumn h2 {
-	font-size:1.4em;
-	margin-bottom:0.5em;	
+	font-size:14px;
+	margin-bottom:5px;	
 	border-bottom:1px solid #d4d4dd;
 }
 
 #midcolumn h3 {
-	font-size:1.4em;
-	margin-bottom:0.5em;
+	font-size:14px;
+	margin-bottom:5px;
 	border-bottom:1px dotted #d4d4dd;
 }
 
@@ -247,30 +246,30 @@ a {
 }
 
 #midcolumn p {
-	font-size:1.2em;
-	padding-bottom:1em;	
+	font-size:12px;
+	padding-bottom:10px;	
 }
 
 .homeitem3col, .homeitem {
-	font-size:1.2em;
-	margin-bottom:1em;
+	font-size:12px;
+	margin-bottom:10px;
 }
 
 .sideitem {
-	margin-bottom:1em;
-	padding-bottom:0.5em;
+	margin-bottom:10px;
+	padding-bottom:5px;
 	border-bottom:1px dotted #d4d4dd;
 
 }
 
-.sideitem ul, .sideitem form, .sideitem p {
-	padding-left:1em;
-	font-size:1.2em;	
+.sideitem ul, .sideitem ol, .sideitem form, .sideitem p {
+	padding-left:10px;
+	font-size:12px;	
 }
 
 .sideitem h6 {
 	background-color:#e8e7dd;
-	font-size:1.4em;
+	font-size:14px;
 	-moz-border-radius:3px;
 	border-bottom:2px solid #FFF;
 	font-weight:bold;
@@ -284,12 +283,12 @@ a {
 }
 
 #leftnav {
-	margin-left:1em;
-	margin-right:2em;	
+	margin-left:10px;
+	margin-right:20px;	
 }
 
 #leftnav li{
-	margin-left:1em;	
+	margin-left:10px;	
 	list-style-position:inside;
 	list-style-image:url('/eclipse.org-common/themes/Nova/images/leftNav.gif');
 }
@@ -300,40 +299,45 @@ a {
 #leftnav li.about {
  	list-style-image:none;  
  	margin-left:0;     
- 	padding-bottom:1em;        
+ 	padding-bottom:10px;        
 }
 
 #leftnav li.about a{
 	color:#333333;
-	font-size:1.2em;	
+	font-size:12px;	
 }
 	
 #leftnav li.separator {
-	margin-top:0.5em;
-	padding-top:0.5em;
+	margin-top:5px;
+	padding-top:5px;
 	margin-left:0;
-	padding:0.5em 0;
+	padding:5px 0;
 	list-style-image:none;	
 	border-top:1px dotted #d4d4dd;
 }
 
 #leftnav li.separator a {
-	font-size:1.2em;
+	font-size:12px;
 	color:#333333;
 }
 
 .homeitem3col ul, .homeitem ul {
-	margin-left:1em;	
+	margin-left:10px;	
 }
 
 .homeitem3col li, .homeitem li {
-	margin-left:1em;
+	margin-left:10px;
 	list-style-position:outside;	
 	list-style-image:url('/eclipse.org-common/themes/Nova/images/homeitemBulletIE.gif');	
-	padding:0em 1em 0.5em 0;
+	padding:0em 10px 5px 0;
 	border-bottom:1px dotted #E9E9EE;
 }
 
 .sideitem li {
-	padding:0 1em 0.5em 0;	
+	padding:0 10px 5px 0;	
+}
+
+ol li{
+	margin-left:15px;
+	list-style-type:decimal;	
 }

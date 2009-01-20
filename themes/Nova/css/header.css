@@ -1,6 +1,6 @@
 #header {
 	background:transparent url('/eclipse.org-common/themes/Nova/images/header.png') top left no-repeat;
-	height:4.7em;
+	height:47px;
 	width:100%;
 	margin:0px;
 	padding:0px;
@@ -16,16 +16,16 @@
 }
 
 #menu ul {
-	height:4.7em;
-	margin-left:2em;
-	margin-top:1em;
-	margin-bottom:-0.5em;
+	height:47px;
+	margin-left:20px;
+	margin-top:10px;
+	margin-bottom:-5px;
 	float:left;
 }
 
 #menu ul li {
 	height:100%;
-	font-size:1.3em;
+	font-size:13px;
 	display:block;
 	float:left;
 	cursor:pointer;
@@ -50,14 +50,14 @@
 
 #searchBox {
 	width:230px;
-	font-size:1.2em;		
+	font-size:12px;		
 	border:none !important;
 	position:relative;
 	right:7px;
 }
 
 #searchButton {
-	font-size:1.5em;
+	font-size:15px;
 	padding-left:0px;
 }
 
@@ -65,12 +65,12 @@
 	background:transparent url('/eclipse.org-common/themes/Nova/images/siteSelector.png') no-repeat;
 	display:block;
 	clear:none;
-	height:7.8em;
-	width:34em;
+	height:78px;
+	width:340px;
 	float:right;	
-	margin-top:1em;
+	margin-top:10px;
 	margin-bottom:0px;
-	margin-right:0.4em;
+	margin-right:4px;
 	text-align:right;
 }
 
@@ -83,14 +83,14 @@
 }
 
 #sites ul {
-	padding-left:2.5em;
-	padding-top:0.5em;
-	margin:3em auto 0;
+	padding-left:25px;
+	padding-top:5px;
+	margin:30px auto 0;
 }
 
 #sites ul li{
 	text-align:center;
-	width:5.2em;
+	width:52px;
 	float:left;
 	display:block;
 }
@@ -100,7 +100,7 @@
 	display:block;
 	width:32px;
 	height:32px;
-	font-size:1.2em;
+	font-size:12px;
 	text-decoration:none;
 	color:#FFF;
 }
@@ -120,10 +120,10 @@
 
 #promotionDetails {
 	background:transparent url('/eclipse.org-common/themes/Nova/images/ESE08.png') no-repeat 0 -10px;
-	padding-left:3em;
-	font-size:1.4em;
+	padding-left:30px;
+	font-size:14px;
 	font-weight:bold;
-	line-height:2em;
+	line-height:20px;
 	float:left;	
 	overflow:hidden;
 	

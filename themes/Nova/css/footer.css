@@ -1,6 +1,6 @@
 #footer {
  	background:transparent url('/eclipse.org-common/themes/Nova/images/footer.png') no-repeat;
- 	padding-top:2em;
+ 	padding-top:20px;
 }
 
 #footer *{
@@ -9,7 +9,7 @@
 }
 
 #footer ul {	
-	font-size:1.1em;
+	font-size:11px;
 	padding-left:20px;
 	float:left;	
 }
@@ -25,6 +25,6 @@
 	clear:none;
 	float:right;
 	color:#222;
-	font-size:1.2em;
+	font-size:12px;
 	font-weight:bold;
 }
