@@ -1,7 +1,6 @@
 body {
 	background:#EFEFEF url('/eclipse.org-common/themes/Nova/images/bg.png') repeat-x scroll;
 	font-family:Arial,sans-serif;
-	font-size: 62.5%;
 	text-align:center;	
 }
 
@@ -9,6 +8,10 @@ a {
 	color:#7036be;
 	font-weight:bold;	
 	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;	
 }
 
 #novaContent {
@@ -104,6 +107,7 @@ a {
 .epicLegend {
 	width:200px;
 	float:left;
+	font-size:10px;
 }
 
 .epicLegend img{
@@ -121,7 +125,8 @@ a {
 	background:#FFF url('/eclipse.org-common/themes/Nova/images/moreButton.png') no-repeat;
 	padding-top:7px;
 	text-align:right;	
-	float:right;	
+	float:right;
+	font-size:10px;		
 }
 
 .moreButton a {
@@ -131,6 +136,7 @@ a {
 	height:26px;
 	text-align:center;	
 	color:#595b54;
+	font-size:10px;
 }
 
 .none {
@@ -177,6 +183,7 @@ a {
 	vertical-align:top;
 	padding-right:20px;
 	color:#666;
+	font-size:11px;
 }
 
 .newsPosts tr td {
@@ -224,18 +231,18 @@ a {
 	padding-bottom:20px;
 }
 
-#midcolumn h1 {
+#midcolumn h1, #fullcolumn h1 {
 	font-size:18px;
 	padding-bottom:10px;
 }
 
-#midcolumn h2 {
+#midcolumn h2, #fullcolumn h2 {
 	font-size:14px;
 	margin-bottom:5px;	
 	border-bottom:1px solid #d4d4dd;
 }
 
-#midcolumn h3 {
+#midcolumn h3, #fullcolumn h3 {
 	font-size:14px;
 	margin-bottom:5px;
 	border-bottom:1px dotted #d4d4dd;
@@ -245,7 +252,7 @@ a {
 	color:#000;	font-weight:normal;
 }
 
-#midcolumn p {
+#midcolumn p, #fullcolumn p {
 	font-size:12px;
 	padding-bottom:10px;
 	line-height:15px;	
@@ -296,6 +303,7 @@ a {
 }
 
 #leftnav li a {
+	font-size:12px;
 }
 
 #leftnav li.about {
@@ -327,7 +335,7 @@ a {
 	margin-left:10px;	
 }
 
-#midcolumn li {
+#midcolumn li, #fullcolumn li {
 	font-size:12px;
 	margin-left:10px;
 	list-style-position:outside;	
@@ -344,3 +352,17 @@ ol li{
 	margin-left:15px;
 	list-style-type:decimal;	
 }
+
+#fullcolumn {
+	width:980px;
+	padding-top:20px;
+}
+
+#fullcolumn * {
+	line-height:15px;		
+}
+
+#fullcolumn p, #fullcolumn ul, #fullcolumn ol {
+	margin-left:10px;
+
+} 

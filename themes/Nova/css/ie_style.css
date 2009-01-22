@@ -1,5 +1,5 @@
 #novaWrapper, #footer {
-	width:988px;
+	width:980px;
 }
 
 #search {
@@ -10,11 +10,11 @@
 #searchBox {
 	padding-top:0px;
 	top:0px;
-	right:8px;
+	right:7px;
 }
 
 #searchButton {
-	width:40px;
+	width:4em;
 }	
  
 #sites ul {
