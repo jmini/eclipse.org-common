@@ -243,9 +243,10 @@ a:hover {
 }
 
 #midcolumn h3, #fullcolumn h3 {
-	font-size:14px;
+	font-size:16px;
 	margin-bottom:5px;
 	border-bottom:1px dotted #d4d4dd;
+	padding-top:10px;
 }
 
 #midcolumn h1 a, #midcolumn h2 a, #midcolumn h3 a {
@@ -258,6 +259,15 @@ a:hover {
 	line-height:15px;	
 }
 
+#midcolumn table, #fullcolumn table {
+	font-size:12px;
+	line-height:15px;
+	padding-bottom:10px;
+}
+
+#midcolumn td, #fullcolumn td {
+	padding:3px;
+}
 
 .homeitem3col, .homeitem {
 	font-size:12px;
@@ -272,7 +282,7 @@ a:hover {
 }
 
 .sideitem ul, .sideitem ol, .sideitem form, .sideitem p {
-	padding-left:10px;
+	padding:5px;
 	font-size:12px;	
 }
 
@@ -332,8 +342,10 @@ a:hover {
 }
 
 #midcolumn ul, .midcolumn ol {
-	margin-left:10px;	
+	margin-left:20px;	
+	padding-bottom:10px;
 }
+
 
 #midcolumn li, #fullcolumn li {
 	font-size:12px;
@@ -342,6 +354,10 @@ a:hover {
 	list-style-image:url('/eclipse.org-common/themes/Nova/images/homeitemBulletIE.gif');	
 	padding:0em 10px 5px 0;
 	border-bottom:1px dotted #E9E9EE;
+}
+
+#midcolumn ol li, #fullcolumn ol li {
+	list-style-image:none;	
 }
 
 .sideitem li {
@@ -366,3 +382,7 @@ ol li{
 	margin-left:10px;
 
 } 
+
+#fullcolumn #midcolumn {
+	width:680px;
+}
