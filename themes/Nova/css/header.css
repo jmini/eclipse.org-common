@@ -111,26 +111,9 @@
 }
 
 #promotion {
-	float:left;
-	width:500px;
-	padding-left:50px;
-	text-align:center;
-	clear:none;
-}
-
-#promotionDetails {
-	background:transparent url('/eclipse.org-common/themes/Nova/images/ESE08.png') no-repeat 0 -10px;
-	padding-left:30px;
-	font-size:14px;
-	font-weight:bold;
-	line-height:20px;
-	float:left;	
-	overflow:hidden;
-	
-}
-
-#promotionDetails a {
-	color:#0D3656;	
+	padding:11px 0 0 15px;
+	width:604px;
+	height:79px;
 }
 
 #sites ul li a div {
