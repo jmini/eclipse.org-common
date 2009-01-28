@@ -46,7 +46,7 @@ class App {
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
 	public  $Promotion			= "";
-	private $CustomPromotionPath = "";
+	public  $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
 
 	#Google Analytics Variables
@@ -126,7 +126,7 @@ class App {
 		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/footer.php";
 	}
 	function getPromotionPath($_theme) {
-		return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/promotion.php";
+		return $_SERVER["DOCUMENT_ROOT"] . "/home/promotions/promotion.php";
 	}
 
 
@@ -388,7 +388,6 @@ class App {
 		# OPT1: ob_start();
 
 		# All web page parameters passed for variable scope
-
 		if($theme == "") {
 			$theme = "Phoenix";
 		}
@@ -411,15 +410,6 @@ class App {
 
 		if ($Menu != NULL)
 		include($this->getMenuPath($theme));
-
-		if ($this->Promotion == TRUE) {
-			if ($this->CustomPromotionPath != "") {
-				include($this->CustomPromotionPath);
-			}
-			else {
-				include($this->getPromotionPath($theme));
-			}
-		}
 
 		if ($Nav != NULL)
 		include($this->getNavPath($theme));
