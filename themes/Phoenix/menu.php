@@ -54,3 +54,11 @@
 			<li class="text_size"><a class="smallText" title="Small Text" href="#" onclick="setActiveStyleSheet('small');return false;">A</a> <a class="largeText" title="Large Text" href="#" onclick="setActiveStyleSheet('large');return false;">A</a></li>
 		</ul>
 	</div></div>
+	
+			<? if ($App->CustomPromotionPath != "") {
+					include($App->CustomPromotionPath);
+				}
+				else {
+					include($App->getPromotionPath($theme));
+				} ?>
+				
