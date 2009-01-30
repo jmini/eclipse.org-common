@@ -1,16 +1,18 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2007 Eclipse Foundation and others.
+ * Copyright (c) 2007-2009 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Bjorn Freeman-Benson - Initial API
+ *    Bjorn Freeman-Benson - Initial API, meta-data inheritance
  *    Nathan Gervais - Fixed __get function to return correct values for multirow records
  *    Karl Matthias - Implemented Countable Extension to the class. And Plural __get retrieval
  * 					Added fields() and ProjectInfoID() functions, fixed bug in multi-row sets
+ * 					Meta-data inheritance
+ * 					Fixed meta-data inheritance not to override name/short name
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
@@ -21,12 +23,15 @@ class ProjectInfoData implements Countable
 	private $subkeys;  // [main key] -> true if has subkeys, false otherwise
 	public $original_projectid;
 	public $effective_projectid;
+	private $projectname; // Stored separately because even with inheritance we don't inherit this
+	private $projectshortname; // Same reason as $projectname
+	private $inherited = false;
 
 	function ProjectInfoData( $projectid )
 	{
 		$App = new App();
 		$this->original_projectid = $projectid;
-		while( 1) {
+		while(1) { // While loop allows infinite levels of inheritance
 			$result = $App->eclipse_sql("
 						SELECT COUNT(1) AS count FROM ProjectInfo, ProjectInfoValues
 							WHERE ProjectID = '$projectid'
@@ -35,9 +40,34 @@ class ProjectInfoData implements Countable
 							  AND Value = 'true'");
 			$row = mysql_fetch_object( $result );
 			if( $row && $row->count > 0 ) {
+				// Ok, we inherited so store the original name
+				$result2 = $App->eclipse_sql("
+						SELECT Value AS projectname FROM ProjectInfo, ProjectInfoValues
+							WHERE ProjectID = '$projectid'
+							  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID
+							  AND MainKey = 'projectname'"
+				);
+				$row = mysql_fetch_object($result2);
+				$this->projectname = $row->projectname;
+				
+				// Store shortname, too
+				$result2 = $App->eclipse_sql("
+						SELECT Value AS projectshortname FROM ProjectInfo, ProjectInfoValues
+							WHERE ProjectID = '$projectid'
+							  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID
+							  AND MainKey = 'projectshortname'"
+				);
+				$row = mysql_fetch_object($result2);
+				$this->projectshortname = $row->projectshortname;
+				
+				// Set inherited flag
+				$this->inherited = true;
+				
+				// Set the new projectid
 				$words = explode( '.', $projectid );
 				array_pop( $words);
 				$projectid = implode( '.', $words );
+				
 			} else {
 				break;
 			}
@@ -64,8 +94,18 @@ class ProjectInfoData implements Countable
 		}
 	}
 	
-	function __get( $varname )
-	{
+	function __get( $varname ) {
+		// When inheriting data, don't inherit the project name/short name
+		if(($varname == 'projectname') && $this->inherited) {
+			return $this->projectname;
+		} elseif(($varname == 'projectshortname') && $this->inherited) {
+			return $this->projectshortname;
+		} elseif(($varname == 'projectnames') && $this->inherited) {
+			return array($this->projectname);
+		} elseif(($varname == 'projectshortnames') && $this->inherited) {
+			return array($this->projectshortname);
+		}
+			
 		$check_multiples = false;
 		if(preg_match('/s$/', $varname)) // see if we need to look for "newsgroups" instead of just "newsgroup" for example
 			$check_multiples = true;
