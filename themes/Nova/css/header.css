@@ -16,7 +16,6 @@
 }
 
 #menu ul {
-	height:47px;
 	margin-left:20px;
 	margin-top:10px;
 	margin-bottom:-5px;
@@ -24,7 +23,6 @@
 }
 
 #menu ul li {
-	height:100%;
 	font-size:13px;
 	display:block;
 	float:left;
