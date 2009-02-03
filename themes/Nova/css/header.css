@@ -91,6 +91,8 @@
 	width:52px;
 	float:left;
 	display:block;
+	margin:0;
+	padding:0;
 }
 
 #sites ul li a {
