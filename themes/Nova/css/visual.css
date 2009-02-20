@@ -60,7 +60,7 @@ h4 {
 	color:#222;	
 }
 
-ol li
+ol > li
 {
 	list-style-image: none !important;
 	list-style-type: decimal;
