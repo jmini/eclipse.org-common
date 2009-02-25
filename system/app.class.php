@@ -36,7 +36,7 @@ class App {
 	private $POST_MAX_SIZE		= 262144;   # 256KB Max post
 	private $OUR_DOWNLOAD_URL   = "http://download1.eclipse.org";
 	private $PUB_DOWNLOAD_URL   = "http://download.eclipse.org";
-	private $DOWNLOAD_BASE_PATH = "/home/data/httpd/download.eclipse.org";
+	private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
 	private $DB_CLASS_PATH		= "/home/data/httpd/eclipse-php-classes/system/"; # ends with '/'
 
 	private $WWW_PREFIX			= "";  # default is relative
