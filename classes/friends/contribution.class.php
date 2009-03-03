@@ -98,7 +98,7 @@ class Contribution {
 		{
 			$App = new App();
 
-			$sql = "SELECT transaction_id
+			$sql = "SELECT /* USE MASTER */ transaction_id
 					FROM friends_contributions
 					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitize($_transaction_id));
 
@@ -120,7 +120,7 @@ class Contribution {
 		if($_contribution_id != "")  {
 			$App = new App();
 
-			$sql = "SELECT friend_id,
+			$sql = "SELECT /* USE MASTER */ friend_id,
 							contribution_id,
 							date_expired,
 							amount,

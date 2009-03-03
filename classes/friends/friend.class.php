@@ -159,7 +159,7 @@ class Friend {
 			$App = new App();
 			$_friend_id = $App->sqlSanitize($_friend_id, $dbh);
 			
-			$sql = "SELECT friend_id,
+			$sql = "SELECT /* USE MASTER */ friend_id,
 							bugzilla_id,
 							first_name,
 							last_name,
@@ -191,7 +191,7 @@ class Friend {
 			$_fieldname = $App->sqlSanitize($_fieldname, null);
 			$_searchfor = $App->sqlSanitize($_searchfor, null);
 			
-			$sql = "SELECT friend_id
+			$sql = "SELECT /* USE MASTER */ friend_id
 					FROM friends
 					WHERE $_fieldname = " . $App->returnQuotedString($_searchfor);
 
