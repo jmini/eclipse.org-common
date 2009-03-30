@@ -45,7 +45,7 @@ class App {
 	public $ExtraHtmlHeaders   = "";
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
-	public  $Promotion			= "";
+	public  $Promotion			= false;
 	public  $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
 
