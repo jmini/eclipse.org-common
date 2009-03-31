@@ -60,6 +60,7 @@ class projectInfoList {
 	function selectProjectInfoList($_projectID = NULL, $_mainKey = NULL, $_subKey = NULL, $_value = NULL, $_projectInfoID = NULL , $_order_by = NULL) {
 
 		   $App = new App();
+		   echo "Projectinfolist id: ". $_projectID . "\n\r ";
 		   	
 		   $sql = "SELECT DISTINCT ProjectID
 						FROM ProjectInfo, ProjectInfoValues";
