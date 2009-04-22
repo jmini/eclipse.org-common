@@ -132,5 +132,5 @@
  	background:#333;
  	border:1px solid #666;
  	-moz-border-radius:5px;
- 		
+ 	-webkit-border-radius:5px; 		
 }
