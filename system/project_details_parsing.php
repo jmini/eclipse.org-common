@@ -72,7 +72,7 @@ function NewsParse( $newsgroupArray, $id ) {
 	    $news_html = "<a href=\"http://www.eclipse.org/newsportal/thread.php?group=" . $news_name . "\""  . ">$news_name</a>";
 	    $webnews_html = "<a href=\"news://news.eclipse.org/" . $news_name . "\" alt='News server' title=\"News server\"/><img src='/images/newsgroup.png' alt='Web interface' title=\"Web interface\" /></a>";
 		$newsarch_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/\""  . " alt='Archive' title=\"Archive\" />Newsgroup Archive</a>";
-		$newsrss_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\">RSS Feed  </a><a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\"><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
+		$newsrss_html = "<a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\"></a><a href=\"http://dev.eclipse.org/newslists/news." . $news_name . "/maillist.rss\"><img src='/eclipse.org-common/themes/Phoenix/images/rss_btn.gif' alt='RSS Feed' title=\"RSS Feed\" /></a>";
 		$newssearch = "<FORM NAME=\"$news_name\" METHOD=GET ACTION=\"/search/search.cgi\" onsubmit=\"fnSetAction();\">
 				<table bgcolor=#EEEEEE border=0>
 	  			<TR><TD>Search $news_name 
@@ -85,7 +85,7 @@ function NewsParse( $newsgroupArray, $id ) {
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"News\">
 	      	        <INPUT TYPE=\"hidden\" NAME=\"t\" value=\"Mail\"></td></tr></Table></FORM>";
 		$description = $newsgroupArray->description;
-		$html = "<p><a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html </p><div id=\"$news_name.$id\" class=\"switchcontent\"> <p>$description </p> <p>$newsarch_html</p> <p>$newsrss_html</p></div>";
+		$html = "<p><a href=\"javascript:switchMenu('$news_name.$id');\" title=\"Description\"><img src='images/plus.gif' alt='Description' title=\"Description\"></a>  $news_html $webnews_html $newsrss_html </p><div id=\"$news_name.$id\" class=\"switchcontent\"> <p>$description </p> <p>$newsarch_html</p></div>";
 	    }
 	}     
 	return $html;     
