@@ -710,7 +710,10 @@ EOHTML;
         function usePolls() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
         }
-
+		function useJSON() {
+        	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/json/JSON.php");
+        }
+        
         function useProjectInfo() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
         }
