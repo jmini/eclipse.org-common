@@ -6,6 +6,14 @@
 	padding:0px;
 }
 
+#headerAlt {
+	background:transparent url('/eclipse.org-common/themes/Nova/images/headerAlt.png') top left no-repeat;
+	height:47px;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
 #logo {
 	float:left;
 	z-index:9999; /*Something Insanely High*/
