@@ -58,9 +58,13 @@ class Menu {
 		$www_prefix = $App->getWWWPrefix();
 
 		$MenuText = "Home";
-		$MenuItem = new MenuItem($MenuText, $www_prefix . "/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/home/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
+		$MenuText = "Downloads";
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/downloads/", "_self", 0);
+		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
+		
 		$MenuText = "Users";
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/users/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
@@ -71,11 +75,6 @@ class Menu {
 
 		$MenuText = "Committers";
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/committers/", "_self", 0);
-		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
-		
-
-		$MenuText = "Downloads";
-		$MenuItem = new MenuItem($MenuText, $www_prefix . "/downloads/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Resources";
