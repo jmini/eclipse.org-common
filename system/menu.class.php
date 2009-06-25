@@ -58,7 +58,7 @@ class Menu {
 		$www_prefix = $App->getWWWPrefix();
 
 		$MenuText = "Home";
-		$MenuItem = new MenuItem($MenuText, $www_prefix . "/home/", "_self", 0);
+		$MenuItem = new MenuItem($MenuText, $www_prefix . "/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 		$MenuText = "Downloads";
