@@ -41,11 +41,11 @@ class Nav {
 	}
 	
 	function getHTMLBlock () {
-		return $this->$HTMLBlock;
+		return $this->HTMLBlock;
 	}
 	
 	function setHTMLBlock ($html) {
-		$this->$HTMLBlock = $html;
+		$this->HTMLBlock = $html;
 	}
 	
 
