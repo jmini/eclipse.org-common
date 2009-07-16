@@ -42,7 +42,9 @@
 	}
 	?>
 </ul>
+<? echo $Nav->getHTMLBlock(); ?>
 <? /*
+	
 	<br />
 	<div class="sideitem">
 		<h6>Did you know?</h6>
