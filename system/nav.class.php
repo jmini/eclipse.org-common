@@ -29,6 +29,8 @@ class Nav {
 	
 	private $LinkList = array();
 	
+	private $HTMLBlock = "";
+	
 	
 	function getLinkList() {
 		return $this->LinkList;
@@ -37,6 +39,16 @@ class Nav {
 	function setLinkList($_LinkList) {
 		$this->LinkList = $_LinkList;
 	}
+	
+	function getHTMLBlock () {
+		return $this->$HTMLBlock;
+	}
+	
+	function setHTMLBlock ($html) {
+		$this->$HTMLBlock = $html;
+	}
+	
+
 	
 	# Main constructor
 	function Nav() {
@@ -51,11 +63,11 @@ class Nav {
 
 	}
 	
-	function addCustomNav($_Text, $_URL, $_Target, $_Level) {
+	function addCustomNav($_Text, $_URL, $_Target, $_Level, $_CSS=NULL) {
 		if($_Level == "") {
 			$_Level = 0;
 		}
-		$Link = new Link($_Text, $_URL, $_Target, $_Level);
+		$Link = new Link($_Text, $_URL, $_Target, $_Level, $_CSS);
 			
 		# Add incoming Nav Item
 		$this->LinkList[count($this->LinkList)] = $Link;
