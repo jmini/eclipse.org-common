@@ -35,7 +35,7 @@ class FriendsContributionsList {
             }
     }    
     
-	function selectFriendsContributionsList($_start = -1, $_numrows = -1) {
+	function selectFriendsContributionsList($_start = -1, $_numrows = -1, $_where=NULL) {
 		
 		$App = new App();
 	    $sql = "SELECT 
@@ -52,19 +52,21 @@ class FriendsContributionsList {
 	    		FC.amount,
 	    		FC.message
 	    		FROM friends_contributions as FC
-	    		LEFT JOIN friends as F on FC.friend_id = F.friend_id
-	    		ORDER by FC.date_expired DESC";
+	    		LEFT JOIN friends as F on FC.friend_id = F.friend_id";
+	    if ($_where != NULL) {
+	    	$sql .= " " . $_where;
+	    }
+	    		$sql .= " ORDER by FC.date_expired DESC";
 	    if ($_start >= 0)
 	    {
 			$sql .= " LIMIT $_start";
 			if ($_numrows > 0)
 				$sql .= ", $_numrows";
 	    }
-	    $dbc = new DBConnection();
-	    $dbh = $dbc->connect();
-	
-	    $result = mysql_query($sql, $dbh);
-
+	    
+	    $App->sqlSanitize($sql);
+	    $result = $App->eclipse_sql($sql);
+		
 	    while($myrow = mysql_fetch_array($result))
 	    {
 			$Friend = new Friend();
@@ -92,11 +94,7 @@ class FriendsContributionsList {
 			
             $this->add($FriendsContributions);
 	    }
-	    
 	    	
-	    $dbc->disconnect();
-	    $dbh 	= null;
-	    $dbc 	= null;
 	    $result = null;
 	    $myrow	= null;
 	}
