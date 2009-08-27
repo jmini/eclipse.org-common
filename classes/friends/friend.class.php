@@ -233,6 +233,8 @@ class Friend {
 	 * @return boolean - auth was successful or not
 	 * @since 2007-11-20
 	 * 
+	 * 2009-08-27: Added code for crypt/sha-256 passes
+	 * 
 	 */
 	function authenticate($email, $password) {
 
@@ -244,39 +246,53 @@ class Friend {
 		$App = new App();
 		if($email != "" && $password != "" && ($App->isValidCaller($validPaths) || $App->devmode)) {
 			
-			if (eregi('^[a-zA-Z0-9\+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z.]{2,5}$', $email)) {
-				$email 		= $App->sqlSanitize($email, null);
-				$password 	= $App->sqlSanitize($password, null);
+			$email 		= $App->sqlSanitize($email, null);
+			$password 	= $App->sqlSanitize($password, null);
 
-				$sql = "SELECT
-							userid,
-							login_name,
-							LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
-							SUBSTR(realname, @loc+2) AS last_name
-					FROM 
-						profiles 
-					WHERE login_name = '$email' 
-						AND cryptpassword = ENCRYPT('$password', cryptpassword)
-						AND disabledtext = ''";
-				$result = $App->bugzilla_sql($sql);
-				if($result && mysql_num_rows($result) > 0) {
-					$rValue = true;
-					$myrow = mysql_fetch_assoc($result);
-					
+			$sql = "SELECT
+						userid,
+						login_name,
+						LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
+						SUBSTR(realname, @loc+2) AS last_name,
+						cryptpassword
+				FROM 
+					profiles 
+				WHERE login_name = '$email' 
+					AND disabledtext = ''";
+			$result = $App->bugzilla_sql($sql);
+			
+			if($result && mysql_num_rows($result) > 0) {
+				$myrow 				= mysql_fetch_assoc($result);
+				$db_cryptpassword 	= $myrow['cryptpassword'];
+				$pw 				= "abc12345";  // never allow db == pw by default
+				
+				# check password
+				if(preg_match("/{([^}]+)}$/", $db_cryptpassword, $matches)) {
+					$hash = $matches[0];
+					$salt = substr($db_cryptpassword,0,8);
+					$pw = $salt . str_replace("=", "", base64_encode(mhash(MHASH_SHA256,$password . $salt))) . $hash;
+				}
+				else {
+					$pw = crypt($password, $db_cryptpassword);
+				}
+
+				if($db_cryptpassword == $pw) {
+  					$rValue = true;
+				
 					$this->setBugzillaID($myrow['userid']);
 					$this->setEmail($myrow['login_name']);
-					
+				
 					# Load up the rest of the Friend record
 					$friend_id = $this->selectFriendID("bugzilla_id", $this->getBugzillaID());
 					if($friend_id > 0) {
 						$this->selectFriend($friend_id);
 					}
-					
+				
 					# Override the friend record with (known good) Bugzilla info
 					$this->setFirstName($myrow['first_name']);
 					$this->setLastName($myrow['last_name']);
-					
-					
+				
+				
 					# Get user roles				
 					# Committer
 					$sql = "SELECT /* friend.class.php authenticate */ COUNT(1) AS RecordCount FROM PeopleProjects AS PRJ
