@@ -21,6 +21,7 @@
 				<li><a href="<?= $App->getWWWPrefix() ?>/">Home</a></li>
 				<li><a href="<?= $App->getWWWPrefix() ?>/legal/privacy.php">Privacy Policy</a></li>
 				<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a></li>
+				<li><a href="<?= $App->getWWWPrefix() ?>/legal/copyright.php">Copyright Agent</a></li>
 				<li><a href="<?= $App->getWWWPrefix() ?>/legal/">Legal</a></li>
 				<li><a href="<?= $App->getWWWPrefix() ?>/org/foundation/contact.php">Contact Us</a></li>
 			</ul>
