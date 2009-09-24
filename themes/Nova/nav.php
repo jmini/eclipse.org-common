@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
+ *    gbarbier mia-software com - bug 284239
  *******************************************************************************/
 ?>
 <div id="leftcol">
@@ -34,7 +35,7 @@
 				<?= $Link->getText() ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
 <?php
 			} else {
-				?><li><a href="<?= $Link->getURL() ?>"><?= $Link->getText() ?></a></li>
+				?><li><a href="<?= $Link->getURL() ?>" target="<?= ($Link->getTarget() == "_blank") ? "_blank" : "_self" ?>"><?= $Link->getText() ?></a></li>
 <?php
 			}
 		}
