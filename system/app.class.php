@@ -904,6 +904,7 @@ EOHTML;
 		$this->setDatabase( "live",			"localhost", "dashboard", "draobhsad", "live_demo" );
 		$this->setDatabase( "epic", 		"localhost", "dashboard", "draobhsad", "epic_demo" );
 		$this->setDatabase( "conferences",  "localhost", "dashboard", "draobhsad", "conferences_demo" );
+		$this->setDatabase( "marketplace", 	"localhost", "dashboard", "draobhsad", "marketplace_demo" );		
 		#-----------------------------------------------------------------------------------------------------
 
 		#-----------------------------------------------------------------------------------------------------
@@ -944,6 +945,8 @@ EOHTML;
 		$this->set("eclipse_db_class_ro",	 	'DBConnection');
 		$this->set("conferences_db_classfile",	'dbconnection.conferences_rw.class.php');
 		$this->set("conferences_db_class", 	 	'DBConnectionConferencesRW');
+		$this->set("marketplace_db_classfile_ro",	 	'dbconnection_marketplace_ro.class.php');
+		$this->set("marketplace_db_class_ro",	 	 	'DBConnectionMarket');			
 		#-----------------------------------------------------------------------------------------------------
 	}
 
@@ -1100,6 +1103,7 @@ EOHTML;
 	function portal_sql	($statement) 	{ return $this->sql ($statement, "myfoundation"); }		// MyFoundation Portal
 	function projectinfo_sql ($statement) { return $this->sql ($statement, "projectinfo"); }	// ProjectInfo tables only (read-only!)
 	function packaging_sql ($statement)  { return $this->sql ($statement, "packaging"); } 		// Packaging Database
+	function marketplace_sql ($statement) { return $this->sql ($statement, "marketplace"); } 	// Marketplace (read-only)
 }
 
 ?>
