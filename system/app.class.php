@@ -350,7 +350,9 @@ class App {
 		# return: string - Quoted String
 
 		// replace " with '
-		$_String = str_replace('"', "'", $_String);
+		# $_String = str_replace('"', "'", $_String);
+		# https://bugs.eclipse.org/bugs/show_bug.cgi?id=299682#c1
+		$_String = addslashes($_String);
 
 		return "\"" . $_String . "\"";
 	}
