@@ -49,3 +49,9 @@
 	height:40px;
 }
 
+#fullcolumn
+{
+	float:left;
+	margin-left:20px;
+	width: 750px;
+}
