@@ -116,7 +116,7 @@ td
 #fullcolumn
 {
 	padding-top: 20px;
-	width: 980px;
+	width: 978px;
 }
 #fullcolumn #midcolumn
 {
@@ -145,8 +145,7 @@ td
 #leftnav li
 {
 	list-style-image: url('/eclipse.org-common/themes/Nova/images/leftNav.gif');
-	list-style-position: inside;
-	margin-left: 10px;
+	margin-left: 30px;
 	padding: 0px;
 }
 #leftnav li a
