@@ -336,3 +336,7 @@ td
 	font-size: 12px;
 	padding: 5px;
 }
+
+small {
+	font-size:10px;
+}
