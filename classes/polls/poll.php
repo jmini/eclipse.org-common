@@ -33,15 +33,10 @@ class Poll {
 	var $poll_action	= "";
 	var $total_votes 	= 0;
 	var $show_graph		= true;
-	var $require_login	= false;
-	var $bugzilla_id	= 0;
-	var $error			= "";
 	
 	var $COOKIE_NAME = "ECLIPSE_INSTA_POLLS";
 	
-	# Initiate session
-	var $Session = 		null;
- 	
+	
 	var $poll_options	= array(); # Array of PollOption objects	
 	
 	
@@ -69,8 +64,6 @@ class Poll {
 			$this->poll_action 	= $_POST['poll_action' . $_poll_index];
 		}
 		
-		$this->Session = $App->useSession("optional");
-		
 		# Clean incoming
 		$this->url = str_replace("..", "", $this->url);
 		$this->url = str_replace(";", "", $this->url);
@@ -81,14 +74,10 @@ class Poll {
 			
 		# Determine the action to take.
 		if($this->poll_action == "vote" && $this->isVoteable()) {
-			
-			if($this->require_login && $this->Session->getBugzillaID() <= 0) {
-				# should not happen unless someone forces a post.
-				$this->error = "You must be logged in to vote.";
-			}
 			# Save poll options!
 			$this->updatePollCount();
 		}
+		
 	}
 
 
@@ -315,13 +304,6 @@ class Poll {
 	}
 
 	/**
-	 * disable anonymous polls
-	 */
-	function requireLogin() {
-		$this->require_login = true;
-	}
-	
-	/**
 	 * generate HTML required for the poll
 	 * @return string
 	 */
@@ -342,16 +324,7 @@ class Poll {
 				$rValue .= "<input type=\"radio\" name=\"polloption\" value=\"" . $PollOption->option_id . "\" />" . $PollOption->option_text . "<br />";
 			}
 			
-			if($this->error != "") {
-				$rValue .= "<br /><font class='error'>Error: " . $this->error . "</font><br />";
-			}
-			
-			if($this->Session->getBugzillaID() <= 0 && $this->require_login) {
-				$rValue .= "You must be logged in to vote. Please login <a href='" . $Session->getLoginPageURL() . "'>here</a>.";
-			}
-			else {
-				$rValue .= "<input type=\"submit\" value=\"Vote\" /></form></p>";
-			}
+			$rValue .= "<input type=\"submit\" value=\"Vote\" /></form></p>";
 		}
 
 		if($this->poll_action == "vote" || !($this->isVoteable())) {
