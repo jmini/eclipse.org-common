@@ -1,5 +1,6 @@
 <?php
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_polls_rw.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 /*******************************************************************************
  * Copyright (c) 2006 Eclipse Foundation and others.
@@ -33,10 +34,15 @@ class Poll {
 	var $poll_action	= "";
 	var $total_votes 	= 0;
 	var $show_graph		= true;
+	var $require_login	= false;
+	var $bugzilla_id	= 0;
+	var $error			= "";
 	
 	var $COOKIE_NAME = "ECLIPSE_INSTA_POLLS";
 	
-	
+	# Initiate session
+	var $Session = 		null;
+	 	
 	var $poll_options	= array(); # Array of PollOption objects	
 	
 	
@@ -64,6 +70,9 @@ class Poll {
 			$this->poll_action 	= $_POST['poll_action' . $_poll_index];
 		}
 		
+		$App = new App();
+		$this->Session = $App->useSession("optional");
+		
 		# Clean incoming
 		$this->url = str_replace("..", "", $this->url);
 		$this->url = str_replace(";", "", $this->url);
@@ -74,10 +83,14 @@ class Poll {
 			
 		# Determine the action to take.
 		if($this->poll_action == "vote" && $this->isVoteable()) {
+			
+			if($this->require_login && $this->Session->getBugzillaID() <= 0) {
+				# should not happen unless someone forces a post.
+				$this->error = "You must be logged in to vote.";
+			}
 			# Save poll options!
 			$this->updatePollCount();
 		}
-		
 	}
 
 
@@ -140,7 +153,7 @@ class Poll {
 			$App = new App();
 			
 		    $sql = "SELECT 
-						POL.poll_id
+						POL.poll_id, POL.require_login
 		        	FROM
 						polls AS POL
 					WHERE POL.url = " . $App->returnQuotedString($this->url) . "
@@ -152,7 +165,8 @@ class Poll {
 		    $result = mysql_query($sql, $dbh);
 	
 		    if($myrow = mysql_fetch_array($result)) {
-		            $this->poll_id  = $myrow["poll_id"];
+		            $this->poll_id  		= $myrow["poll_id"];
+		            $this->require_login	= $myrow['require_login'];
 		    }
 		    else {
 		    	$sql = "INSERT INTO polls (
@@ -190,46 +204,67 @@ class Poll {
 
 		if($this->isValidPollID()) {
 			$App = new App();
+			
+			# if poll requires login, ensure client is logged in
+			$Session = $this->Session;
+			# echo "Session: " . $Session->getBugzillaID() . " Login req: " . $this->require_login; exit;
+			if( ($this->require_login && $Session->getBugzillaID() > 0) || !$this->require_login) {
 	    
-		    # we have the poll id, add a count
-		    $poll_option = $_POST['polloption'];
-			if(!is_numeric($poll_option)) {
-				$poll_option = 1;
-			}
-		    
-		    
-	    	$sql = "UPDATE poll_options SET
-						answer_count = answer_count + 1
-					WHERE
-						poll_id = " . $this->poll_id . "
-						AND option_id = " . $poll_option;  
-	
-	
-		    $dbc = new DBConnectionPollsRW();
-		    $dbh = $dbc->connect();
-			mysql_query($sql, $dbh);
+			    # we have the poll id, add a count
+			    $poll_option = $_POST['polloption'];
+				if(!is_numeric($poll_option)) {
+					$poll_option = 1;
+				}
+
+				$dbc = new DBConnectionPollsRW();
+			    $dbh = $dbc->connect();
+				
+				# Attempt to insert this user's vote in poll_login_votes.
+				# If it fails, the user has already voted and we must not continue
+				$error = false;
+				if($this->require_login && $Session->getBugzillaID() > 0) {
+					$sql = "INSERT INTO poll_login_votes (poll_id, bugzilla_id) VALUES (" . $this->poll_id . ", " . $Session->getBugzillaID() . ")";
+					mysql_query($sql, $dbh);
+				
+					if(mysql_affected_rows() <= 0) {
+						$error = true;
+					}
+				}
+				
+				if(!$error) {
+			    
+			    	$sql = "UPDATE poll_options SET
+								answer_count = answer_count + 1
+							WHERE
+								poll_id = " . $this->poll_id . "
+								AND option_id = " . $poll_option;  
 			
-			if(mysql_affected_rows() == 0) {
-				# Update failed.  Issue insert statement
-				$sql = "INSERT INTO poll_options (
-							poll_id,
-							option_id, 
-							answer_count) VALUES (
-						" . $this->poll_id . ",
-						" . $poll_option . ",
-						1)";  
-							  
-				mysql_query($sql, $dbh);
-			}
 			
-			# put cookie on the browser to indicate user has voted
-			$this->setCookie(); 
-	
-		    $dbc->disconnect();
-		    $dbh 	= null;
-		    $dbc 	= null;
-		    $result = null;
-		    $myrow	= null;
+					mysql_query($sql, $dbh);
+					
+					if(mysql_affected_rows() == 0) {
+						# Update failed.  Issue insert statement
+						$sql = "INSERT INTO poll_options (
+									poll_id,
+									option_id, 
+									answer_count) VALUES (
+								" . $this->poll_id . ",
+								" . $poll_option . ",
+								1)";  
+									  
+						mysql_query($sql, $dbh);
+					}
+					
+					# put cookie on the browser to indicate user has voted
+					$this->setCookie();
+				} 
+		
+			    $dbc->disconnect();
+			    $dbh 	= null;
+			    $dbc 	= null;
+			    $result = null;
+			    $myrow	= null;
+			}
 		}
 	}
 	
@@ -304,6 +339,34 @@ class Poll {
 	}
 
 	/**
+	 * disable anonymous polls
+	 */
+	function requireLogin() {
+		
+		# the constructor should have read this state from the DB
+		# if we're setting requireLogin() and it's false in this object,
+		# then this is the first time we've set requireLogin
+		
+		if(!$this->require_login) {
+			
+			$this->require_login = true;
+		
+			$App = new App();
+				
+		    $dbc = new DBConnectionPollsRW();
+		    $dbh = $dbc->connect();
+			$sql = "UPDATE polls SET require_login = 1 WHERE poll_id = " . $this->poll_id;
+							
+			mysql_query($sql, $dbh);
+		    
+		    	
+	    	$dbc->disconnect();
+	    	$dbh 	= null;
+	    	$dbc 	= null;
+		}
+	}
+	
+	/**
 	 * generate HTML required for the poll
 	 * @return string
 	 */
@@ -324,7 +387,18 @@ class Poll {
 				$rValue .= "<input type=\"radio\" name=\"polloption\" value=\"" . $PollOption->option_id . "\" />" . $PollOption->option_text . "<br />";
 			}
 			
-			$rValue .= "<input type=\"submit\" value=\"Vote\" /></form></p>";
+			if($this->error != "") {
+				$rValue .= "<br /><font class='error'>Error: " . $this->error . "</font><br />";
+			}
+			
+			$Session = $this->Session;
+			
+			if($Session->getBugzillaID() <= 0 && $this->require_login) {
+				$rValue .= "You must be logged in to vote. Please login <a href='" . $Session->getLoginPageURL() . "'>here</a>.";
+			}
+			else {
+				$rValue .= "<input type=\"submit\" value=\"Vote\" /></form></p>";
+			}
 		}
 
 		if($this->poll_action == "vote" || !($this->isVoteable())) {
