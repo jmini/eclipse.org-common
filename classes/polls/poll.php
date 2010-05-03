@@ -92,8 +92,15 @@ class Poll {
 				# should not happen unless someone forces a post.
 				$this->error = "You must be logged in to vote.";
 			}
-			# Save poll options!
-			$this->updatePollCount();
+
+			if(isset($_POST['polloption']) && is_numeric($_POST['polloption'])) {
+				# Save poll options!
+				$this->updatePollCount();
+			}
+			else {
+				$this->error = "You must choose an option to vote.";
+				$this->poll_action = "";
+			}
 		}
 	}
 
@@ -392,7 +399,7 @@ class Poll {
 			}
 			
 			if($this->error != "") {
-				$rValue .= "<br /><font class='error'>Error: " . $this->error . "</font><br />";
+				$rValue .= "<font color='red'>Error: " . $this->error . "</font><br />";
 			}
 			
 			$Session = $this->Session;
@@ -479,6 +486,5 @@ class PollOption {
 	var $option_text	= "";
 	var $answer_count	= 0;
 }
-
 
 ?>
