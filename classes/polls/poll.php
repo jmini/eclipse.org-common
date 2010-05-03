@@ -24,6 +24,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.p
 #
 #****************************************************************************
 
+# prevent caching the host web page
+if (ob_get_length() == 0) {
+	header("Pragma: no-cache");
+}
 
 
 class Poll {
