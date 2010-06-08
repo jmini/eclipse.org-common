@@ -20,6 +20,9 @@ div, span, p, blockquote, pre, code, em, sub, sup, dl, dt, dd, ol, ul, li, field
 	font-size: 12px;
 	line-height: 16px;
 }
+em {
+	font-style:italic;	
+}
 h1
 {
 	font-size: 20px;
