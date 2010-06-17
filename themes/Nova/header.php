@@ -23,9 +23,9 @@ if(isset($App)) {
 	<title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" />
-	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/menu/assets/skins/sam/menu.css" />
-	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/menu/assets/skins/sam/menu.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/reset.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/header.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/footer.css" media="screen" />
