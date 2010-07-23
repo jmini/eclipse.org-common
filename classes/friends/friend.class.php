@@ -270,7 +270,12 @@ class Friend {
 				if(preg_match("/{([^}]+)}$/", $db_cryptpassword, $matches)) {
 					$hash = $matches[0];
 					$salt = substr($db_cryptpassword,0,8);
-					$pw = $salt . str_replace("=", "", base64_encode(mhash(MHASH_SHA256,$password . $salt))) . $hash;
+					if(function_exists(mhash)) {
+						$pw = $salt . str_replace("=", "", base64_encode(mhash(MHASH_SHA256,$password . $salt))) . $hash;
+					}
+					else {
+						$pw = $salt . str_replace("=", "", base64_encode(hash("sha256",$password . $salt))) . $hash;
+					}
 				}
 				else {
 					$pw = crypt($password, $db_cryptpassword);
