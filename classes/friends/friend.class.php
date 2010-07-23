@@ -247,18 +247,13 @@ class Friend {
 		if($email != "" && $password != "" && ($App->isValidCaller($validPaths) || $App->devmode)) {
 			
 			$email 		= $App->sqlSanitize($email, null);
-			$password 	= $App->sqlSanitize($password, null);
+			// Don't know why this is here: $password 	= $App->sqlSanitize($password, null);
 
-			$sql = "SELECT
-						userid,
-						login_name,
+			$sql = "SELECT userid, login_name,
 						LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
 						SUBSTR(realname, @loc+2) AS last_name,
 						cryptpassword
-				FROM 
-					profiles 
-				WHERE login_name = '$email' 
-					AND disabledtext = ''";
+				FROM profiles WHERE login_name = '$email' AND disabledtext = ''";
 			$result = $App->bugzilla_sql($sql);
 			
 			if($result && mysql_num_rows($result) > 0) {
@@ -274,7 +269,7 @@ class Friend {
 						$pw = $salt . str_replace("=", "", base64_encode(mhash(MHASH_SHA256,$password . $salt))) . $hash;
 					}
 					else {
-						$pw = $salt . str_replace("=", "", base64_encode(hash("sha256",$password . $salt))) . $hash;
+						$pw = $salt . str_replace("=", "", base64_encode(hash("sha256",$password . $salt, true))) . $hash;
 					}
 				}
 				else {
