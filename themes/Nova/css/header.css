@@ -52,10 +52,11 @@
 	position:relative;
 	padding-top:14px;
 	padding-right:7px;
+	width:290px;
 }
 
 #searchBox {
-	width:230px;
+	width:220px;
 	font-size:12px;		
 	border:none !important;
 	position:relative;
