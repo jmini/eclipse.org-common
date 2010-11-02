@@ -50,9 +50,9 @@
 #search {
 	float:right;
 	position:relative;
-	padding-top:14px;
-	padding-right:7px;
-	width:290px;
+	padding-top:12px;
+	padding-right:0px;
+	width:300px;
 }
 
 #searchBox {
@@ -65,7 +65,9 @@
 
 #searchButton {
 	font-size:15px;
-	padding-left:0px;
+	padding:2px;
+	margin-left:5px;
+	margin-top:1px;
 }
 
 #otherSites{
