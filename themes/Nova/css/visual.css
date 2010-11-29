@@ -85,6 +85,14 @@ td
 	padding: 3px;
 }
 
+sub {
+	vertical-align:sub;
+}
+
+sup {
+	vertical-align:super;
+}
+
 #novaContent
 {
 	background: #FFF;
