@@ -87,10 +87,12 @@ td
 
 sub {
 	vertical-align:sub;
+	font-size:80%;
 }
 
 sup {
 	vertical-align:super;
+	font-size:80%
 }
 
 #novaContent
