@@ -246,7 +246,11 @@ class Friend {
 		$App = new App();
 		if($email != "" && $password != "" && ($App->isValidCaller($validPaths) || $App->devmode)) {
 			
-			$email 		= $App->sqlSanitize($email, null);
+			//check if magic quotes is 'off'. If it's on then the sanitizer will extra escape 
+			//the adress which results in valid accounts being rejected.
+			if(!get_magic_quotes_gpc()) {
+              $email          = $App->sqlSanitize($email, null);
+            }
 			// Don't know why this is here: $password 	= $App->sqlSanitize($password, null);
 
 			$sql = "SELECT userid, login_name,
