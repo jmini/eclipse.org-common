@@ -717,6 +717,43 @@ EOHTML;
 				}
         	}
         }
+        
+        /**
+         * @param layout string Button layout (standard, condensed)
+         * @param showfaces bool
+         * @author droy
+         * @since 2011-05-18
+         * @return: HTML string for facebook like
+         * Generate HTML string for facebook like button 
+         */
+        function getFacebookLikeButtonHTML($_layout="standard", $_showfaces=false) {
+        	
+        	$width 	= 450;
+        	$height	=  20;
+
+        	if($_layout == "condensed") {
+        		$width = 90;
+        		$_layout = "button_count";
+        	}
+        	else {
+        		$_layout = "standard";
+        	}
+
+        	if($_showfaces) {
+        		$height = 80;
+        	}
+        	$str = "<iframe src='http://www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
+        	return $str;
+        }
+        /**
+         * @author droy
+         * @since 2011-05-18
+         * @return URL of the current PHP page
+         * Construct and return URL of the current script
+         */
+        function getCurrentURL() {
+        	return "http" . ((empty($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT']!=443) ? "" : "s") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        }
 
         function usePolls() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
