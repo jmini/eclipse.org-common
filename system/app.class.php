@@ -729,7 +729,7 @@ EOHTML;
         function getFacebookLikeButtonHTML($_layout="standard", $_showfaces=false) {
         	
         	$width 	= 450;
-        	$height	=  20;
+        	$height	=  22;
 
         	if($_layout == "condensed") {
         		$width = 90;
@@ -740,7 +740,7 @@ EOHTML;
         	}
 
         	if($_showfaces) {
-        		$height = 80;
+        		$height = 82;
         	}
         	$str = "<iframe src='http://www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
         	return $str;
