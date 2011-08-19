@@ -49,20 +49,23 @@ class Friend {
 		return $this->email;
 	}
 	private function getRoles() {
-		$App= new App();
-		# Get user roles				
-		# Committer
-		$sql = "SELECT /* friend.class.php authenticate */ COUNT(1) AS RecordCount FROM PeopleProjects AS PRJ
+	
+		if ( $this->roles === "" ){
+		  $App= new App();
+		  # Get user roles				
+		  # Committer
+		  $sql = "SELECT /* friend.class.php authenticate */ COUNT(1) AS RecordCount FROM PeopleProjects AS PRJ
 			INNER JOIN People AS P ON P.PersonID = PRJ.PersonID
 			WHERE P.EMail = '$this->email' AND PRJ.Relation = 'CM' 
 			AND (LEFT(PRJ.InactiveDate,10) = '0000-00-00' OR PRJ.InactiveDate IS NULL OR PRJ.InactiveDate > NOW())";
 
-		$result = $App->foundation_sql($sql);
-		if($result && mysql_num_rows($result) > 0) {
-			$myrow = mysql_fetch_assoc($result);
-			if($myrow['RecordCount'] > 0) {
+  		  $result = $App->foundation_sql($sql);
+		  if($result && mysql_num_rows($result) > 0) {
+  			$myrow = mysql_fetch_assoc($result);
+	  		if($myrow['RecordCount'] > 0) {
 				$this->roles .= "::CM::";
 			}			
+		  }
 		}
 		return $this->roles;
 	}
