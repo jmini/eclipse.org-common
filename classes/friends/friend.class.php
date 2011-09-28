@@ -267,9 +267,11 @@ class Friend {
 			//check if magic quotes is 'off'. If it's on then the sanitizer will extra escape 
 			//the adress which results in valid accounts being rejected.
 			if(!get_magic_quotes_gpc()) {
-              $email          = $App->sqlSanitize($email, null);
-            }
-			// Don't know why this is here: $password 	= $App->sqlSanitize($password, null);
+				$email          = $App->sqlSanitize($email, null);
+			}
+			else {
+				$password = stripslashes($password);  # 359128 - password didn't work with \
+			}
 
 			$sql = "SELECT userid, login_name,
 						LEFT(realname, @loc:=LENGTH(realname) - LOCATE(' ', REVERSE(realname))) AS first_name, 
