@@ -22,6 +22,7 @@ class Friend {
 	private $email			= "";
 	private $roles			= ""; 	## FORMAT: ::XX::  where XX is a Foundation role (CM, PL, PM, etc)
 									## Concatenate for multiples: ::CM::::PL::::PM::
+	private $dn 			= "";
 
 
 	function getFriendID() {
@@ -69,6 +70,9 @@ class Friend {
 		}
 		return $this->roles;
 	}
+	function getDn() {
+		return $this->dn;
+	}
 	
 
 
@@ -98,6 +102,9 @@ class Friend {
 	}
 	private function setRoles($_roles) {
 		$this->roles = $_roles;
+	}
+	function setDn($_dn) {
+		$this->dn = $_dn;
 	}
 	
 	
@@ -175,7 +182,7 @@ class Friend {
 
 		if($_friend_id != "") {
 			$App = new App();
-			$_friend_id = $App->sqlSanitize($_friend_id, $dbh);
+			$_friend_id = $App->sqlSanitize($_friend_id);
 			
 			$sql = "SELECT /* USE MASTER */ friend_id,
 							bugzilla_id,
@@ -289,7 +296,7 @@ class Friend {
 				if(preg_match("/{([^}]+)}$/", $db_cryptpassword, $matches)) {
 					$hash = $matches[0];
 					$salt = substr($db_cryptpassword,0,8);
-					if(function_exists(mhash)) {
+					if(function_exists('mhash')) {
 						$pw = $salt . str_replace("=", "", base64_encode(mhash(MHASH_SHA256,$password . $salt))) . $hash;
 					}
 					else {
