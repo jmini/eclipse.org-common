@@ -187,8 +187,10 @@ class Session {
 				$cookie_time = time()+3600*24*365;
 			}
 
-			# setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
+			
+			# uncomment for local dev
+			# setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
 		}
 	}
 
