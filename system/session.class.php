@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2007 Eclipse Foundation and others.
+ * Copyright (c) 2007-2011 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,8 +15,10 @@ define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
 define('LOGINPAGE', 'https://dev.eclipse.org/site_login/');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+if (!class_exists("EvtLog")) {
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
+}
 
 
 class Session {
@@ -116,20 +118,18 @@ class Session {
 
 	function destroy() {
 		$App = new App();
-		if($this->getBugzillaID() != 0) {
-        	$sql = "DELETE FROM sessions WHERE bugzilla_id = " . $this->getBugzillaID();
-        	$App->eclipse_sql($sql);
-			setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
+		$sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), null) . "' LIMIT 1";
+        $App->eclipse_sql($sql);
+		setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
 			
-			if(!$App->devmode) {
-				# Log this event
-				$EvtLog = new EvtLog();
-				$EvtLog->setLogTable("sessions");
-				$EvtLog->setPK1($this->getBugzillaID());
-				$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
-				$EvtLog->setLogAction("DELETE");
-				$EvtLog->insertModLog("apache");
-			}
+		if(!$App->devmode) {
+			# Log this event
+			$EvtLog = new EvtLog();
+			$EvtLog->setLogTable("sessions");
+			$EvtLog->setPK1($this->getBugzillaID());
+			$EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+			$EvtLog->setLogAction("DELETE");
+			$EvtLog->insertModLog("apache");
 		}
 	}
 
@@ -187,7 +187,8 @@ class Session {
 				$cookie_time = time()+3600*24*365;
 			}
 
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
+			# setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
 		}
 	}
 
@@ -220,9 +221,10 @@ class Session {
 	function maintenance() {
 		$App = new App();
 			
-		$sql = "DELETE FROM sessions 
-				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND is_persistent = 0) 
-				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), null) . "')"; 
+		$sql = "DELETE FROM sessions
+				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND is_persistent = 0) 
+				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), null) . "')
+				OR updated_at < DATE_SUB(NOW(), INTERVAL 1 YEAR)"; 
 
 		$App->eclipse_sql($sql);
 		
