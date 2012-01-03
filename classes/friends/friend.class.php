@@ -17,6 +17,7 @@ class Friend {
 	private $first_name		= "";
 	private $last_name		= "";
 	private $date_joined	= NULL;
+	private $benefit_expires= NULL;
 	private $is_anonymous	= 0;
 	private $is_benefit		= 0;
 	private $email			= "";
@@ -48,6 +49,9 @@ class Friend {
 	}	
 	function getEmail() {
 		return $this->email;
+	}
+	function getBenefitExpires() {
+		return $this->benefit_expires;
 	}
 	private function getRoles() {
 	
@@ -99,6 +103,9 @@ class Friend {
 	}
 	function setEmail($_email) {
 		$this->email = $_email;
+	}
+	function setBenefitExpires($_benefit_expires) {
+		$this->benefit_expires = $_benefit_expires;
 	}
 	private function setRoles($_roles) {
 		$this->roles = $_roles;
@@ -184,16 +191,12 @@ class Friend {
 			$App = new App();
 			$_friend_id = $App->sqlSanitize($_friend_id);
 			
-			$sql = "SELECT /* USE MASTER */ friend_id,
-							bugzilla_id,
-							first_name,
-							last_name,
-							date_joined,
-							is_anonymous,
-							is_benefit
-					FROM friends 
-					WHERE friend_id = " . $App->returnQuotedString($_friend_id);
-
+			$sql = "SELECT /* USE MASTER */ f.friend_id, f.bugzilla_id, f.first_name, f.last_name, f.date_joined, f.is_anonymous, f.is_benefit,
+					fc_temp.date_expired 
+					FROM friends as f 
+					LEFT JOIN (SELECT friend_id, MAX(date_expired) AS date_expired FROM friends_contributions GROUP BY friend_id) fc_temp 
+						ON fc_temp.friend_id = f.friend_id 
+					WHERE f.friend_id = " . $App->returnQuotedString($_friend_id);
 			$result = $App->eclipse_sql($sql);
 
 			if ($myrow = mysql_fetch_array($result))	{
@@ -204,6 +207,7 @@ class Friend {
 				$this->setDateJoined	($myrow["date_joined"]);
 				$this->setIsAnonymous	($myrow["is_anonymous"]);
 				$this->setIsBenefit		($myrow["is_benefit"]);
+				$this->setBenefitExpires($myrow["date_expired"]);
 			}
 		}
 	}
