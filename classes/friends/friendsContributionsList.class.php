@@ -38,6 +38,7 @@ class FriendsContributionsList {
 	function selectFriendsContributionsList($_start = -1, $_numrows = -1, $_where=NULL) {
 		
 		$App = new App();
+		# the IF() for date_expired is a bad hack to accommodate the donor list, should we decide to extend all our friends by one month 
 	    $sql = "SELECT 
 	    		F.first_name,
 	    		F.last_name,
