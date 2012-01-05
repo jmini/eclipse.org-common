@@ -46,7 +46,7 @@ class FriendsContributionsList {
 	    		F.is_benefit,
 	    		F.date_joined,
 				FC.friend_id,
-	    		if(FC.date_expired > date_add(now(), interval 1 year), date_sub(FC.date_expired, interval 1 month), FC.date_expired) AS date_expired
+	    		if(FC.date_expired > date_add(now(), interval 1 year), date_sub(FC.date_expired, interval 1 month), FC.date_expired) AS date_expired,
 	    		FC.contribution_id,
 	    		FC.transaction_id,
 	    		FC.amount,
