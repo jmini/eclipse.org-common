@@ -46,7 +46,7 @@ class FriendsContributionsList {
 	    		F.is_benefit,
 	    		F.date_joined,
 				FC.friend_id,
-	    		FC.date_expired,
+	    		if(FC.date_expired > date_add(now(), interval 1 year), date_sub(FC.date_expired, interval 1 month), FC.date_expired) AS date_expired
 	    		FC.contribution_id,
 	    		FC.transaction_id,
 	    		FC.amount,
@@ -56,7 +56,7 @@ class FriendsContributionsList {
 	    if ($_where != NULL) {
 	    	$sql .= " " . $_where;
 	    }
-	    		$sql .= " ORDER by FC.date_expired DESC";
+	    		$sql .= " ORDER by date_expired DESC";
 	    if ($_start >= 0)
 	    {
 			$sql .= " LIMIT $_start";
