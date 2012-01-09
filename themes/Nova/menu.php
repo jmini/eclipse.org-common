@@ -13,6 +13,15 @@
 	$www_prefix = "";
 	$pageRSS = "";
 	
+	$image_protocol = "http";
+	
+	if(isset($_SERVER['HTTPS'])) {
+		if($_SERVER['HTTPS']) {
+			$image_protocol = "https";
+		}
+	}
+	
+	
 	if(isset($App)) {
 		$www_prefix = $App->getWWWPrefix();
 		
@@ -40,12 +49,12 @@
 		</div>
 
 		<div id="search">
-				<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
+				<form action="<?= $image_protocol ?>://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 			 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
 		  		<input id="searchBox" type="text" name="q" size="25" />
 		  		<input id="searchButton" type="submit" name="sa" value="Search" />
 				</form>
-			<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
+			<script type="text/javascript" src="<?= $image_protocol ?>://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
 		</div>
 	</div>
 	<? if ($Nav == NULL) { ?>
