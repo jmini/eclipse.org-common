@@ -14,6 +14,14 @@ $www_prefix = "";
 global $App;
 if(isset($App)) {
 	$www_prefix = $App->getWWWPrefix();
+	
+	$image_protocol = "http";
+	
+	if(isset($_SERVER['HTTPS'])) {
+		if($_SERVER['HTTPS']) {
+			$image_protocol = "https";
+		}
+	}
 }
 	
 ?>
@@ -37,7 +45,6 @@ if(isset($App)) {
 	<!-- Source File -->
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
-
 <body>
 	<div id="novaWrapper"><?//This Div is closed in footer.php?>
 		<div id="clearHeader">
@@ -54,18 +61,12 @@ if(isset($App)) {
 					}
 				?>
 			</div>
-			<div id="otherSites">
-				<div id="sites">
-				<ul id="sitesUL">
-					<li><a href='http://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="http://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<div>Eclipse Marketplace</div></a></li>
-					<li><a href='http://live.eclipse.org'><img alt="Eclipse Live" src="http://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<div>Eclipse Live</div></a></li>
-		    		<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="http://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<div>Bugzilla</div></a></li>
-		    		<li><a href='http://www.eclipse.org/forums/'><img alt="Forums" src="http://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<div>Eclipse Forums</div></a></li>
-		    		<li><a href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="http://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<div>Planet Eclipse</div></a></li>
-		    		<li><a href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="http://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<div>Eclipse Wiki</div></a></li>
-		    		<li><a href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="http://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><div>My Foundation Portal</div></a></li>
-		    	</ul>
-		    	</div>
-			</div>		
-		</div>
-
+<div id="otherSites"><div id="sites"><ul id="sitesUL">
+<li><a href='http://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<div>Eclipse Marketplace</div></a></li>
+<li><a href='http://live.eclipse.org'><img alt="Eclipse Live" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<div>Eclipse Live</div></a></li>
+<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<div>Bugzilla</div></a></li>
+<li><a href='http://www.eclipse.org/forums/'><img alt="Forums" src="<?= $image_protocol?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<div>Eclipse Forums</div></a></li>
+<li><a href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?= $image_protocol?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<div>Planet Eclipse</div></a></li>
+<li><a href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<div>Eclipse Wiki</div></a></li>
+<li><a href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><div>My Foundation Portal</div></a></li>
+</ul></div></div></div>
