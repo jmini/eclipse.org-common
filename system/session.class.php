@@ -158,7 +158,7 @@ class Session {
 							" . $App->sqlSanitize($Friend->getBugzillaID(), null) . ",
 							" . $App->returnQuotedString($this->getSubnet()) . ",
 							NOW(),
-							'" . $App->returnJSSAfeString($this->data) . "',
+							'" . $App->sqlSanitize($this->data) . "',
 							'" . $App->sqlSanitize($this->getIsPersistent(), null) . "')";
 
 			$App->eclipse_sql($sql);
