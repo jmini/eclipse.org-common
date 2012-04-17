@@ -123,7 +123,7 @@ class Friend {
 	function getIsCommitter() {
 		$rValue = false;
 		if(preg_match('/ou=people,/i', $this->getDn())) {
-			if($this->roles === "") {
+			if(strlen($this->roles) == 0) {
 				$this->setRoles("::CM::");
 			}
 			$rValue = true;
