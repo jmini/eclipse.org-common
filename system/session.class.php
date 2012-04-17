@@ -69,6 +69,9 @@ class Session {
 	function getLoginPageURL() {
 		return LOGINPAGE;
 	}
+	function getIsLoggedIn() {
+		return $this->getGID() !== "";
+	}
 	
 	function setGID($_gid) {
 		$this->gid = $_gid;
