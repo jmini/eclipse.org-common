@@ -121,9 +121,12 @@ class Friend {
 	 * @return bool user is a committer
 	 */
 	function getIsCommitter() {
-		$rValue = strpos($this->getRoles(), "::CM::");
-		if($rValue !== false && $rValue >= 0) {
-			$rValue = true;		
+		$rValue = false;
+		if(preg_match('/ou=people,/i', $this->getDn())) {
+			if($this->roles === "") {
+				$this->setRoles("::CM::");
+			}
+			$rValue = true;
 		}
 		return $rValue;
 	}
@@ -261,6 +264,7 @@ class Friend {
 	 * @param string password
 	 * @return boolean - auth was successful or not
 	 * @since 2007-11-20
+	 * @deprecated Use site_login instead, which uses LDAP for everyone
 	 * 
 	 * 2009-08-27: Added code for crypt/sha-256 passes
 	 * 
