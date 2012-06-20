@@ -48,7 +48,7 @@
 		<fieldset><input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
 		<input id="searchBox" type="text" name="q" size="25" />
 		<input id="searchButton" type="submit" name="sa" value="Search" />
-		</form></fieldset>
+		</fieldset></form>
 		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
 	</div>
 </div>
