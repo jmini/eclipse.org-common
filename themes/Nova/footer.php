@@ -10,23 +10,19 @@
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 	
-		
-?>		
-
+?>
 		<br style="clear:both;height:1em;"/>&nbsp;
-		</div> <?//This Div tag is used to close #novaContent?>		
+		</div> <?//This Div tag is used to close #novaContent?>
 		<div id="clearFooter"></div>
-			<div id="footer">
+		<div id="footer">
 			<ul id="footernav">
-				<li><a href="<?= $App->getWWWPrefix() ?>/">Home</a></li>
-				<li><a href="<?= $App->getWWWPrefix() ?>/legal/privacy.php">Privacy Policy</a></li>
-				<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a></li>
-				<li><a href="<?= $App->getWWWPrefix() ?>/legal/copyright.php">Copyright Agent</a></li>
-				<li><a href="<?= $App->getWWWPrefix() ?>/legal/">Legal</a></li>
-				<li><a href="<?= $App->getWWWPrefix() ?>/org/foundation/contact.php">Contact Us</a></li>
-			</ul>
+<li><a href="<?= $App->getWWWPrefix() ?>/">Home</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/legal/privacy.php">Privacy Policy</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/legal/termsofuse.php">Terms of Use</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/legal/copyright.php">Copyright Agent</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/legal/">Legal</a></li>
+<li><a href="<?= $App->getWWWPrefix() ?>/org/foundation/contact.php">Contact Us</a></li></ul>
 			<span id="copyright">Copyright &copy; <?=date("Y");?> The Eclipse Foundation. All Rights Reserved.</span>
 		</div>
 	</div> <?//This Div tag is used to close #novaWrapper?>
-</body>		
-</html>
+</body></html>
