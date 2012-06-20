@@ -48,7 +48,12 @@ class App {
 	public  $Promotion			= FALSE;
 	public  $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
-
+	
+	#Open Graph Protocol Variables
+	private $OGTitle            = "";
+	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
+	private $OGImage      	    = "http://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
+	
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
@@ -902,7 +907,30 @@ EOHTML;
 			$_value = mysql_real_escape_string($_value, $_dbh);
         	return $_value;
 		}
-
+	function getOGTitle(){
+		return '<meta property="og:title" content="' . $this->OGTitle . '" />' . PHP_EOL;
+	}
+			
+	function setOGTitle($title){
+		$this->OGTitle = $title;
+	}
+				
+	function getOGDescription(){
+		return '<meta property="og:description" content="' . $this->OGDescription . '" />' . PHP_EOL;
+	}
+					
+	function setOGDescription($description){
+		$this->OGDescription = $description;
+	}
+						
+	function getOGImage(){
+		return '<meta property="og:image" content="' . $this->OGImage . '" />' . PHP_EOL;
+	}
+							
+	function setOGImage($image){
+		$this->OGImage = $image;
+	}
+	
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">

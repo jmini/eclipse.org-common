@@ -25,10 +25,17 @@ if(isset($App)) {
 }
 	
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
+	<?php 
+	if ($App->OGTitle != "") {
+		echo($App->getOGTitle());		
+	}
+	echo($App->getOGDescription());
+	echo($App->getOGImage());
+	?>
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" media="screen" />
