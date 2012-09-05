@@ -1,0 +1,12 @@
+h1. Fork of eclipse.org-common.git
+
+This is a fork of the @common@ project of the @eclipse.org@ website.
+
+The modifications allow to running @php@ files without any internet connection and on an apache server with default configurations. For example the shortened forms of the delimiters @<?@ and @<?=@ are replaced with common delimiters.
+
+
+h2. Upstream
+
+@git://git.eclipse.org/gitroot/www.eclipse.org/eclipse.org-common.git@
+
+See: "Repository page by eclipse":http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/.
