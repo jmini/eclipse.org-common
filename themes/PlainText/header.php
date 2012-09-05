@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title><?= $pageTitle ?></title>
+		<title><?php echo $pageTitle; ?></title>
 		<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Modern/css/stylesheet.css">
 	</head>
 

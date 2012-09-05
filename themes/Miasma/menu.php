@@ -13,7 +13,7 @@
 		
 		
 ?>
-		<li><a <?= $aclass ?>" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></li>
+		<li><a <?php echo $aclass; ?>" href="<?php echo $MenuItem->getURL(); ?>" target="<?php echo $MenuItem->getTarget(); ?>"><?php echo $MenuItem->getText(); ?></a></li>
 <?php
 	}
 ?>			

@@ -11,7 +11,7 @@
 		$MenuItem = $Menu->getMenuItemAt($i);
 ?>				
 							<td>&#160;&#160;&#160;</td>
-							<td nowrap="true"><a class="menu_item" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></td>
+							<td nowrap="true"><a class="menu_item" href="<?php echo $MenuItem->getURL(); ?>" target="<?php echo $MenuItem->getTarget(); ?>"><?php echo $MenuItem->getText(); ?></a></td>
 							<td>&#160;&#160;&#160;</td>
 							<td class="menu_separator" width="1"></td>
 				

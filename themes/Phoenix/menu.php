@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*******************************************************************************
  * Copyright (c) 2006 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
@@ -35,7 +35,7 @@
 			
 		
 		?>
-		<li><a <?=$firstClass;?> href="<?= $MenuItem->getURL(); ?>" target="<?= $MenuItem->getTarget(); ?>"><?= $MenuItem->getText(); ?></a></li> 
+		<li><a <?php echo $firstClass; ?> href="<?php echo $MenuItem->getURL(); ?>" target="<?php echo $MenuItem->getTarget(); ?>"><?php echo $MenuItem->getText(); ?></a></li> 
 		<?php
 		$firstClass="";
 			}
@@ -43,11 +43,11 @@
 		</ul>
 	</div>
 	<div id="header-utils">
-<?= $App->getGoogleSearchHTML() ?>
+<?php echo $App->getGoogleSearchHTML(); ?>
 		<ul>
 			<?php
 				if($pageRSS != "") {
-			?><li class="rss_feed"><a href="<?= $pageRSS ?>" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" alt="RSS" height="16" width="16" border="0" class="rss_icon" /></a></li>
+			?><li class="rss_feed"><a href="<?php echo $pageRSS; ?>" target="_blank"><img src="/eclipse.org-common/themes/Phoenix/images/rss_btn.gif" alt="RSS" height="16" width="16" border="0" class="rss_icon" /></a></li>
 			<?php
 				} 
 			?>

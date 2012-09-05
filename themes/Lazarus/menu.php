@@ -25,7 +25,7 @@
 		
 		
 ?>
-		<li><a class="<?= $aclass ?>" href="<?= $MenuItem->getURL() ?>" target="<?= $MenuItem->getTarget() ?>"><?= $MenuItem->getText() ?></a></li>
+		<li><a class="<?php echo $aclass; ?>" href="<?php echo $MenuItem->getURL(); ?>" target="<?php echo $MenuItem->getTarget(); ?>"><?php echo $MenuItem->getText(); ?></a></li>
 <?php
 	}
 ?>
@@ -34,9 +34,9 @@
 </div>
 
 
-	<div id="searchbar"><?= $App->getGoogleSearchHTML() ?></div>
+	<div id="searchbar"><?php echo $App->getGoogleSearchHTML(); ?></div>
 
 <div id="topnavsep">
 </div>
 
-<?= $Menu->getProjectBranding() ?>
+<?php echo $Menu->getProjectBranding(); ?>

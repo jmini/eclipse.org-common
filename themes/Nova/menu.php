@@ -1,4 +1,4 @@
-<? 
+<?php
 /*******************************************************************************
  * Copyright (c) 2008-2012 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
@@ -37,12 +37,12 @@
 		$MenuItem = $Menu->getMenuItemAt($i);
 		
 		?>
-		<li><a href="<?= $MenuItem->getURL(); ?>" target="<?= $MenuItem->getTarget(); ?>"><?= $MenuItem->getText(); ?></a></li> 
-	<? } 
+		<li><a href="<?php echo $MenuItem->getURL(); ?>" target="<?php echo $MenuItem->getTarget(); ?>"><?php echo $MenuItem->getText(); ?></a></li> 
+	<?php } 
 	$menuHTML = ob_get_clean();
 	?>
 <div id="header">			
-	<div id="menu"><ul><?=$menuHTML;?></ul></div>
+	<div id="menu"><ul><?php echo $menuHTML; ?></ul></div>
 	<div id="search">
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 		<fieldset><input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -52,9 +52,9 @@
 		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
 	</div>
 </div>
-	<? if ($Nav == NULL) { ?>
+	<?php if ($Nav == NULL) { ?>
 	<div id="novaContent">
-	<? } 
+	<?php } 
 	else { ?>
 	<div id="novaContent" class="faux"><br style="clear:both;height:1em;"/>
-	<? } ?>
+	<?php } ?>

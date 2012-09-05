@@ -21,8 +21,8 @@
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
-<meta name="keywords" content="<?= $pageKeywords ?>" />
+<head><title><?php echo $pageTitle; ?></title><meta name="author" content="<?php echo $pageAuthor; ?>" />
+<meta name="keywords" content="<?php echo $pageKeywords; ?>" />
 <link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Lazarus/css/small.css" title="small" />
 <link rel="alternate stylesheet" type="text/css" href="/eclipse.org-common/themes/Lazarus/css/large.css" title="large" />
 <link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Lazarus/css/visual.css" media="screen" />

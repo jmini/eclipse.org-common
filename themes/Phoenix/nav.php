@@ -1,4 +1,4 @@
-<? 
+<?php 
 /*******************************************************************************
  * Copyright (c) 2006 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
@@ -22,24 +22,24 @@
 			   
 			   ?><li class="separator"><a class="separator"><?php
 			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
-			   ?><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li>
+			   ?><?php echo $Link->getText(); ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li>
 <?php
 			} else {
 				?><li><a class="nolink" href="#"><?php
 			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
-			   ?><?= $Link->getText() ?></a></li>
+			   ?><?php echo $Link->getText(); ?></a></li>
 <?php
 			}
 		} else {
 			if($Link->getTarget() == "__SEPARATOR") {
-				?><li class="separator"><a class="separator" href="<?= $Link->getURL() ?>"><?php
+				?><li class="separator"><a class="separator" href="<?php echo $Link->getURL(); ?>"><?php
 			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
-			   ?><?= $Link->getText() ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li>
+			   ?><?php echo $Link->getText(); ?> &#160;&#160;<img src="/eclipse.org-common/themes/Phoenix/images/leftnav_bullet_down.gif" border="0" alt="" /></a></li>
 <?php
 			} else {
-				?><li><a href="<?= $Link->getURL() ?>"><?php
+				?><li><a href="<?php echo $Link->getURL(); ?>"><?php
 			   	  for($j = 0; $j < (($newlevel - 1) * 4); $j++ ) { ?>&nbsp;<?php } 
-			   ?><?= $Link->getText() ?></a></li>
+			   ?><?php echo $Link->getText(); ?></a></li>
 <?php
 			}
 		}

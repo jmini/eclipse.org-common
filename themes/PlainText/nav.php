@@ -9,7 +9,7 @@
 					<td nowrap="true" class="nav_separator" height="1"></td>
 				</tr>
 				<tr>
-					<td nowrap="true"><a class="nav_item" href="<?= $Link->getURL() ?>" target="<?= $Link->getTarget() ?>"><?= $Link->getText() ?></a></td>
+					<td nowrap="true"><a class="nav_item" href="<?php echo $Link->getURL(); ?>" target="<?php echo $Link->getTarget(); ?>"><?php echo $Link->getText(); ?></a></td>
 				</tr>
 <?php
 	}	

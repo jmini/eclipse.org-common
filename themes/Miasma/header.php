@@ -20,9 +20,9 @@
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title><?= $pageTitle ?></title>
-	<meta name="author" content="<?= $pageAuthor ?>" />
-	<meta name="keywords" content="<?= $pageKeywords ?>" />
+<head><title><?php echo $pageTitle; ?></title>
+	<meta name="author" content="<?php echo $pageAuthor; ?>" />
+	<meta name="keywords" content="<?php echo $pageKeywords; ?>" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Miasma/css/visual.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Miasma/css/layout.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Phoenix/css/print.css" media="print" />
@@ -31,9 +31,9 @@
 <body>
 <div id="header">
 	<a href="/"><img src="/eclipse.org-common/themes/Miasma/images/header_logo.gif" alt="Eclipse Logo" class="logo" border="0" height="71" width="128" /></a>
-	<div id="searchbar"><?= $App->getGoogleSearchHTML() ?>
+	<div id="searchbar"><?php echo $App->getGoogleSearchHTML(); ?>
 	</div>
 	<ul id="headernav">
-		<li class="first"><a href="<?= $www_prefix ?>/org/foundation/contact.php">Contact</a></li>
-		<li><a href="<?= $www_prefix ?>/legal/">Legal</a></li>
+		<li class="first"><a href="<?php echo $www_prefix; ?>/org/foundation/contact.php">Contact</a></li>
+		<li><a href="<?php echo $www_prefix; ?>/legal/">Legal</a></li>
 	</ul>

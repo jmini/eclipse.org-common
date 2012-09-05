@@ -11,7 +11,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			<tr>
 				<td align="left" width="25%" class="small">
-					Copyright &copy; <?=date("Y");?> The Eclipse Foundation. All Rights
+					Copyright &copy; <?php echo date("Y"); ?> The Eclipse Foundation. All Rights
 Reserved
 				</td>
 				<td align="center" width="50%" class="small">

@@ -34,10 +34,10 @@
 			}
 	
 	        if( $Link->getURL() ) {
-	?>    		<li <?= $liClass ?>><a <?= $aClass ?> href="<?= $Link->getURL() ?>" <?= $target ?>><?= $Link->getText() ?></a></li>
+	?>    		<li <?php echo $liClass; ?>><a <?php echo $aClass; ?> href="<?php echo $Link->getURL(); ?>" <?php echo $target; ?>><?php echo $Link->getText(); ?></a></li>
 	<?php
 	        } else {
-	?>    <li <?= $liClass ?>><span <?= $aClass ?>><?= $Link->getText() ?></span></li>
+	?>    <li <?php echo $liClass; ?>><span <?php echo $aClass; ?>><?php echo $Link->getText(); ?></span></li>
 	<?php
 	        }
 		}		

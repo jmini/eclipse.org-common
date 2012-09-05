@@ -1,4 +1,4 @@
-<? 
+<?php
 /*******************************************************************************
  * Copyright (c) 2006 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
@@ -21,21 +21,21 @@
 			if($Link->getTarget() == "__SEPARATOR") {
 			   
 			   ?><li class="separator"><a class="separator"><?php
-			   ?><?= $Link->getText() ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
+			   ?><?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
 <?php
 			} else {
-				?><li><a class="nolink" href="#"><?= $Link->getText() ?></a></li>
+				?><li><a class="nolink" href="#"><?php echo $Link->getText(); ?></a></li>
 <?php
 			}
 		} elseif (stripos($Link->getURL(), 'project_summary.php') !== FALSE) { 
-				?><li class="about"><a href="<?= $Link->getURL() ?>"><?=$Link->getText();?></a></li> <?
+				?><li class="about"><a href="<?php echo $Link->getURL(); ?>"><?php echo $Link->getText(); ?></a></li> <?php
 		} else {
 			if($Link->getTarget() == "__SEPARATOR") {
-				?><li class="separator"><a class="separator" href="<?= $Link->getURL() ?>">
-				<?= $Link->getText() ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
+				?><li class="separator"><a class="separator" href="<?php echo $Link->getURL(); ?>">
+				<?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
 <?php
 			} else {
-				?><li><a href="<?= $Link->getURL() ?>" target="<?= ($Link->getTarget() == "_blank") ? "_blank" : "_self" ?>"><?= $Link->getText() ?></a></li>
+				?><li><a href="<?php echo $Link->getURL(); ?>" target="<?php echo ($Link->getTarget() == "_blank") ? "_blank" : "_self"; ?>"><?php echo $Link->getText(); ?></a></li>
 <?php
 			}
 		}
@@ -43,8 +43,8 @@
 	}
 	?>
 </ul>
-<? echo $Nav->getHTMLBlock(); ?>
-<? /*
+<?php  echo $Nav->getHTMLBlock(); ?>
+<?php /*
 	
 	<br />
 	<div class="sideitem">
