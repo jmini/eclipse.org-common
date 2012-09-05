@@ -63,7 +63,9 @@ if(isset($App)) {
 							include($App->CustomPromotionPath);
 						}
 						else {
-							include($App->getPromotionPath($theme));
+							//OFFLINE-HACK: add the default image instead of calling PromotionPath:
+							echo '<img src="/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse.org"/>';
+							//was: include($App->getPromotionPath($theme));
 						}
 					}
 				?>

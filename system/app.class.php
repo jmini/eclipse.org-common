@@ -52,7 +52,7 @@ class App {
 	#Open Graph Protocol Variables
 	private $OGTitle            = "";
 	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
-	private $OGImage      	    = "http://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
+	private $OGImage      	    = "/eclipse.org-common/themes/Nova/images/eclipse.png"; //OFFLINE-HACK
 	
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
@@ -80,7 +80,7 @@ class App {
 	function App() {
 		# Set value for WWW_PREFIX
 		if($_SERVER['SERVER_NAME'] != "www.eclipse.org") {
-			$this->WWW_PREFIX = "http://www.eclipse.org";
+			$this->WWW_PREFIX = ""; //OFFLINE-HACK: was "http://www.eclipse.org"
 		}
 
 		$this->databases = array();
@@ -462,7 +462,7 @@ EOHTML;
 EOHTML;
 		}
 
-		echo $this->googleJavaScript;
+		//OFFLINE-HACK: remove: echo $this->googleJavaScript;
 		include($this->getFooterPath($theme));
 
 		# OPT1:$starttime = microtime();
@@ -932,6 +932,7 @@ EOHTML;
 	}
 	
 	function getGoogleSearchHTML() {
+		/* //OFFLINE-HACK: remove call to google.com
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 	 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -940,7 +941,8 @@ EOHTML;
 		</form>
 		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
 EOHTML;
-		return $strn;
+		return $strn; */
+		return "";
 	}
 
 	function setGoogleAnalyticsTrackingCode($gaUniqueID) {

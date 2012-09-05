@@ -43,6 +43,7 @@
 	?>
 <div id="header">			
 	<div id="menu"><ul><?php echo $menuHTML; ?></ul></div>
+	<?php /* //OFFLINE-HACK: remove Google Search Box 
 	<div id="search">
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 		<fieldset><input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -51,6 +52,7 @@
 		</fieldset></form>
 		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
 	</div>
+	*/ ?>
 </div>
 	<?php if ($Nav == NULL) { ?>
 	<div id="novaContent">
