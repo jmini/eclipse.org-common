@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
+ *    Christopher Guindon (Eclipse Foundation)
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
@@ -125,12 +126,39 @@ class Contribution {
 							date_expired,
 							amount,
 							message,
-							transaction,
+							transaction_id
 					FROM friends_contributions 
 					WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($_contribution_id));
 
 			$result = $App->eclipse_sql($sql);
 
+			if ($myrow = mysql_fetch_array($result))	{
+				$this->setFriendID			($myrow["friend_id"]);
+				$this->setContributionID	($myrow["contribution_id"]);
+				$this->setDateExpired		($myrow["date_expired"]);
+				$this->setAmount			($myrow["amount"]);
+				$this->setMessage			($myrow["message"]);
+				$this->setTransactionID		($myrow["transaction_id"]);
+			}
+		}
+	}
+	
+	function selectContributionWithTransaction($_transaction_id)
+	{
+		if($_transaction_id != "")  {
+			$App = new App();
+	
+			$sql = "SELECT /* USE MASTER */ friend_id,
+							contribution_id,
+							date_expired,
+							amount,
+							message,
+							transaction_id
+					FROM friends_contributions
+					WHERE transaction_id = " . $App->returnQuotedString($App->sqlSanitize($_transaction_id));
+	
+			$result = $App->eclipse_sql($sql);
+	
 			if ($myrow = mysql_fetch_array($result))	{
 				$this->setFriendID			($myrow["friend_id"]);
 				$this->setContributionID	($myrow["contribution_id"]);
