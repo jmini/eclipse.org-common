@@ -1179,7 +1179,7 @@ EOHTML;
 	function portal_sql	($statement) 	{ return $this->sql ($statement, "myfoundation"); }		// MyFoundation Portal
 	function projectinfo_sql ($statement) { return $this->sql ($statement, "projectinfo"); }	// ProjectInfo tables only (read-only!)
 	function packaging_sql ($statement)  { return $this->sql ($statement, "packaging"); } 		// Packaging Database
-	function marketplace_sql ($statement) { return $this->sql ($statement, "marketplaced7"); } 	// Marketplace (read-only)
+	function marketplace_sql ($statement) { return $this->sql ($statement, "marketplace"); } 	// Marketplace (read-only)
 }
 
 ?>
