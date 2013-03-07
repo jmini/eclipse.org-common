@@ -56,5 +56,10 @@
 	<div id="novaContent">
 	<? } 
 	else { ?>
-	<div id="novaContent" class="faux"><br style="clear:both;height:1em;"/>
+	<div id="novaContent" class="faux"><br id="faux-br" style="clear:both;height:1em;"/>
 	<? } ?>
+	<?php if ($App->OutDated == TRUE) {?>
+		<div class="message-box-container">
+			<div class="message-box error">This page is deprecated and may contain some information that is no longer relevant or accurate.</div>
+		</div>
+	<?php } ?>

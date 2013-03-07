@@ -63,7 +63,10 @@ class App {
 
 	# Database config and handle cache
 	private $databases;
-
+	
+	# Flag to determine whether the "deprecated" theme should be loaded.
+	private $OutDated			= false;
+	
 	# Flag to determine whether this is development mode or not (for databases)
 	public $devmode 			= false;
 	
@@ -929,6 +932,36 @@ EOHTML;
 							
 	function setOGImage($image){
 		$this->OGImage = $image;
+	}
+	
+    /**
+	 * Function to validate a date
+	 * @param string $date
+	 * @return boolean
+	 */
+	private function validateDateFormat($date) {	
+		if (preg_match ("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $date, $d)) {
+			//date validation
+			if (checkdate($d[2],$d[3],$d[1])) {
+				return TRUE;
+			}
+		}		
+		return FALSE;	
+	}
+	
+	/**
+	 * Function to set the OutDated flag
+	 * @param string $when. 
+	 *   Accepted formats 'YYYY-MM-DD' or 'now'.
+	 *
+	 * @return boolean
+	 */
+	function setOutDated($when = 'now') {
+		if (strtolower($when) == 'now' || ($this->validateDateFormat($when) && time() >= strtotime($when))) {
+			$this->OutDated = TRUE;
+			return TRUE;
+		}
+		return FALSE;
 	}
 	
 	function getGoogleSearchHTML() {

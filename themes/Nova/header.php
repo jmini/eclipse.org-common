@@ -53,7 +53,7 @@ if(isset($App)) {
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 <body>
-	<div id="novaWrapper"><?//This Div is closed in footer.php?>
+	<div id="novaWrapper"<?php if ($App->OutDated == TRUE) print ' class="deprecated"';?>><?//This Div is closed in footer.php?>
 		<div id="clearHeader">
 			<div id="logo">
 				<? if ($App->Promotion == FALSE) { ?>
