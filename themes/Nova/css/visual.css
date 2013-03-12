@@ -349,7 +349,59 @@ sup {
 	font-size: 12px;
 	padding: 5px;
 }
-
 small {
 	font-size:10px;
+}
+.message-box.error{
+    border: 1px solid #D8000C;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    color: #333;
+    font-size:14px;
+    background-color: #FFBABA;
+    background-image: url('../images/message-24-error.png');  
+}
+
+/* DEPRECATED THEME */
+.deprecated .message-box-container{
+	background:#fff;
+	padding:10px 10px 15px 10px;
+}
+.deprecated #faux-br{
+	display: none;
+}
+.deprecated #novaContent{
+	padding-top:0;
+}
+.deprecated #maincontent,
+.deprecated #fullcolumn,
+.deprecated .leftContent {	
+	background: url("../images/bg-deprecated.gif") center  75px no-repeat;
+}
+.deprecated #maincontent:after,
+.deprecated #fullcolumn:after,
+.deprecated .leftContent:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+.deprecated #maincontent,
+.deprecated #fullcolumn,
+.deprecated .leftContent {
+	display: inline-block;
+}
+html[xmlns] .deprecated #maincontent,
+html[xmlns] .deprecated #fullcolumn,
+html[xmlns] .deprecated .leftContent {
+	display: block;
+}
+* html .deprecated #maincontent,
+* html .deprecated #fullcolumn,
+* html .deprecated .leftContent {
+	height: 1%;
 }
