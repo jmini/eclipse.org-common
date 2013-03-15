@@ -49,7 +49,7 @@
 		<input id="searchBox" type="text" name="q" size="25" />
 		<input id="searchButton" type="submit" name="sa" value="Search" />
 		</fieldset></form>
-		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>			
+		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>			
 	</div>
 </div>
 	<? if ($Nav == NULL) { ?>
