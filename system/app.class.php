@@ -975,7 +975,7 @@ EOHTML;
 	 */
 	function setjQueryVersion($version = FALSE){
 		//Only set jQueryVersion if we have a copy on eclipse.org
-		$supported = array('1.9.1', '1.5.1', '1.5.2', '2.0.0');		
+		$supported = array('1.5.1', '1.5.2', '1.7.2', '1.9.1', '2.0.0');		
 		if(in_array($version, $supported)){
 			$this->jQueryVersion = $version;
 			return TRUE;
