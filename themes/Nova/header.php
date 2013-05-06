@@ -50,6 +50,8 @@ if(isset($App)) {
 	<!--[if IE 6]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie6_style.css" media="screen"/> <![endif]-->
 	<!-- Dependencies --> 
 	<!-- Source File -->
+<?php if($App->getjQuery()) echo $App->getjQuery(); ?>
+	
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 <body>

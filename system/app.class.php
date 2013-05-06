@@ -57,6 +57,9 @@ class App {
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
+	
+	#jQuery Variables
+	private $jQueryVersion = FALSE;
 
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
@@ -964,6 +967,41 @@ EOHTML;
 		return FALSE;
 	}
 	
+	/**
+	 * Function to set the version of jQuery
+	 * @param string $version
+	 * 
+	 * @return boolean
+	 */
+	function setjQueryVersion($version = FALSE){
+		//Only set jQueryVersion if we have a copy on eclipse.org
+		$supported = array('1.9.1', '1.5.1', '2.0.0');		
+		if(in_array($version, $supported)){
+			$this->jQueryVersion = $version;
+			return TRUE;
+		}
+		return FALSE;
+	}
+	
+	/**
+	 * Return markup needed to load jQuery
+	 * @return string|boolean
+	 */
+	function getjQuery(){		
+		if($this->jQueryVersion){		
+			$strn = <<<EOHTML
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
+	<script>
+		if (!window.jQuery) {
+			document.write('<script src="/eclipse.org-common/lib/jquery/jquery-$this->jQueryVersion.min.js"><\/script>');
+		}
+	</script>
+EOHTML;
+			return $strn;
+		}
+		return FALSE;
+	}
+	
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
@@ -975,7 +1013,7 @@ EOHTML;
 EOHTML;
 		return $strn;
 	}
-
+	
 	function setGoogleAnalyticsTrackingCode($gaUniqueID) {
 		$this->projectGoogleAnalyticsCode = $gaUniqueID;
 	}
