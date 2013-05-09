@@ -990,11 +990,11 @@ EOHTML;
 	function getjQuery(){		
 		if($this->jQueryVersion){		
 			$strn = <<<EOHTML
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
-	<script>
-		if (!window.jQuery) {
-			document.write('<script src="/eclipse.org-common/lib/jquery/jquery-$this->jQueryVersion.min.js"><\/script>');
-		}
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	window.jQuery || document.write('<script src="/eclipse.org-common/lib/jquery/jquery-$this->jQueryVersion.min.js"><\/script>')
+	/* ]]> */
 	</script>
 EOHTML;
 			return $strn;
