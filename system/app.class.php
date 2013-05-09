@@ -414,7 +414,7 @@ class App {
 			if ($this->PageRSSTitle != "") {
 				$this->PageRSSTitle = "Eclipse RSS Feed";
 			}
-			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
+			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml"/>';
 		}
 
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
