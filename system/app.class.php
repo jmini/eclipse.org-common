@@ -1002,6 +1002,21 @@ EOHTML;
 		return FALSE;
 	}
 	
+	/**
+	 * Return The Eclipse Foundation Twitter and Facebook badge
+	 * @return string
+	 */
+	function getSocialBadge(){
+		$strn = <<<EOHTML
+		<script type="text/javascript">
+		/* <![CDATA[ */
+		document.write('<div id=\"badge_facebook\"><iframe src=\"http:\/\/www.facebook.com\/plugins\/like.php?href=http:\/\/www.facebook.com\/pages\/Eclipse\/259655700571&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like\" frameborder=\"0\" scrolling=\"no\"><\/iframe><\/div><div id=\"badge_twitter\"><a href=\"https:\/\/twitter.com\/EclipseFdn\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @EclipseFdn<\/a><script type=\"text\/javascript\">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"\/\/platform.twitter.com\/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");<\/script><\/div>');
+		/* ]]> */
+		</script>
+EOHTML;
+		return $strn;
+	}
+	
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
