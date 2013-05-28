@@ -953,7 +953,8 @@ EOHTML;
 <html xmlns="http://www.w3.org/1999/xhtml">';
 		switch ($this->doctype) {
 			case 'html5':
-				$doc = '<!DOCTYPE html>';
+				$doc = '<!DOCTYPE html>
+<html>';
 				break;			
 		}
 		return $doc;
