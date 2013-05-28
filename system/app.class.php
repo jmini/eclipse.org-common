@@ -54,6 +54,9 @@ class App {
 	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
 	private $OGImage      	    = "http://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
 	
+	#Doctype
+	private $doctype 			= FALSE;
+	
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
@@ -937,6 +940,24 @@ EOHTML;
 		$this->OGImage = $image;
 	}
 	
+	function setDoctype($doctype) {
+		$accepted = array('html5', 'xhtml');
+		if (in_array($doctype, $accepted)) {
+			$this->doctype = $doctype;
+		}
+		return;
+	}
+	
+	function getDoctype() {
+		$doc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">';
+		switch ($this->doctype) {
+			case 'html5':
+				$doc = '<!DOCTYPE html>';
+				break;			
+		}
+		return $doc;
+	}
     /**
 	 * Function to validate a date
 	 * @param string $date
