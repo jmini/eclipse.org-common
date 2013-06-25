@@ -123,7 +123,7 @@ class Session {
 		$App = new App();
 		$sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), null) . "' LIMIT 1";
         $App->eclipse_sql($sql);
-		setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
+		setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
 			
 		if(!$App->devmode) {
 			# Log this event
@@ -190,7 +190,7 @@ class Session {
 				$cookie_time = time()+3600*24*365;
 			}
 
-			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org");
+			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org", 1, TRUE);
 			
 			# uncomment for local dev
 			# setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
