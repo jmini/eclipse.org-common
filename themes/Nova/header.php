@@ -25,8 +25,8 @@ if(isset($App)) {
 }
 	
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php print $this->getDoctype();?>
+
 <head>
 	<title><?php echo $pageTitle; ?></title><meta name="author" content="<?php echo $pageAuthor; ?>" />
 	<?php 
@@ -50,6 +50,8 @@ if(isset($App)) {
 	<!--[if IE 6]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie6_style.css" media="screen"/> <![endif]-->
 	<!-- Dependencies --> 
 	<!-- Source File -->
+<?php if($App->getjQuery()) echo $App->getjQuery(); ?>
+	
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 <body>
@@ -71,11 +73,11 @@ if(isset($App)) {
 				?>
 			</div>
 <div id="otherSites"><div id="sites"><ul id="sitesUL">
-<li><a href='http://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<div>Eclipse Marketplace</div></a></li>
-<li><a href='http://live.eclipse.org'><img alt="Eclipse Live" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<div>Eclipse Live</div></a></li>
-<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<div>Bugzilla</div></a></li>
-<li><a href='http://www.eclipse.org/forums/'><img alt="Forums" src="<?php echo $image_protocol; ?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<div>Eclipse Forums</div></a></li>
-<li><a href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?php echo $image_protocol; ?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<div>Planet Eclipse</div></a></li>
-<li><a href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<div>Eclipse Wiki</div></a></li>
-<li><a href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><div>My Foundation Portal</div></a></li>
+<li><a href='http://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<span>Eclipse Marketplace</span></a></li>
+<li><a href='http://www.youtube.com/user/EclipseFdn' target="_blank"><img alt="Eclipse YouTube Channel" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<span>Eclipse YouTube Channel</span></a></li>
+<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<span>Bugzilla</span></a></li>
+<li><a href='http://www.eclipse.org/forums/'><img alt="Forums" src="<?php echo $image_protocol; ?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<span>Eclipse Forums</span></a></li>
+<li><a href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?php echo $image_protocol; ?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<span>Planet Eclipse</span></a></li>
+<li><a href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<span>Eclipse Wiki</span></a></li>
+<li><a href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?php echo $image_protocol; ?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><span>My Foundation Portal</span></a></li>
 </ul></div></div></div>

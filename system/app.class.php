@@ -54,9 +54,15 @@ class App {
 	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
 	private $OGImage      	    = "/eclipse.org-common/themes/Nova/images/eclipse.png"; //OFFLINE-HACK
 	
+	#Doctype
+	private $doctype 			= FALSE;
+	
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
+	
+	#jQuery Variables
+	private $jQueryVersion = FALSE;
 
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
@@ -411,7 +417,7 @@ class App {
 			if ($this->PageRSSTitle != "") {
 				$this->PageRSSTitle = "Eclipse RSS Feed";
 			}
-			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml">';
+			$this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml"/>';
 		}
 
 		$extraHtmlHeaders = $this->ExtraHtmlHeaders;
@@ -934,6 +940,25 @@ EOHTML;
 		$this->OGImage = $image;
 	}
 	
+	function setDoctype($doctype) {
+		$accepted = array('html5', 'xhtml');
+		if (in_array($doctype, $accepted)) {
+			$this->doctype = $doctype;
+		}
+		return;
+	}
+	
+	function getDoctype() {
+		$doc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">';
+		switch ($this->doctype) {
+			case 'html5':
+				$doc = '<!DOCTYPE html>
+<html>';
+				break;			
+		}
+		return $doc;
+	}
     /**
 	 * Function to validate a date
 	 * @param string $date
@@ -964,6 +989,56 @@ EOHTML;
 		return FALSE;
 	}
 	
+	/**
+	 * Function to set the version of jQuery
+	 * @param string $version
+	 * 
+	 * @return boolean
+	 */
+	function setjQueryVersion($version = FALSE){
+		//Only set jQueryVersion if we have a copy on eclipse.org
+		$supported = array('1.4.4', '1.5.1', '1.5.2', '1.7.2', '1.9.1', '2.0.0');		
+		if(in_array($version, $supported)){
+			$this->jQueryVersion = $version;
+			return TRUE;
+		}
+		return FALSE;
+	}
+	
+	/**
+	 * Return markup needed to load jQuery
+	 * @return string|boolean
+	 */
+	function getjQuery(){		
+		if($this->jQueryVersion){		
+			$strn = <<<EOHTML
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	window.jQuery || document.write('<script src="/eclipse.org-common/lib/jquery/jquery-$this->jQueryVersion.min.js"><\/script>')
+	/* ]]> */
+	</script>
+EOHTML;
+			return $strn;
+		}
+		return FALSE;
+	}
+	
+	/**
+	 * Return The Eclipse Foundation Twitter and Facebook badge
+	 * @return string
+	 */
+	function getSocialBadge(){
+		$strn = <<<EOHTML
+		<script type="text/javascript">
+		/* <![CDATA[ */
+		document.write('<div id=\"badge_facebook\"><iframe src=\"http:\/\/www.facebook.com\/plugins\/like.php?href=http:\/\/www.facebook.com\/pages\/Eclipse\/259655700571&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like\" frameborder=\"0\" scrolling=\"no\"><\/iframe><\/div><div id=\"badge_twitter\"><a href=\"https:\/\/twitter.com\/EclipseFdn\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @EclipseFdn<\/a><script type=\"text\/javascript\">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"\/\/platform.twitter.com\/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");<\/script><\/div>');
+		/* ]]> */
+		</script>
+EOHTML;
+		return $strn;
+	}
+	
 	function getGoogleSearchHTML() {
 		/* //OFFLINE-HACK: remove call to google.com
 		$strn = <<<EOHTML
@@ -977,7 +1052,7 @@ EOHTML;
 		return $strn; */
 		return "";
 	}
-
+	
 	function setGoogleAnalyticsTrackingCode($gaUniqueID) {
 		$this->projectGoogleAnalyticsCode = $gaUniqueID;
 	}

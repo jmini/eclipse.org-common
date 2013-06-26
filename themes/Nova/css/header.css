@@ -129,12 +129,12 @@ div#search {
 	height:79px;
 }
 
-#sites ul li a div {
+#sites ul li a span {
 	display:none;	
 	white-space: nowrap;
 }
 
-#sites ul li a:hover div {
+#sites ul li a:hover span {
 	display:block;
 	position:absolute;
 	z-index:10;

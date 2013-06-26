@@ -21,7 +21,7 @@
 			if($Link->getTarget() == "__SEPARATOR") {
 			   
 			   ?><li class="separator"><a class="separator"><?php
-			   ?><?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
+			   ?><?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png" alt="navigation image"/></a></li>
 <?php
 			} else {
 				?><li><a class="nolink" href="#"><?php echo $Link->getText(); ?></a></li>
@@ -32,7 +32,7 @@
 		} else {
 			if($Link->getTarget() == "__SEPARATOR") {
 				?><li class="separator"><a class="separator" href="<?php echo $Link->getURL(); ?>">
-				<?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png"/></a></li>
+				<?php echo $Link->getText(); ?><img src="/eclipse.org-common/themes/Nova/images/separator.png" alt="navigation image"/></a></li>
 <?php
 			} else {
 				?><li><a href="<?php echo $Link->getURL(); ?>" target="<?php echo ($Link->getTarget() == "_blank") ? "_blank" : "_self"; ?>"><?php echo $Link->getText(); ?></a></li>
